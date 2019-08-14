@@ -1,0 +1,14 @@
+@font-face{
+    font-family: 'Water';
+    src: url("../fonts/water.ttf");
+}
+
+@font-face{
+    font-family: "Bukber";
+    src: url("../fonts/buka_puasa_bersama.ttf");
+}
+
+@font-face{
+    font-family: "Ramadhan";
+    src: url("../fonts/ramadhan.ttf") format("truetype");
+}
