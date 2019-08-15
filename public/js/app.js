@@ -86893,6 +86893,66 @@ function (_Component) {
       }
     }
   }, {
+    key: "checkEmail",
+    value: function checkEmail(e) {
+      var self = this;
+      this.$em = $(this.em);
+      this.$bt = $(this.bt);
+      var email = e.target.value;
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: 'post',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/cekEmail',
+        data: "email=" + email,
+        dataType: 'json',
+        config: {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      }).then(function (res) {
+        if (res.data.status == 200) {
+          self.$em.html("");
+          self.$bt.removeAttr('disabled');
+        } else {
+          self.$em.html(res.data.msg);
+          self.$ur.css("color", "red");
+          self.$bt.attr('disabled', 'disabled');
+        }
+      }.bind(this))["catch"](function (res) {
+        console.log(res);
+      });
+    }
+  }, {
+    key: "checkPhoneNumber",
+    value: function checkPhoneNumber(e) {
+      var self = this;
+      this.$ph = $(this.ph);
+      this.$bt = $(this.bt);
+      var phone = e.target.value;
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: 'post',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/cekNoHp',
+        data: "noHp=" + phone,
+        dataType: 'json',
+        config: {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      }).then(function (res) {
+        if (res.data.status == 200) {
+          self.$ph.html("");
+          self.$bt.removeAttr('disabled');
+        } else {
+          self.$ph.html(res.data.msg);
+          self.$ph.css("color", "red");
+          self.$bt.attr('disabled', 'disabled');
+        }
+      }.bind(this))["catch"](function (res) {
+        console.log(res);
+      });
+    }
+  }, {
     key: "handleEdit",
     value: function handleEdit(id) {
       var self = this;
@@ -87103,11 +87163,15 @@ function (_Component) {
         placeholder: "Masukan email",
         maxLength: "60",
         onChange: this.inputChange,
+        onKeyUp: this.checkEmail.bind(this),
         value: this.state.email,
         autoComplete: "off"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "text-danger"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        ref: function ref(em) {
+          return _this3.em = em;
+        },
         id: "email-error"
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
@@ -87121,11 +87185,15 @@ function (_Component) {
         placeholder: "Masukan nomor hp",
         maxLength: "15",
         onChange: this.inputChange,
+        onKeyUp: this.checkPhoneNumber.bind(this),
         value: this.state.no_hp,
         autoComplete: "off"
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "text-danger"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        ref: function ref(ph) {
+          return _this3.ph = ph;
+        },
         id: "noHp-error"
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
@@ -87154,6 +87222,9 @@ function (_Component) {
         "data-dismiss": "modal",
         type: "button"
       }, "Cancel"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        ref: function ref(bt) {
+          return _this3.bt = bt;
+        },
         className: "btn btn-primary",
         id: "btn-insert-data",
         onClick: this.handleSubmit,
@@ -87816,46 +87887,6 @@ function (_Component) {
       }
     }
   }, {
-    key: "handleEdit",
-    value: function handleEdit(id) {
-      var self = this;
-      this.$tl = $(this.tl);
-      this.$pa = $(this.pa);
-      this.$pe = $(this.pe);
-      this.$us = $(this.us);
-      this.$lv = $(this.lv);
-      axios__WEBPACK_IMPORTED_MODULE_2___default()({
-        method: 'post',
-        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'user/get',
-        data: "id=" + id,
-        dataType: 'json',
-        config: {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        }
-      }).then(function (res) {
-        if (res.data.status == 200) {
-          this.setState({
-            id: res.data.user.id,
-            level: res.data.item,
-            status: res.data.user.status,
-            edit: true,
-            showForm: false
-          });
-          self.$tl.html("Update Data User Pengurus");
-          self.$pa.hide();
-          self.$pe.hide();
-          self.$us.hide();
-          self.$lv.select2().val(res.data.item).trigger('change');
-        } else {
-          console.log(res.data.msg);
-        }
-      }.bind(this))["catch"](function (res) {
-        console.log(res);
-      });
-    }
-  }, {
     key: "handleResetPassword",
     value: function handleResetPassword(id) {
       $.confirm({
@@ -87898,27 +87929,99 @@ function (_Component) {
       });
     }
   }, {
+    key: "handleEdit",
+    value: function handleEdit(id) {
+      var self = this;
+      this.$tl = $(this.tl);
+      this.$pa = $(this.pa);
+      this.$pe = $(this.pe);
+      this.$us = $(this.us);
+      this.$lv = $(this.lv);
+      this.$pa.hide();
+      this.$pe.hide();
+      this.$us.hide();
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: 'post',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'user/get',
+        data: "id=" + id,
+        dataType: 'json',
+        config: {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      }).then(function (res) {
+        if (res.data.status == 200) {
+          this.setState({
+            id: res.data.user.id,
+            level: res.data.item,
+            status: res.data.user.status,
+            edit: true
+          });
+          self.$tl.html("Update Data User Pengurus");
+          self.$lv.select2().val(res.data.item).trigger('change');
+        } else {
+          console.log(res.data.msg);
+        }
+      }.bind(this))["catch"](function (res) {
+        console.log(res);
+      });
+    }
+  }, {
+    key: "checkUsername",
+    value: function checkUsername(e) {
+      var self = this;
+      this.$ur = $(this.ur);
+      this.$bt = $(this.bt);
+      var username = e.target.value;
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: 'post',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'user/cekUsername',
+        data: "username=" + username,
+        dataType: 'json',
+        config: {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      }).then(function (res) {
+        if (res.data.status == 200) {
+          self.$ur.html("");
+          self.$bt.removeAttr('disabled');
+        } else {
+          self.$ur.html(res.data.msg);
+          self.$ur.css("color", "red");
+          self.$bt.attr('disabled', 'disabled');
+        }
+      }.bind(this))["catch"](function (res) {
+        console.log(res);
+      });
+    }
+  }, {
     key: "openModal",
     value: function openModal() {
-      this.setState({
-        id: 0,
-        pengurus: '',
-        username: '',
-        password: '',
-        level: [],
-        status: '',
-        edit: false
-      });
+      this.$pa = $(this.pa);
+      this.$pe = $(this.pe);
+      this.$us = $(this.us);
+      this.$lv = $(this.lv);
       this.$tl = $(this.tl);
       this.$tl.html("Tambah Data User Pengurus");
+
+      if (this.state.edit) {
+        this.$pa.show();
+        this.$pe.show();
+        this.$us.show();
+        this.$lv.val('').trigger('change');
+      }
     }
   }, {
     key: "handleChange",
     value: function handleChange(e) {
       var options = e.target.options;
+      var length = options.length;
       var value = [];
 
-      for (var i = 0, l = options.length; i < l; i++) {
+      for (var i = 0; i < length; i++) {
         if (options[i].selected) {
           value.push(options[i].value);
         }
@@ -88156,6 +88259,7 @@ function (_Component) {
         name: "username",
         className: "form-control",
         type: "text",
+        onKeyUp: this.checkUsername.bind(this),
         onChange: this.inputChange,
         value: this.state.username,
         placeholder: "Masukan username",
@@ -88164,6 +88268,9 @@ function (_Component) {
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "text-danger"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        ref: function ref(ur) {
+          return _this5.ur = ur;
+        },
         id: "username-error"
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group",
@@ -88220,9 +88327,7 @@ function (_Component) {
         value: this.state.level,
         className: "form-control",
         multiple: true
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
-        value: ""
-      }, "-- Pilih Level --"), this.state.cmb_level.map(function (data, index) {
+      }, this.state.cmb_level.map(function (data, index) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
           key: index,
           value: data.id
@@ -88259,6 +88364,9 @@ function (_Component) {
         "data-dismiss": "modal",
         type: "button"
       }, "Cancel"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        ref: function ref(bt) {
+          return _this5.bt = bt;
+        },
         className: "btn btn-primary",
         id: "btn-insert-data",
         onClick: this.handleSubmit,

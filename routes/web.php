@@ -46,6 +46,8 @@ Route::group(['prefix' => 'pengurus', 'middleware' => 'auth:pengurus'], function
     Route::post('/json', 'PengurusController@datatable');
     Route::post('/get', 'PengurusController@edit');
     Route::post('/insert', 'PengurusController@store');
+    Route::post('/cekEmail', 'PengurusController@cekEmail');
+    Route::post('/cekNoHp', 'PengurusController@cekNoHp');
     Route::put('/update', 'PengurusController@update');
     Route::delete('/delete', 'PengurusController@destroy');
 });
@@ -59,9 +61,7 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth:pengurus'], function () 
     Route::get('/getPengurus', 'UserPengurusController@getPengurus');
     Route::post('/insert', 'UserPengurusController@store');
     Route::put('/update', 'UserPengurusController@update');
-    Route::get('/cekUsername', 'UserPengurusController@cekUsername');
-    Route::get('/cekEmail', 'UserPengurusController@cekEmail');
-    Route::get('/cekNoHp', 'UserPengurusController@cekNoHp');
+    Route::post('/cekUsername', 'UserPengurusController@cekUsername');
     Route::put('/reset', 'UserPengurusController@resetPassword');
     Route::delete('/delete', 'UserPengurusController@destroy');
 });

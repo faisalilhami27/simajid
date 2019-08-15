@@ -152,38 +152,12 @@ class UserPengurusController extends Controller
     {
         $username = $request->username;
         $cekUsername = UserPengurus::where('username', $username)->get();
-        $getEmail = $cekUsername->count();
+        $getUsername = $cekUsername->count();
 
-        if ($getEmail == 1) {
+        if ($getUsername == 1) {
             return response()->json(['status' => 500, 'msg' => 'username has been used']);
         } else {
             return response()->json(['status' => 200, 'msg' => 'username available']);
-        }
-    }
-
-    public function cekEmail(Request $request)
-    {
-        $email = $request->email;
-        $cekUsername = Pengurus::where('email', $email)->get();
-        $getEmail = $cekUsername->count();
-
-        if ($getEmail == 1) {
-            return response()->json(['status' => 500, 'msg' => 'email has been used']);
-        } else {
-            return response()->json(['status' => 200, 'msg' => 'email available']);
-        }
-    }
-
-    public function cekNoHp(Request $request)
-    {
-        $noHp = $request->noHp;
-        $cekUsername = Pengurus::where('no_hp', $noHp)->get();
-        $getNoHp = $cekUsername->count();
-
-        if ($getNoHp == 1) {
-            return response()->json(['status' => 500, 'msg' => 'No Handphone has been used']);
-        } else {
-            return response()->json(['status' => 200, 'msg' => 'No Handphone available']);
         }
     }
 

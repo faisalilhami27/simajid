@@ -16,7 +16,7 @@ if (!function_exists('versionApp')) {
     function versionApp()
     {
         $query = Konfigurasi::all();
-        return $query[5]->nilai_konfig;
+        return $query[4]->nilai_konfig;
     }
 }
 

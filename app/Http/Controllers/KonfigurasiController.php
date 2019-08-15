@@ -15,63 +15,42 @@ class KonfigurasiController extends Controller
 
     public function update(KonfigurasiRequest $request)
     {
-        $namaPerusahaan = htmlspecialchars($request->nama_perusahaan);
-        $namaPemilik = htmlspecialchars($request->nama_pemilik);
+        $namaMesjid = htmlspecialchars($request->nama_mesjid);
+        $ketua = htmlspecialchars($request->ketua);
         $password = htmlspecialchars($request->password);
         $alamat = htmlspecialchars($request->alamat);
         $versi = htmlspecialchars($request->versi);
-        $file = $request->file('gambar');
         $konfig = Konfigurasi::all();
 
         $kode = "";
         $data = "";
-        if ($file == "") {
-            if ($namaPerusahaan != $konfig[2]->nilai_konfig) {
-                $data = ['nilai_konfig' => $namaPerusahaan];
-                $kode = "NAMA_MESJID";
-            } else if ($namaPemilik != $konfig[3]->nilai_konfig) {
-                $data = ['nilai_konfig' => $namaPemilik];
-                $kode = "KETUA";
-            }  else if ($password != $konfig[4]->nilai_konfig) {
-                $data = ['nilai_konfig' => $password];
-                $kode = "RESET_PASSWORD";
-            } else if ($alamat != $konfig[0]->nilai_konfig) {
-                $data = ['nilai_konfig' => $alamat];
-                $kode = "ALAMAT_MESJID";
-            } else if ($versi != $konfig[5]->nilai_konfig) {
-                $data = ['nilai_konfig' => $versi];
-                $kode = "VERSION";
-            }
+        if ($namaMesjid != $konfig[2]->nilai_konfig) {
+            $data = ['nilai_konfig' => $namaMesjid];
+            $kode = "NAMA_MESJID";
+        } else if ($ketua != $konfig[1]->nilai_konfig) {
+            $data = ['nilai_konfig' => $ketua];
+            $kode = "KETUA";
+        }  else if ($password != $konfig[3]->nilai_konfig) {
+            $data = ['nilai_konfig' => $password];
+            $kode = "RESET_PASSWORD";
+        } else if ($alamat != $konfig[0]->nilai_konfig) {
+            $data = ['nilai_konfig' => $alamat];
+            $kode = "ALAMAT_MESJID";
+        } else if ($versi != $konfig[4]->nilai_konfig) {
+            $data = ['nilai_konfig' => $versi];
+            $kode = "VERSION";
+        }
 
-            if ($kode == '' && $data == '') {
-                return response()->json(['status' => 500]);
-            } else {
-                $update = Konfigurasi::where('kode_konfig', $kode)->update($data);
-            }
-
-            if ($update) {
-                return response()->json(['status' => 200, 'msg' => 'Data berhasil diubah otomatis']);
-            } else {
-                return response()->json(['status' => 500, 'msg' => 'Data gagal diubah']);
-            }
+        if ($kode == '' && $data == '') {
+            return response()->json(['status' => 500]);
         } else {
-            $kode = "LOGO_MESJID";
+            $update = Konfigurasi::where('kode_konfig', $kode)->update($data);
+        }
 
-            $data = [
-                'nilai_konfig' => $file->store('img', 'public')
-            ];
-
-            if ($file->getSize() > 1000000) {
-                return response()->json(["status" => 500, "msg" => "Maksimal file adalah 1 MB"]);
-            } else {
-                $update = Konfigurasi::where('kode_konfig', $kode)->update($data);
-
-                if ($update) {
-                    return response()->json(['status' => 200, 'msg' => 'Data berhasil diubah otomatis']);
-                } else {
-                    return response()->json(['status' => 500, 'msg' => 'Data gagal diubah']);
-                }
-            }
+        if ($update) {
+            return response()->json(['status' => 200, 'msg' => 'Data berhasil diubah otomatis']);
+        } else {
+            return response()->json(['status' => 500, 'msg' => 'Data gagal diubah']);
         }
     }
 }

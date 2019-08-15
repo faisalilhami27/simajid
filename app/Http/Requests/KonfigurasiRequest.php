@@ -24,13 +24,11 @@ class KonfigurasiRequest extends FormRequest
     public function rules()
     {
         return [
-            'nama_perusahaan' => 'required|max:40|regex:/^[a-zA-Z ]*$/',
-            'nama_pemilik' => 'required|max:50|regex:/^[a-zA-Z,. ]*$/',
+            'nama_mesjid' => 'required|max:40|regex:/^[a-zA-Z- ]*$/',
+            'ketua' => 'required|max:50|regex:/^[a-zA-Z,. ]*$/',
             'alamat' => 'required',
             'versi' => 'required|regex:/^[0-9. ]*$/',
             'password' => 'required|min:8|max:12',
-            'no_hp' => 'required|max:12|regex:/^[0-9]*$/',
-            'gambar' => 'required'
         ];
     }
 }

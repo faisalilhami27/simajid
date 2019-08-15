@@ -2,7 +2,7 @@
     <div class="navbar navbar-default">
         <div class="navbar-header">
             <a class="navbar-brand navbar-brand-center">
-                <span style="font-weight: bold; color: #fff; font-family: Ramadhan; font-size: 26px;">{{ mosqueName() }}</span>
+                <span style="font-weight: bold; color: #fff; font-family: Ramadhan; font-size: 20px;">{{ mosqueName() }}</span>
             </a>
             <button class="navbar-toggler visible-xs-block collapsed" type="button" data-toggle="collapse"
                     data-target="#sidenav">
@@ -56,29 +56,6 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li class="visible-xs-block">
                         <h4 class="navbar-text text-center">Hi, {{ Auth::user()->pengurus->nama }}</h4>
-                    </li>
-                    <li class="dropdown oces">
-                        <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true">
-                          <span class="icon-with-child hidden-xs">
-                            <span class="icon icon-bell-o icon-lg"></span>
-                            <span class="badge badge-primary badge-above right notif"></span>
-                          </span>
-                            <span class="visible-xs-block">
-                            <span class="icon icon-bell icon-lg icon-fw"></span>
-                            <span class="badge badge-primary pull-right badge-notif"></span>
-                            Notifications
-                          </span>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg">
-                            <div class="dropdown-header">
-                                <h5 class="dropdown-heading">Notifikasi masuk</h5>
-                            </div>
-                            <div class="dropdown-body">
-                                <div class="list-group list-group-divided custom-scrollbar">
-
-                                </div>
-                            </div>
-                        </div>
                     </li>
                     <li class="dropdown hidden-xs">
                         <button class="navbar-account-btn" data-toggle="dropdown" aria-haspopup="true">

@@ -14,8 +14,10 @@ class CreateKonfigurasisTable extends Migration
     public function up()
     {
         Schema::create('konfigurasi', function (Blueprint $table) {
-            $table->string('kode_konfig');
+            $table->string('kode_konfig')->unique();
             $table->text('nilai_konfig')->nullable();
+            $table->timestamp();
+            $table->softDeletes();
         });
     }
 

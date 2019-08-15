@@ -54,6 +54,32 @@ class PengurusController extends Controller
         }
     }
 
+    public function cekEmail(Request $request)
+    {
+        $email = $request->email;
+        $cekUsername = Pengurus::where('email', $email)->get();
+        $getEmail = $cekUsername->count();
+
+        if ($getEmail == 1) {
+            return response()->json(['status' => 500, 'msg' => 'email has been used']);
+        } else {
+            return response()->json(['status' => 200, 'msg' => 'email available']);
+        }
+    }
+
+    public function cekNoHp(Request $request)
+    {
+        $noHp = $request->noHp;
+        $cekUsername = Pengurus::where('no_hp', $noHp)->get();
+        $getNoHp = $cekUsername->count();
+
+        if ($getNoHp == 1) {
+            return response()->json(['status' => 500, 'msg' => 'No Handphone has been used']);
+        } else {
+            return response()->json(['status' => 200, 'msg' => 'No Handphone available']);
+        }
+    }
+
     public function update(PengurusRequest $request)
     {
         $data = $request->all();

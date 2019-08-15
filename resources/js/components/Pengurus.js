@@ -128,6 +128,56 @@ export default class Pengurus extends Component {
         }
     }
 
+    checkEmail(e) {
+        const self = this;
+        this.$em = $(this.em);
+        this.$bt = $(this.bt);
+        let email = e.target.value;
+        axios({
+            method: 'post',
+            url: ROUTE + 'pengurus/cekEmail',
+            data: "email=" + email,
+            dataType: 'json',
+            config: {headers: {'Content-Type': 'multipart/form-data'}}
+        }).then(function (res) {
+            if (res.data.status == 200) {
+                self.$em.html("");
+                self.$bt.removeAttr('disabled');
+            } else {
+                self.$em.html(res.data.msg);
+                self.$ur.css("color", "red");
+                self.$bt.attr('disabled', 'disabled');
+            }
+        }.bind(this)).catch(function (res) {
+            console.log(res);
+        })
+    }
+
+    checkPhoneNumber(e) {
+        const self = this;
+        this.$ph = $(this.ph);
+        this.$bt = $(this.bt);
+        let phone = e.target.value;
+        axios({
+            method: 'post',
+            url: ROUTE + 'pengurus/cekNoHp',
+            data: "noHp=" + phone,
+            dataType: 'json',
+            config: {headers: {'Content-Type': 'multipart/form-data'}}
+        }).then(function (res) {
+            if (res.data.status == 200) {
+                self.$ph.html("");
+                self.$bt.removeAttr('disabled');
+            } else {
+                self.$ph.html(res.data.msg);
+                self.$ph.css("color", "red");
+                self.$bt.attr('disabled', 'disabled');
+            }
+        }.bind(this)).catch(function (res) {
+            console.log(res);
+        })
+    }
+
     handleEdit(id) {
         const self = this;
         this.$tl = $(this.tl);
@@ -288,10 +338,11 @@ export default class Pengurus extends Component {
                                         <input id="email" name="email" className="form-control" type="text"
                                                placeholder="Masukan email" maxLength="60"
                                                onChange={this.inputChange}
+                                               onKeyUp={this.checkEmail.bind(this)}
                                                value={this.state.email}
                                                autoComplete="off"/>
                                         <span className="text-danger">
-                                    <strong id="email-error"></strong>
+                                    <strong ref={em => this.em = em} id="email-error"></strong>
                                 </span>
                                     </div>
                                     <div className="form-group">
@@ -299,10 +350,11 @@ export default class Pengurus extends Component {
                                         <input id="no_hp" name="no_hp" className="form-control" type="text"
                                                placeholder="Masukan nomor hp" maxLength="15"
                                                onChange={this.inputChange}
+                                               onKeyUp={this.checkPhoneNumber.bind(this)}
                                                value={this.state.no_hp}
                                                autoComplete="off"/>
                                         <span className="text-danger">
-                                    <strong id="noHp-error"></strong>
+                                    <strong ref={ph => this.ph = ph} id="noHp-error"></strong>
                                 </span>
                                     </div>
                                     <div className="form-group">
@@ -321,7 +373,7 @@ export default class Pengurus extends Component {
                                 <div className="modal-footer">
                                     <button className="btn btn-default" data-dismiss="modal" type="button">Cancel
                                     </button>
-                                    <button className="btn btn-primary" id="btn-insert-data" onClick={this.handleSubmit} type="submit">Submit
+                                    <button ref={bt => this.bt = bt} className="btn btn-primary" id="btn-insert-data" onClick={this.handleSubmit} type="submit">Submit
                                     </button>
                                 </div>
                             </form>

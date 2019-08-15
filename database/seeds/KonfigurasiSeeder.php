@@ -18,10 +18,6 @@ class KonfigurasiSeeder extends Seeder
                 'nilai_konfig' => 'Kp. Rawasari RT/RW 02/01 Kecamatan Sukanagara Desa Sukanagara Kabupaten Cianjur, Jawa Barat, 42364.'
             ],
             [
-                'kode_konfig' => "LOGO_MESJID",
-                'nilai_konfig' => 'img/logo2.png'
-            ],
-            [
                 'kode_konfig' => "NAMA_MESJID",
                 'nilai_konfig' => 'Mesjid Nurul Huda'
             ],

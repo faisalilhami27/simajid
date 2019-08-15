@@ -164,41 +164,6 @@ export default class UserPengurus extends Component {
         }
     }
 
-    handleEdit(id) {
-        const self = this;
-        this.$tl = $(this.tl);
-        this.$pa = $(this.pa);
-        this.$pe = $(this.pe);
-        this.$us = $(this.us);
-        this.$lv = $(this.lv);
-        axios({
-            method: 'post',
-            url: ROUTE + 'user/get',
-            data: "id=" + id,
-            dataType: 'json',
-            config: {headers: {'Content-Type': 'multipart/form-data'}}
-        }).then(function (res) {
-            if (res.data.status == 200) {
-                this.setState({
-                    id: res.data.user.id,
-                    level: res.data.item,
-                    status: res.data.user.status,
-                    edit: true,
-                    showForm: false
-                });
-                self.$tl.html("Update Data User Pengurus");
-                self.$pa.hide();
-                self.$pe.hide();
-                self.$us.hide();
-                self.$lv.select2().val(res.data.item).trigger('change')
-            } else {
-                console.log(res.data.msg);
-            }
-        }.bind(this)).catch(function (res) {
-            console.log(res);
-        })
-    }
-
     handleResetPassword(id) {
         $.confirm({
             content: 'Apakah yakin akan mereset password akun ini ?',
@@ -237,24 +202,86 @@ export default class UserPengurus extends Component {
         });
     }
 
+    handleEdit(id) {
+        const self = this;
+        this.$tl = $(this.tl);
+        this.$pa = $(this.pa);
+        this.$pe = $(this.pe);
+        this.$us = $(this.us);
+        this.$lv = $(this.lv);
+        this.$pa.hide();
+        this.$pe.hide();
+        this.$us.hide();
+        axios({
+            method: 'post',
+            url: ROUTE + 'user/get',
+            data: "id=" + id,
+            dataType: 'json',
+            config: {headers: {'Content-Type': 'multipart/form-data'}}
+        }).then(function (res) {
+            if (res.data.status == 200) {
+                this.setState({
+                    id: res.data.user.id,
+                    level: res.data.item,
+                    status: res.data.user.status,
+                    edit: true
+                });
+                self.$tl.html("Update Data User Pengurus");
+                self.$lv.select2().val(res.data.item).trigger('change')
+            } else {
+                console.log(res.data.msg);
+            }
+        }.bind(this)).catch(function (res) {
+            console.log(res);
+        })
+    }
+
+    checkUsername(e) {
+        const self = this;
+        this.$ur = $(this.ur);
+        this.$bt = $(this.bt);
+        let username = e.target.value;
+        axios({
+            method: 'post',
+            url: ROUTE + 'user/cekUsername',
+            data: "username=" + username,
+            dataType: 'json',
+            config: {headers: {'Content-Type': 'multipart/form-data'}}
+        }).then(function (res) {
+            if (res.data.status == 200) {
+                self.$ur.html("");
+                self.$bt.removeAttr('disabled');
+            } else {
+                self.$ur.html(res.data.msg);
+                self.$ur.css("color", "red");
+                self.$bt.attr('disabled', 'disabled');
+            }
+        }.bind(this)).catch(function (res) {
+            console.log(res);
+        })
+    }
+
     openModal() {
-        this.setState({
-            id: 0,
-            pengurus: '',
-            username: '',
-            password: '',
-            level: [],
-            status: '',
-            edit: false,
-        });
+        this.$pa = $(this.pa);
+        this.$pe = $(this.pe);
+        this.$us = $(this.us);
+        this.$lv = $(this.lv);
         this.$tl = $(this.tl);
         this.$tl.html("Tambah Data User Pengurus");
+
+        if (this.state.edit) {
+            this.$pa.show();
+            this.$pe.show();
+            this.$us.show();
+            this.$lv.val('').trigger('change')
+        }
     }
 
     handleChange(e) {
         var options = e.target.options;
+        var length = options.length
         var value = [];
-        for (var i = 0, l = options.length; i < l; i++) {
+        for (var i = 0; i < length; i++) {
             if (options[i].selected) {
                 value.push(options[i].value);
             }
@@ -432,11 +459,12 @@ export default class UserPengurus extends Component {
                                                name="username"
                                                className="form-control"
                                                type="text"
+                                               onKeyUp={this.checkUsername.bind(this)}
                                                onChange={this.inputChange}
                                                value={this.state.username}
                                                placeholder="Masukan username" maxLength="60" autoComplete="off"/>
                                         <span className="text-danger">
-                                            <strong id="username-error"></strong>
+                                            <strong ref={ur => this.ur = ur} id="username-error"></strong>
                                         </span>
                                     </div>
                                     <div className="form-group" ref={pa => this.pa = pa}>
@@ -463,7 +491,6 @@ export default class UserPengurus extends Component {
                                     <div className="form-group">
                                         <label htmlFor="level" className="form-label">Level</label>
                                         <select id="level" ref={lv => this.lv = lv} name="level" onChange={this.handleChange} value={this.state.level} className="form-control" multiple={true}>
-                                            <option value="">-- Pilih Level --</option>
                                             {this.state.cmb_level.map((data, index) => {
                                                 return (
                                                     <option key={index} value={data.id}>{data.nama}</option>
@@ -489,7 +516,7 @@ export default class UserPengurus extends Component {
                                 <div className="modal-footer">
                                     <button className="btn btn-default" data-dismiss="modal" type="button">Cancel
                                     </button>
-                                    <button className="btn btn-primary" id="btn-insert-data" onClick={this.handleSubmit} type="submit">Submit
+                                    <button ref={bt => this.bt = bt} className="btn btn-primary" id="btn-insert-data" onClick={this.handleSubmit} type="submit">Submit
                                     </button>
                                 </div>
                             </form>
