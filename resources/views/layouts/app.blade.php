@@ -79,6 +79,10 @@
 <script>
     $(document).ready(function () {
         setNavigation();
+
+        $('[name="id_user_level"]').on('change', function() {
+            $('#pickRole').submit();
+        })
     });
 
     function setNavigation() {

@@ -6,16 +6,19 @@
                 <nav id="sidenav" class="sidenav-collapse collapse">
                     <ul class="sidenav level-1 list-menu">
                         <li class="sidenav-search">
-                            <form class="sidenav-form" action="">
+                            <form class="sidenav-form" action="{{ route('role.pick') }}" method="POST" id="pickRole" role="pickRole">
+                                @csrf
                                 <div class="form-group form-group-sm">
                                     @if(App\Models\RoleUserPengurus::where('id_pengurus', Auth::id())->count() > 1)
-                                        @foreach(App\Models\RoleUserPengurus::where('id_pengurus', Auth::id())->with('role')->get() as $user)
-                                            @if(!empty(session('id_user_level')) && session('id_user_level') == $user->role->id)
-                                                <option value="{!! $user->role->id !!}" selected>{!! $user->role->nama !!}</option>
-                                            @else
-                                                <option value="{!! $user->role->id !!}">{!! $user->role->nama !!}</option>
-                                            @endif
-                                        @endforeach
+                                        <select name="id_user_level" id="demo-select2-1" class="form-control">
+                                            @foreach(App\Models\RoleUserPengurus::where('id_pengurus', Auth::id())->with('role')->get() as $user)
+                                                @if(!empty(session('id_user_level')) && session('id_user_level') == $user->role->id)
+                                                    <option value="{!! $user->role->id !!}" selected>{!! $user->role->nama !!}</option>
+                                                @else
+                                                    <option value="{!! $user->role->id !!}">{!! $user->role->nama !!}</option>
+                                                @endif
+                                            @endforeach
+                                        </select>
                                     @else
                                         <div class="input-with-icon">
                                             <input class="form-control" type="text" placeholder="Search…">

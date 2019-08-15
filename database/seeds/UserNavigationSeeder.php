@@ -64,6 +64,16 @@ class UserNavigationSeeder extends Seeder
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
+            [
+                'id_user_level' => 1,
+                'id_menu' => 6,
+                'create' => 1,
+                'read' => 1,
+                'update' => 1,
+                'delete' => 1,
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
         ]);
     }
 }

@@ -52,6 +52,28 @@ Route::group(['prefix' => 'pengurus', 'middleware' => 'auth:pengurus'], function
     Route::delete('/delete', 'PengurusController@destroy');
 });
 
+// modul role level
+Route::group(['prefix' => 'role_level', 'middleware' => 'auth:pengurus'], function () {
+    Route::get('/', 'RoleLevelController@index')->name('role_level');
+    Route::post('/json', 'RoleLevelController@datatable');
+    Route::post('/get', 'RoleLevelController@edit');
+    Route::post('/insert', 'RoleLevelController@store');
+    Route::put('/update', 'RoleLevelController@update');
+    Route::delete('/delete', 'RoleLevelController@destroy');
+});
+
+// modul user navigation
+Route::group(['prefix' => 'akses', 'middleware' => 'auth:pengurus'], function () {
+    Route::get('/', 'UserNavigationController@index')->name('akses');
+    Route::post('/json', 'UserNavigationController@datatable');
+    Route::get('/getLevel', 'UserNavigationController@getLevel');
+    Route::get('/getNavigation', 'UserNavigationController@getNavigation');
+    Route::post('/get', 'UserNavigationController@edit');
+    Route::post('/insert', 'UserNavigationController@store');
+    Route::put('/update', 'UserNavigationController@update');
+    Route::delete('/delete', 'UserNavigationController@destroy');
+});
+
 // modul user pengurus
 Route::group(['prefix' => 'user', 'middleware' => 'auth:pengurus'], function () {
     Route::get('/', 'UserPengurusController@index')->name('user');
@@ -66,22 +88,6 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth:pengurus'], function () 
     Route::delete('/delete', 'UserPengurusController@destroy');
 });
 
-// modul konfigurasi web
-Route::group(['prefix' => 'konfigurasi', 'middleware' => 'auth:pengurus'], function () {
-    Route::get('/', 'KonfigurasiController@index')->name('konfigurasi');
-    Route::post('/update', 'KonfigurasiController@update');
-});
-
-// modul role level
-Route::group(['prefix' => 'role_level', 'middleware' => 'auth:pengurus'], function () {
-    Route::get('/', 'RoleLevelController@index')->name('role_level');
-    Route::post('/json', 'RoleLevelController@datatable');
-    Route::post('/get', 'RoleLevelController@edit');
-    Route::post('/insert', 'RoleLevelController@store');
-    Route::put('/update', 'RoleLevelController@update');
-    Route::delete('/delete', 'RoleLevelController@destroy');
-});
-
 // modul pengurus
 Route::group(['prefix' => 'jadwal', 'middleware' => 'auth:pengurus'], function () {
     Route::get('/', 'UserController@index')->name('jadwal');
@@ -94,4 +100,10 @@ Route::group(['prefix' => 'jadwal', 'middleware' => 'auth:pengurus'], function (
     Route::put('/resetpassword', 'UserController@resetPassword');
     Route::put('/update', 'UserController@update');
     Route::delete('/delete', 'UserController@destroy');
+});
+
+// modul konfigurasi web
+Route::group(['prefix' => 'konfigurasi', 'middleware' => 'auth:pengurus'], function () {
+    Route::get('/', 'KonfigurasiController@index')->name('konfigurasi');
+    Route::post('/update', 'KonfigurasiController@update');
 });

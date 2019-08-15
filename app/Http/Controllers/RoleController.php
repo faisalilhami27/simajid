@@ -21,7 +21,7 @@ class RoleController extends Controller
 
         if (Auth::guard('pengurus')->check()) {
             $listAkses = RoleUserPengurus::where('id_pengurus', Auth::id())
-                ->with('userPengurus')
+                ->with(['userPengurus', 'role'])
                 ->get();
 
             $role = RoleUserPengurus::where('id_pengurus', Auth::id())

@@ -15,4 +15,9 @@ class UserNavigation extends Model
     {
         return $this->hasOne(Navigation::class, 'id', 'id_menu');
     }
+
+    public function role()
+    {
+        return $this->hasOne(RoleLevel::class, 'id', 'id_user_level');
+    }
 }

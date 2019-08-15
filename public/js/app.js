@@ -81978,6 +81978,251 @@ var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;function _typeof
 
 /***/ }),
 
+/***/ "./public/js/icheck.min.js":
+/*!*********************************!*\
+  !*** ./public/js/icheck.min.js ***!
+  \*********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+/*! iCheck v1.0.2 by Damir Sultanov, http://git.io/arlzeA, MIT Licensed */
+(function (f) {
+  function A(a, b, d) {
+    var c = a[0],
+        g = /er/.test(d) ? _indeterminate : /bl/.test(d) ? n : k,
+        e = d == _update ? {
+      checked: c[k],
+      disabled: c[n],
+      indeterminate: "true" == a.attr(_indeterminate) || "false" == a.attr(_determinate)
+    } : c[g];
+    if (/^(ch|di|in)/.test(d) && !e) x(a, g);else if (/^(un|en|de)/.test(d) && e) q(a, g);else if (d == _update) for (var f in e) {
+      e[f] ? x(a, f, !0) : q(a, f, !0);
+    } else if (!b || "toggle" == d) {
+      if (!b) a[_callback]("ifClicked");
+      e ? c[_type] !== r && q(a, g) : x(a, g);
+    }
+  }
+
+  function x(a, b, d) {
+    var c = a[0],
+        g = a.parent(),
+        e = b == k,
+        u = b == _indeterminate,
+        v = b == n,
+        s = u ? _determinate : e ? y : "enabled",
+        F = l(a, s + t(c[_type])),
+        B = l(a, b + t(c[_type]));
+
+    if (!0 !== c[b]) {
+      if (!d && b == k && c[_type] == r && c.name) {
+        var w = a.closest("form"),
+            p = 'input[name="' + c.name + '"]',
+            p = w.length ? w.find(p) : f(p);
+        p.each(function () {
+          this !== c && f(this).data(m) && q(f(this), b);
+        });
+      }
+
+      u ? (c[b] = !0, c[k] && q(a, k, "force")) : (d || (c[b] = !0), e && c[_indeterminate] && q(a, _indeterminate, !1));
+      D(a, e, b, d);
+    }
+
+    c[n] && l(a, _cursor, !0) && g.find("." + C).css(_cursor, "default");
+
+    g[_add](B || l(a, b) || "");
+
+    g.attr("role") && !u && g.attr("aria-" + (v ? n : k), "true");
+
+    g[_remove](F || l(a, s) || "");
+  }
+
+  function q(a, b, d) {
+    var c = a[0],
+        g = a.parent(),
+        e = b == k,
+        f = b == _indeterminate,
+        m = b == n,
+        s = f ? _determinate : e ? y : "enabled",
+        q = l(a, s + t(c[_type])),
+        r = l(a, b + t(c[_type]));
+
+    if (!1 !== c[b]) {
+      if (f || !d || "force" == d) c[b] = !1;
+      D(a, e, s, d);
+    }
+
+    !c[n] && l(a, _cursor, !0) && g.find("." + C).css(_cursor, "pointer");
+
+    g[_remove](r || l(a, b) || "");
+
+    g.attr("role") && !f && g.attr("aria-" + (m ? n : k), "false");
+
+    g[_add](q || l(a, s) || "");
+  }
+
+  function E(a, b) {
+    if (a.data(m)) {
+      a.parent().html(a.attr("style", a.data(m).s || ""));
+      if (b) a[_callback](b);
+      a.off(".i").unwrap();
+      f(_label + '[for="' + a[0].id + '"]').add(a.closest(_label)).off(".i");
+    }
+  }
+
+  function l(a, b, f) {
+    if (a.data(m)) return a.data(m).o[b + (f ? "" : "Class")];
+  }
+
+  function t(a) {
+    return a.charAt(0).toUpperCase() + a.slice(1);
+  }
+
+  function D(a, b, f, c) {
+    if (!c) {
+      if (b) a[_callback]("ifToggled");
+
+      a[_callback]("ifChanged")[_callback]("if" + t(f));
+    }
+  }
+
+  var m = "iCheck",
+      C = m + "-helper",
+      r = "radio",
+      k = "checked",
+      y = "un" + k,
+      n = "disabled";
+  _determinate = "determinate";
+  _indeterminate = "in" + _determinate;
+  _update = "update";
+  _type = "type";
+  _click = "click";
+  _touch = "touchbegin.i touchend.i";
+  _add = "addClass";
+  _remove = "removeClass";
+  _callback = "trigger";
+  _label = "label";
+  _cursor = "cursor";
+  _mobile = /ipad|iphone|ipod|android|blackberry|windows phone|opera mini|silk/i.test(navigator.userAgent);
+
+  f.fn[m] = function (a, b) {
+    var d = 'input[type="checkbox"], input[type="' + r + '"]',
+        c = f(),
+        g = function g(a) {
+      a.each(function () {
+        var a = f(this);
+        c = a.is(d) ? c.add(a) : c.add(a.find(d));
+      });
+    };
+
+    if (/^(check|uncheck|toggle|indeterminate|determinate|disable|enable|update|destroy)$/i.test(a)) return a = a.toLowerCase(), g(this), c.each(function () {
+      var c = f(this);
+      "destroy" == a ? E(c, "ifDestroyed") : A(c, !0, a);
+      f.isFunction(b) && b();
+    });
+    if ("object" != _typeof(a) && a) return this;
+    var e = f.extend({
+      checkedClass: k,
+      disabledClass: n,
+      indeterminateClass: _indeterminate,
+      labelHover: !0
+    }, a),
+        l = e.handle,
+        v = e.hoverClass || "hover",
+        s = e.focusClass || "focus",
+        t = e.activeClass || "active",
+        B = !!e.labelHover,
+        w = e.labelHoverClass || "hover",
+        p = ("" + e.increaseArea).replace("%", "") | 0;
+    if ("checkbox" == l || l == r) d = 'input[type="' + l + '"]';
+    -50 > p && (p = -50);
+    g(this);
+    return c.each(function () {
+      var a = f(this);
+      E(a);
+      var c = this,
+          b = c.id,
+          g = -p + "%",
+          d = 100 + 2 * p + "%",
+          d = {
+        position: "absolute",
+        top: g,
+        left: g,
+        display: "block",
+        width: d,
+        height: d,
+        margin: 0,
+        padding: 0,
+        background: "#fff",
+        border: 0,
+        opacity: 0
+      },
+          g = _mobile ? {
+        position: "absolute",
+        visibility: "hidden"
+      } : p ? d : {
+        position: "absolute",
+        opacity: 0
+      },
+          l = "checkbox" == c[_type] ? e.checkboxClass || "icheckbox" : e.radioClass || "i" + r,
+          z = f(_label + '[for="' + b + '"]').add(a.closest(_label)),
+          u = !!e.aria,
+          y = m + "-" + Math.random().toString(36).substr(2, 6),
+          h = '<div class="' + l + '" ' + (u ? 'role="' + c[_type] + '" ' : "");
+      u && z.each(function () {
+        h += 'aria-labelledby="';
+        this.id ? h += this.id : (this.id = y, h += y);
+        h += '"';
+      });
+      h = a.wrap(h + "/>")[_callback]("ifCreated").parent().append(e.insert);
+      d = f('<ins class="' + C + '"/>').css(d).appendTo(h);
+      a.data(m, {
+        o: e,
+        s: a.attr("style")
+      }).css(g);
+      e.inheritClass && h[_add](c.className || "");
+      e.inheritID && b && h.attr("id", m + "-" + b);
+      "static" == h.css("position") && h.css("position", "relative");
+      A(a, !0, _update);
+      if (z.length) z.on(_click + ".i mouseover.i mouseout.i " + _touch, function (b) {
+        var d = b[_type],
+            e = f(this);
+
+        if (!c[n]) {
+          if (d == _click) {
+            if (f(b.target).is("a")) return;
+            A(a, !1, !0);
+          } else B && (/ut|nd/.test(d) ? (h[_remove](v), e[_remove](w)) : (h[_add](v), e[_add](w)));
+
+          if (_mobile) b.stopPropagation();else return !1;
+        }
+      });
+      a.on(_click + ".i focus.i blur.i keyup.i keydown.i keypress.i", function (b) {
+        var d = b[_type];
+        b = b.keyCode;
+        if (d == _click) return !1;
+        if ("keydown" == d && 32 == b) return c[_type] == r && c[k] || (c[k] ? q(a, k) : x(a, k)), !1;
+        if ("keyup" == d && c[_type] == r) !c[k] && x(a, k);else if (/us|ur/.test(d)) h["blur" == d ? _remove : _add](s);
+      });
+      d.on(_click + " mousedown mouseup mouseover mouseout " + _touch, function (b) {
+        var d = b[_type],
+            e = /wn|up/.test(d) ? t : v;
+
+        if (!c[n]) {
+          if (d == _click) A(a, !1, !0);else {
+            if (/wn|er|in/.test(d)) h[_add](e);else h[_remove](e + " " + t);
+            if (z.length && B && e == v) z[/ut|nd/.test(d) ? _remove : _add](w);
+          }
+          if (_mobile) b.stopPropagation();else return !1;
+        }
+      });
+    });
+  };
+})(window.jQuery || window.Zepto);
+
+/***/ }),
+
 /***/ "./public/js/jquery-confirm.js":
 /*!*************************************!*\
   !*** ./public/js/jquery-confirm.js ***!
@@ -85876,6 +86121,8 @@ __webpack_require__(/*! ./components/RoleLevel */ "./resources/js/components/Rol
 
 __webpack_require__(/*! ./components/UserPengurus */ "./resources/js/components/UserPengurus.js");
 
+__webpack_require__(/*! ./components/UserNavigation */ "./resources/js/components/UserNavigation.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -87645,6 +87892,698 @@ if (document.getElementById('role_level')) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ROUTE", function() { return ROUTE; });
 var ROUTE = window.location.origin + '/';
+
+/***/ }),
+
+/***/ "./resources/js/components/UserNavigation.js":
+/*!***************************************************!*\
+  !*** ./resources/js/components/UserNavigation.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return UserNavigation; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var _Route__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Route */ "./resources/js/components/Route.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _css_style_css__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../css/style.css */ "./resources/css/style.css");
+/* harmony import */ var _css_style_css__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_css_style_css__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _public_js_dataTables_bootstrap4_min__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../public/js/dataTables.bootstrap4.min */ "./public/js/dataTables.bootstrap4.min.js");
+/* harmony import */ var _public_js_dataTables_bootstrap4_min__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_public_js_dataTables_bootstrap4_min__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _public_js_jquery_confirm__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../public/js/jquery-confirm */ "./public/js/jquery-confirm.js");
+/* harmony import */ var _public_js_jquery_confirm__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_public_js_jquery_confirm__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _public_js_script__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../public/js/script */ "./public/js/script.js");
+/* harmony import */ var _public_js_script__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_public_js_script__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var _public_js_select2_min__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../public/js/select2.min */ "./public/js/select2.min.js");
+/* harmony import */ var _public_js_select2_min__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_public_js_select2_min__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _public_js_icheck_min__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../public/js/icheck.min */ "./public/js/icheck.min.js");
+/* harmony import */ var _public_js_icheck_min__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(_public_js_icheck_min__WEBPACK_IMPORTED_MODULE_9__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+
+
+
+
+
+
+var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+
+$.DataTable = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
+
+var UserNavigation =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(UserNavigation, _Component);
+
+  function UserNavigation(props) {
+    var _this;
+
+    _classCallCheck(this, UserNavigation);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(UserNavigation).call(this, props));
+    _this.state = {
+      id: 0,
+      id_user_level: '',
+      id_menu: '',
+      create: 0,
+      read: 0,
+      update: 0,
+      "delete": 0,
+      cmb_role: [],
+      cmb_menu: [],
+      edit: false
+    };
+    _this.openModal = _this.openModal.bind(_assertThisInitialized(_this));
+    _this.reloadLevel = _this.reloadLevel.bind(_assertThisInitialized(_this));
+    _this.reloadMenu = _this.reloadMenu.bind(_assertThisInitialized(_this));
+    _this.inputChange = _this.inputChange.bind(_assertThisInitialized(_this));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(UserNavigation, [{
+    key: "reloadLevel",
+    value: function reloadLevel() {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_3___default()({
+        method: 'GET',
+        url: _Route__WEBPACK_IMPORTED_MODULE_2__["ROUTE"] + 'akses/getLevel',
+        dataType: 'JSON'
+      }).then(function (res) {
+        _this2.setState({
+          cmb_role: res.data
+        });
+      });
+    }
+  }, {
+    key: "reloadMenu",
+    value: function reloadMenu() {
+      var _this3 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_3___default()({
+        method: 'GET',
+        url: _Route__WEBPACK_IMPORTED_MODULE_2__["ROUTE"] + 'akses/getNavigation',
+        dataType: 'JSON'
+      }).then(function (res) {
+        _this3.setState({
+          cmb_menu: res.data
+        });
+      });
+    }
+  }, {
+    key: "openModal",
+    value: function openModal() {
+      this.$tl = $(this.tl);
+      this.$rl = $(this.rl);
+      this.$mn = $(this.mn);
+      this.$tl.html("Tambah Data User Navigation");
+
+      if (this.state.edit) {
+        this.$rl.show();
+        this.$mn.show();
+      }
+    }
+  }, {
+    key: "inputChange",
+    value: function inputChange(e) {
+      this.setState(_defineProperty({}, e.target.name, e.target.value));
+    }
+  }, {
+    key: "handleEdit",
+    value: function handleEdit(id) {
+      var self = this;
+      this.$cr = $(this.cr);
+      this.$rd = $(this.rd);
+      this.$up = $(this.up);
+      this.$dl = $(this.dl);
+      this.$tl = $(this.tl);
+      this.$rl = $(this.rl);
+      this.$mn = $(this.mn);
+      this.$rl.hide();
+      this.$mn.hide();
+      this.$tl.html("Update Data User Navigation");
+      axios__WEBPACK_IMPORTED_MODULE_3___default()({
+        method: 'post',
+        url: _Route__WEBPACK_IMPORTED_MODULE_2__["ROUTE"] + 'akses/get',
+        data: "id=" + id,
+        dataType: 'json',
+        config: {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      }).then(function (res) {
+        if (res.data.status == 200) {
+          this.setState({
+            id: res.data.list.id,
+            id_user_level: res.data.id_user_level,
+            id_menu: res.data.list.id_menu,
+            create: res.data.list.create,
+            read: res.data.list.read,
+            update: res.data.list.update,
+            "delete": res.data.list["delete"],
+            edit: true
+          });
+          var isCreate = res.data.list.create === 1 ? true : false;
+          var isRead = res.data.list.read === 1 ? true : false;
+          var isUpdate = res.data.list.update === 1 ? true : false;
+          var isDelete = res.data.list["delete"] === 1 ? true : false;
+          self.$cr.prop('checked', isCreate);
+          self.$rd.prop('checked', isRead);
+          self.$up.prop('checked', isUpdate);
+          self.$dl.prop('checked', isDelete);
+        } else {
+          console.log(res.data.msg);
+        }
+      }.bind(this))["catch"](function (res) {
+        console.log(res);
+      });
+    }
+  }, {
+    key: "handleChange",
+    value: function handleChange(e) {
+      var checked = e.target.checked === false ? 0 : 1;
+      this.setState(_defineProperty({}, e.target.name, checked));
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var role = this.state.id_user_level,
+          menu = this.state.id_menu,
+          create = this.state.create,
+          read = this.state.read,
+          update = this.state.update,
+          destroy = this.state["delete"],
+          sendData = "id_user_level=" + role + "&id_menu= " + menu + "&create= " + create + "&read= " + read + "&update= " + update + "&delete= " + destroy;
+
+      if (this.state.edit === false) {
+        axios__WEBPACK_IMPORTED_MODULE_3___default()({
+          method: 'post',
+          url: _Route__WEBPACK_IMPORTED_MODULE_2__["ROUTE"] + 'akses/insert',
+          data: sendData,
+          dataType: 'JSON',
+          config: {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        }).then(function (res) {
+          $('#infoModalColoredHeader').remove();
+          notification(res.data.status, res.data.msg);
+          setTimeout(function () {
+            location.reload();
+          }, 1000);
+        })["catch"](function (resp) {
+          if (_.has(resp.response.data, 'errors')) {
+            _.map(resp.response.data.errors, function (val, key) {
+              $('#' + key + '-error').html(val[0]).fadeIn(1000).fadeOut(5000);
+            });
+          }
+
+          alert(resp.response.data.message);
+        });
+      } else {
+        var id = this.state.id;
+        axios__WEBPACK_IMPORTED_MODULE_3___default()({
+          method: 'put',
+          url: _Route__WEBPACK_IMPORTED_MODULE_2__["ROUTE"] + 'akses/update',
+          data: "create=" + create + "&read=" + read + '&update=' + update + '&delete=' + destroy + '&id=' + id,
+          dataType: 'JSON',
+          config: {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        }).then(function (res) {
+          $('#infoModalColoredHeader').remove();
+          notification(res.data.status, res.data.msg);
+          setTimeout(function () {
+            location.reload();
+          }, 1000);
+        })["catch"](function (resp) {
+          if (_.has(resp.response.data, 'errors')) {
+            _.map(resp.response.data.errors, function (val, key) {
+              $('#' + key + '-error').html(val[0]).fadeIn(1000).fadeOut(5000);
+            });
+          }
+
+          alert(resp.response.data.message);
+        });
+      }
+    }
+  }, {
+    key: "handleDelete",
+    value: function handleDelete(id) {
+      $.confirm({
+        content: 'Data yang dihapus tidak akan dapat dikembalikan.',
+        title: 'Apakah yakin ingin menghapus ?',
+        type: 'red',
+        typeAnimated: true,
+        buttons: {
+          cancel: {
+            text: 'Batal',
+            btnClass: 'btn-danger',
+            keys: ['esc'],
+            action: function action() {}
+          },
+          ok: {
+            text: '<i class="icon icon-trash"></i> Hapus',
+            btnClass: 'btn-warning',
+            action: function action() {
+              axios__WEBPACK_IMPORTED_MODULE_3___default()({
+                method: 'delete',
+                url: _Route__WEBPACK_IMPORTED_MODULE_2__["ROUTE"] + 'akses/delete',
+                data: {
+                  id: id
+                },
+                dataType: 'json',
+                config: {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }
+              }).then(function (res) {
+                notification(res.data.status, res.data.msg);
+                setTimeout(function () {
+                  location.reload();
+                }, 1000);
+              })["catch"](function (res) {
+                console.log(res);
+              });
+            }
+          }
+        }
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this4 = this;
+
+      this.reloadLevel();
+      this.reloadMenu();
+      this.$r = $(this.r);
+      this.$r.select2({
+        width: '100%'
+      });
+      this.$r.on('change', this.inputChange);
+      this.$m = $(this.m);
+      this.$m.select2({
+        width: '100%'
+      });
+      this.$m.on('change', this.inputChange);
+      var styles = {
+        create: function create(row, type, data) {
+          var icon;
+
+          if (data.create == 1) {
+            icon = '<i class="icon icon-check"></i>';
+          } else {
+            icon = '<i class="icon icon-close"></i>';
+          }
+
+          return icon;
+        },
+        read: function read(row, type, data) {
+          var icon;
+
+          if (data.read == 1) {
+            icon = '<i class="icon icon-check"></i>';
+          } else {
+            icon = '<i class="icon icon-close"></i>';
+          }
+
+          return icon;
+        },
+        update: function update(row, type, data) {
+          var icon;
+
+          if (data.update == 1) {
+            icon = '<i class="icon icon-check"></i>';
+          } else {
+            icon = '<i class="icon icon-close"></i>';
+          }
+
+          return icon;
+        },
+        "delete": function _delete(row, type, data) {
+          var icon;
+
+          if (data["delete"] == 1) {
+            icon = '<i class="icon icon-check"></i>';
+          } else {
+            icon = '<i class="icon icon-close"></i>';
+          }
+
+          return icon;
+        }
+      };
+      this.$el = $(this.el);
+      this.$el.DataTable({
+        processing: true,
+        serverSide: true,
+        responsive: true,
+        aLengthMenu: [[5, 10, 25, 100], [5, 10, 25, 100]],
+        order: [],
+        ajax: {
+          "url": _Route__WEBPACK_IMPORTED_MODULE_2__["ROUTE"] + 'akses/json',
+          "type": "POST",
+          "headers": {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
+          }
+        },
+        columns: [{
+          data: 'DT_RowIndex'
+        }, {
+          data: 'role.nama'
+        }, {
+          data: 'menu.title'
+        }, {
+          data: 'create',
+          orderable: false,
+          render: styles.create
+        }, {
+          data: 'read',
+          orderable: false,
+          render: styles.read
+        }, {
+          data: 'update',
+          orderable: false,
+          render: styles.update
+        }, {
+          data: 'delete',
+          orderable: false,
+          render: styles["delete"]
+        }],
+        columnDefs: [{
+          targets: 7,
+          data: null,
+          createdCell: function createdCell(td, cellData, rowData, row, col) {
+            return react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("center", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+              "data-toggle": "modal",
+              "data-target": "#infoModalColoredHeader",
+              className: "btn btn-success btn-sm btn-edit",
+              id: rowData.id,
+              onClick: function onClick() {
+                return _this4.handleEdit(rowData.id);
+              }
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+              className: "icon icon-pencil-square-o"
+            })), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+              className: "btn btn-danger btn-sm",
+              id: rowData.id,
+              onClick: function onClick() {
+                return _this4.handleDelete(rowData.id);
+              }
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+              className: "icon icon-trash"
+            })))), td);
+          }
+        }]
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this5 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "layout-content-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-info btn-sm",
+        type: "button",
+        "data-toggle": "modal",
+        "data-target": "#infoModalColoredHeader",
+        onClick: this.openModal,
+        style: {
+          marginBottom: '10px'
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "icon icon-plus-circle"
+      }), " Tambah"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row gutter-xs"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-xs-12"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-header"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Daftar User Navigation")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "table-responsive"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+        id: "demo-datatables",
+        className: "table table-striped table-hover table-nowrap dataTable",
+        width: "100%",
+        ref: function ref(el) {
+          return _this5.el = el;
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "No"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Role"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Menu"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Create"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "View"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Update"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Delete"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        width: "100px"
+      }, "Aksi"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null)))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "infoModalColoredHeader",
+        role: "dialog",
+        className: "modal fade"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-dialog"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-content"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-header bg-primary"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        className: "close",
+        "data-dismiss": "modal"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        "aria-hidden": "true"
+      }, "\xD7"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "sr-only"
+      }, "Close")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
+        className: "modal-title-insert",
+        ref: function ref(tl) {
+          return _this5.tl = tl;
+        }
+      }, "Tambah Data User Navigation")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "form",
+        method: "post"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group",
+        ref: function ref(rl) {
+          return _this5.rl = rl;
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "id_user_level",
+        className: "form-label"
+      }, "Role"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "id_user_level",
+        ref: function ref(r) {
+          return _this5.r = r;
+        },
+        name: "id_user_level",
+        onChange: this.inputChange,
+        value: this.state.id_user_level,
+        className: "form-control"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: ""
+      }, "-- Pilih Role --"), this.state.cmb_role.map(function (data, index) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: index,
+          value: data.id
+        }, data.nama);
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "text-danger"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        id: "id_user_level-error"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group",
+        ref: function ref(mn) {
+          return _this5.mn = mn;
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "id_menu",
+        className: "form-label"
+      }, "Menu"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "id_menu",
+        ref: function ref(m) {
+          return _this5.m = m;
+        },
+        name: "id_menu",
+        onChange: this.inputChange,
+        value: this.state.id_menu,
+        className: "form-control"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: ""
+      }, "-- Pilih Menu --"), this.state.cmb_menu.map(function (data, index) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: index,
+          value: data.id
+        }, data.title);
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "text-danger"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        id: "id_menu-error"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "form-label"
+      }, "Hak Akses"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("br", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "custom-control custom-control-primary custom-checkbox"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "custom-control-input",
+        ref: function ref(cr) {
+          return _this5.cr = cr;
+        },
+        onChange: this.handleChange,
+        value: this.state.create,
+        name: "create",
+        id: "create",
+        type: "checkbox"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "custom-control-indicator",
+        style: {
+          marginTop: '-2px'
+        }
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "create",
+        style: {
+          marginLeft: '5px'
+        }
+      }, "Create"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "custom-control custom-control-primary custom-checkbox",
+        style: {
+          marginLeft: '10px'
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "custom-control-input",
+        ref: function ref(rd) {
+          return _this5.rd = rd;
+        },
+        onChange: this.handleChange,
+        value: this.state.read,
+        name: "read",
+        id: "read",
+        type: "checkbox"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "custom-control-indicator",
+        style: {
+          marginTop: '-2px'
+        }
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "read",
+        style: {
+          marginLeft: '5px'
+        }
+      }, "Read"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "custom-control custom-control-primary custom-checkbox",
+        style: {
+          marginLeft: '10px'
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "custom-control-input",
+        ref: function ref(up) {
+          return _this5.up = up;
+        },
+        onChange: this.handleChange,
+        value: this.state.update,
+        name: "update",
+        id: "update",
+        type: "checkbox"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "custom-control-indicator",
+        style: {
+          marginTop: '-2px'
+        }
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "update",
+        style: {
+          marginLeft: '5px'
+        }
+      }, "Update"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        className: "custom-control custom-control-primary custom-checkbox",
+        style: {
+          marginLeft: '10px'
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "custom-control-input",
+        ref: function ref(dl) {
+          return _this5.dl = dl;
+        },
+        onChange: this.handleChange,
+        value: this.state["delete"],
+        name: "delete",
+        id: "delete",
+        type: "checkbox"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "custom-control-indicator",
+        style: {
+          marginTop: '-2px'
+        }
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "delete",
+        style: {
+          marginLeft: '5px'
+        }
+      }, "Delete"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-footer"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-default",
+        "data-dismiss": "modal",
+        type: "button"
+      }, "Cancel"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        ref: function ref(bt) {
+          return _this5.bt = bt;
+        },
+        className: "btn btn-primary",
+        id: "btn-insert-data",
+        onClick: this.handleSubmit,
+        type: "submit"
+      }, "Submit")))))));
+    }
+  }]);
+
+  return UserNavigation;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+
+
+if (document.getElementById('user_navigation')) {
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(UserNavigation, null), document.getElementById('user_navigation'));
+}
 
 /***/ }),
 

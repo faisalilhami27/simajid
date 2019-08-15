@@ -22,7 +22,6 @@ class CreateUserNavigationsTable extends Migration
             $table->integer('update');
             $table->integer('delete');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

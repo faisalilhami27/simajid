@@ -78,21 +78,18 @@
                         <ul class="dropdown-menu dropdown-menu-right">
                             <li class="navbar-upgrade-version"> Version {{ versionApp() }}</li>
                             <li class="divider"></li>
-                            @if(Session::get('count') > 1)
-                                <li><a href="{{ URL('role') }}">Pilih Hak Akses</a></li>
-                                <li><a href="{{ URL('profile') }}">Profile</a></li>
-                                <li><a href="{{ URL('logout') }}">Sign out</a></li>
-                            @else
-                                <li><a href="{{ URL('profile') }}">Profile</a></li>
-                                <li>
-                                    <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
-                                        <i class="fa fa-sign-out-alt"></i> Log out
-                                    </a>
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </li>
+                            @if(App\Models\RoleUserPengurus::where('id_pengurus', Auth::id())->count() > 1)
+                                <li><a href="{{ route('role.pickList') }}">Pilih Menu Akses</a></li>
                             @endif
+                            <li><a href="{{ URL('profile') }}">Profile</a></li>
+                            <li>
+                                <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                    <i class="fa fa-sign-out-alt"></i> Log out
+                                </a>
+                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                    @csrf
+                                </form>
+                            </li>
                         </ul>
                     </li>
                     @if(Session::get('count') > 1)
