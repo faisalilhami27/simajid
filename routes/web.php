@@ -88,18 +88,11 @@ Route::group(['prefix' => 'user', 'middleware' => 'auth:pengurus'], function () 
     Route::delete('/delete', 'UserPengurusController@destroy');
 });
 
-// modul pengurus
+// modul jadwal sholat
 Route::group(['prefix' => 'jadwal', 'middleware' => 'auth:pengurus'], function () {
-    Route::get('/', 'UserController@index')->name('jadwal');
-    Route::post('/json', 'UserController@datatable');
-    Route::get('/cekUsername', 'UserController@cekUsername');
-    Route::get('/cekEmail', 'UserController@cekEmail');
-    Route::get('/cekNoHp', 'UserController@cekNoHp');
-    Route::get('/getUserById', 'UserController@edit');
-    Route::post('/insert', 'UserController@store');
-    Route::put('/resetpassword', 'UserController@resetPassword');
-    Route::put('/update', 'UserController@update');
-    Route::delete('/delete', 'UserController@destroy');
+    Route::get('/', 'JadwalSholatController@index')->name('jadwal');
+    Route::post('/json', 'JadwalSholatController@datatable');
+    Route::post('/update', 'JadwalSholatController@update');
 });
 
 // modul konfigurasi web

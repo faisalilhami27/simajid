@@ -15,7 +15,7 @@ class KonfigurasiSeeder extends Seeder
         DB::table('konfigurasi')->insert([
             [
                 'kode_konfig' => "ALAMAT_MESJID",
-                'nilai_konfig' => 'Kp. Rawasari RT/RW 02/01 Kecamatan Sukanagara Desa Sukanagara Kabupaten Cianjur, Jawa Barat, 42364.'
+                'nilai_konfig' => 'Kp. Pasir Kelewih RT/RW 02/01 Kecamatan Sukanagara Desa Sukanagara Kabupaten Cianjur, Jawa Barat, 42364.'
             ],
             [
                 'kode_konfig' => "NAMA_MESJID",
@@ -32,6 +32,22 @@ class KonfigurasiSeeder extends Seeder
             [
                 'kode_konfig' => "VERSION",
                 'nilai_konfig' => '1.0'
+            ],
+            [
+                'kode_konfig' => "KOTA",
+                'nilai_konfig' => 'Sukanagara'
+            ],
+            [
+                'kode_konfig' => "LATITUDE",
+                'nilai_konfig' => '-7.1002144'
+            ],
+            [
+                'kode_konfig' => "LONGITUDE",
+                'nilai_konfig' => '107.1285725'
+            ],
+            [
+                'kode_konfig' => "METODE",
+                'nilai_konfig' => '5'
             ]
         ]);
     }

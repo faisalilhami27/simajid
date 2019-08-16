@@ -39,7 +39,7 @@
 <script src="{{ asset('js/vendor.min.js') }}"></script>
 <script src="{{ asset('js/elephant.min.js') }}"></script>
 <script src="{{ asset('js/script.js') }}"></script>
-<script src="{{ mix('js/app.js') }}"></script>
+<script src="{{ asset('js/app.js') }}"></script>
 <script>
     $(document).ready(function () {
         let mosqueName = '{{ mosqueName() }}';

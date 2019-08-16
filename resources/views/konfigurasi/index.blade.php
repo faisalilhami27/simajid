@@ -16,7 +16,7 @@
                                             <label class="col-sm-4" for="form-control-1">Nama Mesjid</label>
                                             <div class="col-sm-8">
                                                 <div class="input-with-icon">
-                                                    <input id="nama_perusahaan" autocomplete="off" maxlength="50" name="nama_perusahaan" value="{{ $konfig[2]->nilai_konfig }}" class="form-control" type="text" placeholder="Nama Perusahaan">
+                                                    <input id="nama_perusahaan" autocomplete="off" maxlength="50" name="nama_perusahaan" value="{{ $konfig[6]->nilai_konfig }}" class="form-control" type="text" placeholder="Nama Perusahaan">
                                                     <span class="icon icon-building input-icon"></span>
                                                     <span class="text-danger">
                                                         <strong id="nama_mesjid-error"></strong>
@@ -37,10 +37,58 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
+                                            <label class="col-sm-4" for="form-control-1">Kota</label>
+                                            <div class="col-sm-8">
+                                                <div class="input-with-icon">
+                                                    <input id="kota" autocomplete="off" maxlength="50" name="kota" value="{{ $konfig[2]->nilai_konfig }}" class="form-control" type="text" placeholder="Kota">
+                                                    <span class="icon icon-user input-icon"></span>
+                                                    <span class="text-danger">
+                                                        <strong id="kota-error"></strong>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4" for="form-control-1">Metode Penghitungan Jadwal</label>
+                                            <div class="col-sm-8">
+                                                <div class="input-with-icon">
+                                                    <input id="metode" autocomplete="off" maxlength="50" name="metode" value="{{ $konfig[5]->nilai_konfig }}" class="form-control" type="text" placeholder="Kota">
+                                                    <span class="icon icon-user input-icon"></span>
+                                                    <span class="text-danger">
+                                                        <strong id="metode-error"></strong>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4" for="form-control-1">Latitude</label>
+                                            <div class="col-sm-8">
+                                                <div class="input-with-icon">
+                                                    <input id="latitude" autocomplete="off" maxlength="50" name="latitude" value="{{ $konfig[3]->nilai_konfig }}" class="form-control" type="text" placeholder="Kota">
+                                                    <span class="icon icon-user input-icon"></span>
+                                                    <span class="text-danger">
+                                                        <strong id="latitude-error"></strong>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-sm-4" for="form-control-1">Longitude</label>
+                                            <div class="col-sm-8">
+                                                <div class="input-with-icon">
+                                                    <input id="longitude" autocomplete="off" maxlength="50" name="longitude" value="{{ $konfig[4]->nilai_konfig }}" class="form-control" type="text" placeholder="Kota">
+                                                    <span class="icon icon-user input-icon"></span>
+                                                    <span class="text-danger">
+                                                        <strong id="longitude-error"></strong>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
                                             <label class="col-sm-4" for="form-control-1">Versi Aplikasi</label>
                                             <div class="col-sm-8">
                                                 <div class="input-with-icon">
-                                                    <input id="versi" autocomplete="off" name="versi" value="{{ $konfig[4]->nilai_konfig }}" maxlength="12" class="form-control" type="text" placeholder="Nomor Telepon Perusahaan">
+                                                    <input id="versi" autocomplete="off" name="versi" value="{{ $konfig[8]->nilai_konfig }}" maxlength="12" class="form-control" type="text" placeholder="Nomor Telepon Perusahaan">
                                                     <span class="icon icon-level-up input-icon"></span>
                                                     <span class="text-danger">
                                                         <strong id="versi-error"></strong>
@@ -53,7 +101,7 @@
                                             <div class="col-sm-8">
                                                 <div class="input-with-icon">
                                                     <div class="input-group">
-                                                        <input class="form-control form-password" id="password" value="{{ $konfig[3]->nilai_konfig }}" name="password" maxlength="12" minlength="8" type="password" placeholder="Password">
+                                                        <input class="form-control form-password" id="password" value="{{ $konfig[7]->nilai_konfig }}" name="password" maxlength="12" minlength="8" type="password" placeholder="Password">
                                                         <span class="input-group-addon">
                                                             <label class="custom-control custom-control-primary custom-checkbox">
                                                               <input class="custom-control-input form-checkbox" type="checkbox">
