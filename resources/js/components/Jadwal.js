@@ -76,6 +76,12 @@ export default class Jadwal extends Component {
         return (
             <Fragment>
                 <div className="layout-content-body">
+                   <center>
+                       <div className="warning">
+                           <div className="label label-warning exit" style={{fontSize: '15px'}}>Silahkan ubah jadwal sholat berdasarkan lokasi dengan menekan tombol di bawah ini</div>
+                           <br/><br/>
+                       </div>
+                   </center>
                     <button className="btn btn-info btn-sm" type="button" onClick={this.getCurrentLocation}
                             style={{marginBottom: '10px'}}><i className="icon icon-map-marker"></i> Set Location
                     </button>

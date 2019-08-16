@@ -49,18 +49,6 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label class="col-sm-4" for="form-control-1">Metode Penghitungan Jadwal</label>
-                                            <div class="col-sm-8">
-                                                <div class="input-with-icon">
-                                                    <input id="metode" autocomplete="off" maxlength="50" name="metode" value="{{ $konfig[5]->nilai_konfig }}" class="form-control" type="text" placeholder="Kota">
-                                                    <span class="icon icon-user input-icon"></span>
-                                                    <span class="text-danger">
-                                                        <strong id="metode-error"></strong>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="form-group">
                                             <label class="col-sm-4" for="form-control-1">Latitude</label>
                                             <div class="col-sm-8">
                                                 <div class="input-with-icon">
@@ -158,6 +146,8 @@
                 var password = $("#password").val();
                 var alamat = $("#alamat").val();
                 var versi = $("#versi").val();
+                var latitude = $("#latitude").val();
+                var longitude = $("#longitude").val();
                 var formData = new FormData();
 
                 formData.append('nama_mesjid', perusahaan);
@@ -165,6 +155,8 @@
                 formData.append('versi', versi);
                 formData.append('ketua', pemilik);
                 formData.append('alamat', alamat);
+                formData.append('latitude', latitude);
+                formData.append('longitude', longitude);
 
                 $.ajax({
                     headers: {

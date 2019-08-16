@@ -31,8 +31,7 @@ class KonfigurasiRequest extends FormRequest
             'password' => 'required|min:8|max:12',
             'kota' => 'required|regex:/^[a-zA-Z- ]*$/',
             'latitude' => 'required|regex:/^[-+]?[0-9]*\.?[0-9]+$/',
-            'longitude' => 'required|regex:/^[-+]?[0-9]*\.?[0-9]+$/',
-            'metode' => 'required|regex:/^[0-9. ]*$/',
+            'longitude' => 'required|regex:/^[-+]?[0-9]*\.?[0-9]+$/'
         ];
     }
 }

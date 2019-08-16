@@ -22,7 +22,6 @@ class KonfigurasiController extends Controller
         $versi = htmlspecialchars($request->versi);
         $latitude = htmlspecialchars($request->latitude);
         $longitude = htmlspecialchars($request->longitude);
-        $metode = htmlspecialchars($request->metode);
         $konfig = Konfigurasi::all();
 
         $kode = "";
@@ -51,9 +50,6 @@ class KonfigurasiController extends Controller
         } else if ($longitude != $konfig[4]->nilai_konfig) {
             $data = ['nilai_konfig' => $longitude];
             $kode = "LONGITUDE";
-        } else if ($metode != $konfig[5]->nilai_konfig) {
-            $data = ['nilai_konfig' => $metode];
-            $kode = "METODE";
         }
 
         if ($kode == '' && $data == '') {
