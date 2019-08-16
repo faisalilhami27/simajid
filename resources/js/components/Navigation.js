@@ -159,6 +159,7 @@ export default class Navigation extends Component {
            noSubMenu: '',
            mainMenu: '',
            status: '',
+           edit: false
        });
 
         this.$tl = $(this.tl);

@@ -214,6 +214,7 @@ export default class Pengurus extends Component {
             foto: '',
             no_hp: '',
             status: '',
+            edit: false
         });
 
         this.$tl = $(this.tl);

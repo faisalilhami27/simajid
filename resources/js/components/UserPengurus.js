@@ -262,6 +262,10 @@ export default class UserPengurus extends Component {
     }
 
     openModal() {
+        this.setState({
+            edit: false
+        });
+
         this.$pa = $(this.pa);
         this.$pe = $(this.pe);
         this.$us = $(this.us);

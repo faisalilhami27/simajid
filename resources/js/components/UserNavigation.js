@@ -63,6 +63,10 @@ export default class UserNavigation extends Component {
     }
 
     openModal() {
+        this.setState({
+            edit: false
+        });
+
         this.$tl = $(this.tl);
         this.$rl = $(this.rl);
         this.$mn = $(this.mn);

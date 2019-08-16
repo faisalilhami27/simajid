@@ -151,6 +151,7 @@ export default class RoleLevel extends Component {
         this.setState({
             id: 0,
             nama: '',
+            edit: false
         });
 
         this.$tl = $(this.tl);

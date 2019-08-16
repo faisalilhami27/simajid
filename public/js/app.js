@@ -86757,7 +86757,8 @@ function (_Component) {
         noUrut: '',
         noSubMenu: '',
         mainMenu: '',
-        status: ''
+        status: '',
+        edit: false
       });
       this.$tl = $(this.tl);
       this.$tl.html("Tambah Data Navigation");
@@ -87428,7 +87429,8 @@ function (_Component) {
         email: '',
         foto: '',
         no_hp: '',
-        status: ''
+        status: '',
+        edit: false
       });
       this.$tl = $(this.tl);
       this.$tl.html("Tambah Data Pengurus");
@@ -87901,7 +87903,8 @@ function (_Component) {
     value: function openModal() {
       this.setState({
         id: 0,
-        nama: ''
+        nama: '',
+        edit: false
       });
       this.$tl = $(this.tl);
       this.$tl.html("Tambah Data Role Level");
@@ -88211,6 +88214,9 @@ function (_Component) {
   }, {
     key: "openModal",
     value: function openModal() {
+      this.setState({
+        edit: false
+      });
       this.$tl = $(this.tl);
       this.$rl = $(this.rl);
       this.$mn = $(this.mn);
@@ -89126,6 +89132,9 @@ function (_Component) {
   }, {
     key: "openModal",
     value: function openModal() {
+      this.setState({
+        edit: false
+      });
       this.$pa = $(this.pa);
       this.$pe = $(this.pe);
       this.$us = $(this.us);
