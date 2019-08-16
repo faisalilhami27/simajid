@@ -18,20 +18,8 @@ class KonfigurasiSeeder extends Seeder
                 'nilai_konfig' => 'Kp. Pasir Kelewih RT/RW 02/01 Kecamatan Sukanagara Desa Sukanagara Kabupaten Cianjur, Jawa Barat, 42364.'
             ],
             [
-                'kode_konfig' => "NAMA_MESJID",
-                'nilai_konfig' => 'Mesjid Nurul Huda'
-            ],
-            [
                 'kode_konfig' => "KETUA",
                 'nilai_konfig' => 'Lili Kusnadi, S.IP'
-            ],
-            [
-                'kode_konfig' => "RESET_PASSWORD",
-                'nilai_konfig' => 'nurulhuda'
-            ],
-            [
-                'kode_konfig' => "VERSION",
-                'nilai_konfig' => '1.0'
             ],
             [
                 'kode_konfig' => "KOTA",
@@ -48,7 +36,19 @@ class KonfigurasiSeeder extends Seeder
             [
                 'kode_konfig' => "METODE",
                 'nilai_konfig' => '5'
-            ]
+            ],
+            [
+                'kode_konfig' => "NAMA_MESJID",
+                'nilai_konfig' => 'Mesjid Nurul Huda'
+            ],
+            [
+                'kode_konfig' => "RESET_PASSWORD",
+                'nilai_konfig' => 'nurulhuda'
+            ],
+            [
+                'kode_konfig' => "VERSION",
+                'nilai_konfig' => '1.0'
+            ],
         ]);
     }
 }
