@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pengurus;
+use App\Models\RoleUserPengurus;
 use App\Models\UserPengurus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -15,7 +16,27 @@ class ProfileController extends Controller
         $getUser = UserPengurus::with('pengurus')
             ->where('id', Auth::id())
             ->first();
-        return view('profile.index', compact('getUser'));
+        $id = Auth::user()->id_pengurus;
+        $level = RoleUserPengurus::with('roleMany')
+            ->where('id_pengurus', $id)
+            ->get();
+        $array = [];
+        $i = 1;
+        foreach ($level as $item) {
+            foreach ($item->roleMany as $r) {
+                $array[$i] = $r->nama;
+            }
+            $i++;
+        }
+        $data = @implode(', ', $array);
+        $explode = @explode(",", $data);
+        $size = sizeof($explode);
+        if ($size > 2) {
+            $implode = "Memiliki " . $size . " Hak Akses";
+        } else {
+            $implode = $data;
+        }
+        return view('profile.index', compact('getUser', 'implode'));
     }
 
     public function update(Request $request)

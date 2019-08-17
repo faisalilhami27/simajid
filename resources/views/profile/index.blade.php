@@ -13,7 +13,7 @@
             @php ($photo = Avatar::create(Auth::user()->username)->toBase64())
         @endif
     @endif
-    <div class="layout-content" id="profile" data="{{ $photo }}" user="{{ $getUser }}"></div>
+    <div class="layout-content" id="profile" data="{{ $photo }}" user="{{ $getUser }}" level="{{ $implode }}"></div>
 
 @stop
 @push('scripts')

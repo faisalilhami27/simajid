@@ -88104,13 +88104,13 @@ function (_Component) {
         className: "card-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h3", {
         className: "card-title text-center"
-      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      }, this.state.nama), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "card-text text-center"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, this.props.level)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "card-text text-center"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, this.state.no_hp)), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "card-text text-center"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null))))))))));
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("small", null, this.state.email))))))))));
     }
   }]);
 
@@ -88122,9 +88122,11 @@ function (_Component) {
 if (document.getElementById('profile')) {
   var data = document.getElementById('profile').getAttribute('data');
   var user = document.getElementById('profile').getAttribute('user');
+  var level = document.getElementById('profile').getAttribute('level');
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Profile, {
     data: data,
-    user: user
+    user: user,
+    level: level
   }), document.getElementById('profile'));
 }
 

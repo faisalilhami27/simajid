@@ -267,15 +267,15 @@ export default class Profile extends Component {
                                                  style={{marginBottom: '5%', border: '2px solid #fff'}} alt="Profile"/>
                                         </div>
                                         <div className="card-body">
-                                            <h3 className="card-title text-center"></h3>
+                                            <h3 className="card-title text-center">{this.state.nama}</h3>
                                             <p className="card-text text-center">
-                                                <small></small>
+                                                <small>{this.props.level}</small>
                                             </p>
                                             <p className="card-text text-center">
-                                                <small></small>
+                                                <small>{this.state.no_hp}</small>
                                             </p>
                                             <p className="card-text text-center">
-                                                <small></small>
+                                                <small>{this.state.email}</small>
                                             </p>
                                         </div>
                                     </div>
@@ -292,5 +292,6 @@ export default class Profile extends Component {
 if (document.getElementById('profile')) {
     var data = document.getElementById('profile').getAttribute('data');
     var user = document.getElementById('profile').getAttribute('user');
-    ReactDOM.render(<Profile data={data} user={user}/>, document.getElementById('profile'));
+    var level = document.getElementById('profile').getAttribute('level');
+    ReactDOM.render(<Profile data={data} user={user} level={level}/>, document.getElementById('profile'));
 }

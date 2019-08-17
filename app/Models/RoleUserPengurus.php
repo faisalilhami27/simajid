@@ -20,4 +20,9 @@ class RoleUserPengurus extends Model
     {
         return $this->hasOne(RoleLevel::class, 'id', 'id_user_level');
     }
+
+    public function roleMany()
+    {
+        return $this->hasMany(RoleLevel::class, 'id', 'id_user_level');
+    }
 }
