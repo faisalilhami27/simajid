@@ -29,6 +29,13 @@ Route::post('/choose/role', 'RoleController@pickRole')
     ->middleware('auth:pengurus')
     ->name('role.pick');
 
+// modul profile
+Route::group(['prefix' => 'profile', 'middleware' => 'auth:pengurus'], function () {
+    Route::get('/', 'ProfileController@index')->name('profile');
+    Route::post('/update', 'ProfileController@update');
+    Route::put('/changePassword', 'ProfileController@changePassword');
+});
+
 // modul kelola menu
 Route::group(['prefix' => 'navigation', 'middleware' => 'auth:pengurus'], function () {
     Route::get('/', 'NavigationController@index')->name('navigation');

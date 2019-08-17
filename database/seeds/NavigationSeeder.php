@@ -71,10 +71,21 @@ class NavigationSeeder extends Seeder
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
+                'title' => 'Jadwal Sholat',
+                'url' => 'jadwal',
+                'icon' => 'icon icon-clock-o',
+                'order_num' => 6,
+                'order_sub' => 0,
+                'is_main_menu' => 0,
+                'is_aktif' => 'y',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+            [
                 'title' => 'Konfigurasi Website',
                 'url' => 'konfigurasi',
                 'icon' => 'icon icon-gear',
-                'order_num' => 6,
+                'order_num' => 7,
                 'order_sub' => 0,
                 'is_main_menu' => 0,
                 'is_aktif' => 'y',

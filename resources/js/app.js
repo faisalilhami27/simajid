@@ -19,3 +19,4 @@ require('./components/RoleLevel');
 require('./components/UserPengurus');
 require('./components/UserNavigation');
 require('./components/Jadwal');
+require('./components/Profile');

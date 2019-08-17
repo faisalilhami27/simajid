@@ -12,6 +12,6 @@ class DashboardController extends Controller
     public function index()
     {
         $getJumlahPengurus = Pengurus::count();
-        return view('home', compact('getJumlahPengurus'));
+        return view('dashboard.home', compact('getJumlahPengurus'));
     }
 }

@@ -72,7 +72,7 @@
                                     @php ($photo = Avatar::create(Auth::user()->username)->toBase64())
                                 @endif
                             @endif
-                            <img class="circle" width="36" height="36" src="{{ $photo }}" alt="test">  @php ($name = Auth::user()->pengurus->nama)
+                            <img class="circle" width="36" height="36" src="{{ $photo }}" alt="test">  {{ $name }}
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-right">
@@ -81,7 +81,7 @@
                             @if(App\Models\RoleUserPengurus::where('id_pengurus', Auth::id())->count() > 1)
                                 <li><a href="{{ route('role.pickList') }}">Pilih Menu Akses</a></li>
                             @endif
-                            <li><a href="{{ URL('profile') }}">Profile</a></li>
+                            <li><a href="{{ route('profile') }}">Profile</a></li>
                             <li>
                                 <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
                                     <i class="fa fa-sign-out-alt"></i> Log out
