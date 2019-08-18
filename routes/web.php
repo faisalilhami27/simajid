@@ -102,6 +102,46 @@ Route::group(['prefix' => 'jadwal', 'middleware' => 'auth:pengurus'], function (
     Route::post('/update', 'JadwalSholatController@update');
 });
 
+// modul jenis donatur
+Route::group(['prefix' => 'jenis_donatur', 'middleware' => 'auth:pengurus'], function () {
+    Route::get('/', 'JenisDonaturController@index')->name('jenis_donatur');
+    Route::post('/json', 'JenisDonaturController@datatable');
+    Route::post('/get', 'JenisDonaturController@edit');
+    Route::post('/insert', 'JenisDonaturController@store');
+    Route::put('/update', 'JenisDonaturController@update');
+    Route::delete('/delete', 'JenisDonaturController@destroy');
+});
+
+// modul jenis pengeluaran
+Route::group(['prefix' => 'jenis_pengeluaran', 'middleware' => 'auth:pengurus'], function () {
+    Route::get('/', 'JenisPengeluaranController@index')->name('jenis_pengeluaran');
+    Route::post('/json', 'JenisPengeluaranController@datatable');
+    Route::post('/get', 'JenisPengeluaranController@edit');
+    Route::post('/insert', 'JenisPengeluaranController@store');
+    Route::put('/update', 'JenisPengeluaranController@update');
+    Route::delete('/delete', 'JenisPengeluaranController@destroy');
+});
+
+// modul pemasukan
+Route::group(['prefix' => 'pemasukan', 'middleware' => 'auth:pengurus'], function () {
+    Route::get('/', 'PemasukanController@index')->name('pemasukan');
+    Route::post('/json', 'PemasukanController@datatable');
+    Route::post('/get', 'PemasukanController@edit');
+    Route::post('/insert', 'PemasukanController@store');
+    Route::put('/update', 'PemasukanController@update');
+    Route::delete('/delete', 'PemasukanController@destroy');
+});
+
+// modul pengeluaran
+Route::group(['prefix' => 'pengeluaran', 'middleware' => 'auth:pengurus'], function () {
+    Route::get('/', 'PengeluaranController@index')->name('pengeluaran');
+    Route::post('/json', 'PengeluaranController@datatable');
+    Route::post('/get', 'PengeluaranController@edit');
+    Route::post('/insert', 'PengeluaranController@store');
+    Route::put('/update', 'PengeluaranController@update');
+    Route::delete('/delete', 'PengeluaranController@destroy');
+});
+
 // modul konfigurasi web
 Route::group(['prefix' => 'konfigurasi', 'middleware' => 'auth:pengurus'], function () {
     Route::get('/', 'KonfigurasiController@index')->name('konfigurasi');

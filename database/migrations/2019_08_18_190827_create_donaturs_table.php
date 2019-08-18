@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreatePengeluaransTable extends Migration
+class CreateDonatursTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,15 @@ class CreatePengeluaransTable extends Migration
      */
     public function up()
     {
-        Schema::create('pengeluaran', function (Blueprint $table) {
+        Schema::create('donatur', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->date('tanggal');
-            $table->integer('id_pengurus');
             $table->integer('id_jenis');
-            $table->integer('jumlah');
-            $table->text('keterangan');
+            $table->string('nama', 60);
+            $table->string('tempat_lahir', 60)->nullable();
+            $table->string('no_hp', 15)->nullable();
+            $table->date('tanggal_lahir')->nullable();
+            $table->integer('jenis_kelamin')->nullable();
+            $table->text('alamat')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
@@ -32,6 +34,6 @@ class CreatePengeluaransTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pengeluaran');
+        Schema::dropIfExists('donatur');
     }
 }

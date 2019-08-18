@@ -54,7 +54,7 @@
                                             <li class='sidenav-heading'>{{ $route['title'] }}</li>
                                             @foreach($route['child'] as $child)
                                                 <li class='{{ isActiveRoute($child['url']) }}'>
-                                                    <a href='{!! route($child['url']) !!}'  style='cursor: pointer'><span class="{{ $child['icon'] }}"></span>{{ $child['title'] }}</a>
+                                                    <a href='{!! route($child['url']) !!}'  style='cursor: pointer'></span>{{ $child['title'] }}</a>
                                                 </li>
                                             @endforeach
                                         </ul>

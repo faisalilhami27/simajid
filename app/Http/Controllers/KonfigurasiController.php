@@ -4,13 +4,31 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\KonfigurasiRequest;
 use App\Models\Konfigurasi;
+use App\Models\UserPengurus;
+use Illuminate\Support\Facades\Auth;
 
 class KonfigurasiController extends Controller
 {
     public function index()
     {
-        $konfig = Konfigurasi::all();
-        return view('konfigurasi.index', compact('konfig'));
+        $user = UserPengurus::with('pengurusRole')
+            ->find(Auth::id());
+
+        $isAdministrator = false;
+        foreach ($user->pengurusRole as $userRole) {
+            $isAdministrator = RoleIdentifierController::hasAdministrator($userRole->id_user_level);
+
+            if ($isAdministrator) {
+                break;
+            }
+        }
+
+        if ($isAdministrator) {
+            $konfig = Konfigurasi::all();
+            return view('konfigurasi.index', compact('konfig'));
+        } else {
+            return view('error.denied');
+        }
     }
 
     public function update(KonfigurasiRequest $request)

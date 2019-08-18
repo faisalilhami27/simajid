@@ -20,3 +20,5 @@ require('./components/UserPengurus');
 require('./components/UserNavigation');
 require('./components/Jadwal');
 require('./components/Profile');
+require('./components/JenisDonatur');
+require('./components/JenisPengeluaran');

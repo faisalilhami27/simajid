@@ -4,14 +4,32 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PengurusRequest;
 use App\Models\Pengurus;
+use App\Models\UserPengurus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
 class PengurusController extends Controller
 {
     public function index()
     {
-        return view('pengurus.index');
+        $user = UserPengurus::with('pengurusRole')
+            ->find(Auth::id());
+
+        $isAdministrator = false;
+        foreach ($user->pengurusRole as $userRole) {
+            $isAdministrator = RoleIdentifierController::hasAdministrator($userRole->id_user_level);
+
+            if ($isAdministrator) {
+                break;
+            }
+        }
+
+        if ($isAdministrator) {
+            return view('pengurus.index');
+        } else {
+            return view('error.denied');
+        }
     }
 
     public function datatable()

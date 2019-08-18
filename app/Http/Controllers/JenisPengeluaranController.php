@@ -2,31 +2,34 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\RoleLevelRequest;
-use App\Models\RoleLevel;
+use App\Http\Requests\JenisPengeluaranRequest;
+use App\Models\JenisPengeluaran;
 use App\Models\UserPengurus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
-class RoleLevelController extends Controller
+class JenisPengeluaranController extends Controller
 {
     public function index()
     {
         $user = UserPengurus::with('pengurusRole')
             ->find(Auth::id());
 
-        $isAdministrator = false;
+        /*
+            checking is treasure or not
+        */
+        $isTrasure = false;
         foreach ($user->pengurusRole as $userRole) {
-            $isAdministrator = RoleIdentifierController::hasAdministrator($userRole->id_user_level);
+            $isTrasure = RoleIdentifierController::hasTreasure($userRole->id_user_level);
 
-            if ($isAdministrator) {
+            if ($isTrasure) {
                 break;
             }
         }
 
-        if ($isAdministrator) {
-            return view('role_level.index');
+        if ($isTrasure) {
+            return view('jenis_pengeluaran.index');
         } else {
             return view('error.denied');
         }
@@ -34,15 +37,15 @@ class RoleLevelController extends Controller
 
     public function datatable()
     {
-        $data = RoleLevel::orderBy('id', 'desc')->get();
+        $data = JenisPengeluaran::orderBy('id', 'desc')->get();
         return DataTables::of($data)->addIndexColumn()->make(true);
     }
 
-    public function store(RoleLevelRequest $request)
+    public function store(JenisPengeluaranRequest $request)
     {
         $nama = htmlspecialchars($request->nama);
 
-        $insert = RoleLevel::create([
+        $insert = JenisPengeluaran::create([
             'nama' => $nama,
         ]);
 
@@ -57,7 +60,7 @@ class RoleLevelController extends Controller
     {
         $id = $request->id;
 
-        $getData = RoleLevel::where('id', $id)->first();
+        $getData = JenisPengeluaran::where('id', $id)->first();
 
         if ($getData) {
             return response()->json(['status' => 200, 'list' => $getData]);
@@ -66,12 +69,12 @@ class RoleLevelController extends Controller
         }
     }
 
-    public function update(RoleLevelRequest $request)
+    public function update(JenisPengeluaranRequest $request)
     {
         $data = $request->all();
         $id = $request['id'];
 
-        $update = RoleLevel::find($id)->update($data);
+        $update = JenisPengeluaran::find($id)->update($data);
 
         if ($update) {
             return response()->json(['status' => 200, 'msg' => 'Data berhasil diubah']);
@@ -84,7 +87,7 @@ class RoleLevelController extends Controller
     {
         $id = $request->id;
 
-        $delete = RoleLevel::find($id)->delete();
+        $delete = JenisPengeluaran::find($id)->delete();
 
         if ($delete) {
             return response()->json(['status' => 200, 'msg' => 'Data berhasil dihapus']);

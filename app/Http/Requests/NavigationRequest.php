@@ -26,7 +26,7 @@ class NavigationRequest extends FormRequest
         if (request('is_main_menu') != 0) {
             return [
                 'title' => 'required|max:30|regex:/^[a-zA-Z ]*$/',
-                'url' => 'required|max:30|regex:/^[a-zA-Z#-.\/]*$/',
+                'url' => 'required|max:30|regex:/^[a-zA-Z#-_.\/]*$/',
                 'icon' => 'required|max:30||regex:/^[a-zA-Z- ]*$/',
                 'is_main_menu' => 'required',
                 'is_aktif' => 'required'
@@ -34,7 +34,7 @@ class NavigationRequest extends FormRequest
         } else {
             return [
                 'title' => 'required|max:30|regex:/^[a-zA-Z ]*$/',
-                'url' => 'required|max:30|regex:/^[a-zA-Z#-.\/]*$/',
+                'url' => 'required|max:30|regex:/^[a-zA-Z#-_.\/]*$/',
                 'icon' => 'required|max:30||regex:/^[a-zA-Z- ]*$/',
                 'nomor' => 'required|max:4|regex:/^[0-9]*$/',
                 'is_main_menu' => 'required',

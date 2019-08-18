@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="{{ asset('css/errors.min.css') }}">
 </head>
 <body>
-<div class="error">
+<center>
     <div class="error-body">
         <h1 class="error-heading"><b>{{ mosqueName() }}</b></h1>
         <h4 class="error-subheading">Untuk masuk ke dalam Aplikasi</h4>
@@ -38,11 +38,11 @@
             <small>Silahkan pilih level yang anda miliki dibawah ini :</small>
         </p>
     </div>
-    <div class="row" style="position: relative; top: -20px">
+    <div class="row" style="position: relative; top: -30px">
         <form id="chooseRole" method="POST" action="{!! route('role.pick') !!}">
             @csrf
             @forelse($listAkses as $akses)
-                <button class="btn btn-primary btn-pill btn-thick" type="submit" name="id_user_level" value="{!! $akses->role->id !!}">
+                <button style="margin-top: 10px" class="btn btn-primary btn-pill btn-thick" type="submit" name="id_user_level" value="{!! $akses->role->id !!}">
                     {!! $akses->role->nama !!}
                 </button>
             @empty
@@ -55,7 +55,7 @@
             <small>© {{ date('Y') }} {{ mosqueName() }}</small>
         </p>
     </div>
-</div>
+</center>
 <a href="{{ route('logout') }}" class="btn btn-danger pull-right" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
     <i class="icon icon-sign-out"></i> <strong>Logout</strong>
 </a>

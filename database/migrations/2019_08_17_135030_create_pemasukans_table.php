@@ -13,9 +13,15 @@ class CreatePemasukansTable extends Migration
      */
     public function up()
     {
-        Schema::create('pemasukans', function (Blueprint $table) {
+        Schema::create('pemasukan', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->date('tanggal');
+            $table->date('id_pengurus')->nullable();
+            $table->integer('id_jenis');
+            $table->integer('jumlah');
+            $table->text('keterangan');
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
@@ -26,6 +32,6 @@ class CreatePemasukansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('pemasukans');
+        Schema::dropIfExists('pemasukan');
     }
 }

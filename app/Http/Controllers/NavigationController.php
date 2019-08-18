@@ -4,14 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\NavigationRequest;
 use App\Models\Navigation;
+use App\Models\UserPengurus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 use Yajra\DataTables\DataTables;
 
 class NavigationController extends Controller
 {
     public function index()
     {
-        return view('navigation.index');
+        $user = UserPengurus::with('pengurusRole')
+            ->find(Auth::id());
+
+        $isAdministrator = false;
+        foreach ($user->pengurusRole as $userRole) {
+            $isAdministrator = RoleIdentifierController::hasAdministrator($userRole->id_user_level);
+
+            if ($isAdministrator) {
+                break;
+            }
+        }
+
+        if ($isAdministrator) {
+            return view('navigation.index');
+        } else {
+            return view('error.denied');
+        }
     }
 
     public function datatable()

@@ -9,6 +9,7 @@ use App\Models\RoleLevel;
 use App\Models\RoleUserPengurus;
 use App\Models\UserPengurus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Yajra\DataTables\DataTables;
 
@@ -16,7 +17,23 @@ class UserPengurusController extends Controller
 {
     public function index()
     {
-        return view('user_pengurus.index');
+        $user = UserPengurus::with('pengurusRole')
+            ->find(Auth::id());
+
+        $isAdministrator = false;
+        foreach ($user->pengurusRole as $userRole) {
+            $isAdministrator = RoleIdentifierController::hasAdministrator($userRole->id_user_level);
+
+            if ($isAdministrator) {
+                break;
+            }
+        }
+
+        if ($isAdministrator) {
+            return view('user_pengurus.index');
+        } else {
+            return view('error.denied');
+        }
     }
 
     public function datatable()
