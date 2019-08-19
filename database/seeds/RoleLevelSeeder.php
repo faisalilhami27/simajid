@@ -15,6 +15,11 @@ class RoleLevelSeeder extends Seeder
     {
         DB::table('role_level')->insert([
             [
+                'nama' => 'Super Administrator',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+            [
                 'nama' => 'Administrator',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
