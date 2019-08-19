@@ -69,6 +69,17 @@ Route::group(['prefix' => 'role_level', 'middleware' => 'auth:pengurus'], functi
     Route::delete('/delete', 'RoleLevelController@destroy');
 });
 
+// modul donatur
+Route::group(['prefix' => 'donatur', 'middleware' => 'auth:pengurus'], function () {
+    Route::get('/', 'DonaturController@index')->name('donatur');
+    Route::post('/json', 'DonaturController@datatable');
+    Route::post('/get', 'DonaturController@edit');
+    Route::get('/jenis', 'DonaturController@getJenisDonatur');
+    Route::post('/insert', 'DonaturController@store');
+    Route::put('/update', 'DonaturController@update');
+    Route::delete('/delete', 'DonaturController@destroy');
+});
+
 // modul user navigation
 Route::group(['prefix' => 'akses', 'middleware' => 'auth:pengurus'], function () {
     Route::get('/', 'UserNavigationController@index')->name('akses');
@@ -120,6 +131,16 @@ Route::group(['prefix' => 'jenis_pengeluaran', 'middleware' => 'auth:pengurus'],
     Route::post('/insert', 'JenisPengeluaranController@store');
     Route::put('/update', 'JenisPengeluaranController@update');
     Route::delete('/delete', 'JenisPengeluaranController@destroy');
+});
+
+// modul jenis pemasukan
+Route::group(['prefix' => 'jenis_pemasukan', 'middleware' => 'auth:pengurus'], function () {
+    Route::get('/', 'JenisPemasukanController@index')->name('jenis_pemasukan');
+    Route::post('/json', 'JenisPemasukanController@datatable');
+    Route::post('/get', 'JenisPemasukanController@edit');
+    Route::post('/insert', 'JenisPemasukanController@store');
+    Route::put('/update', 'JenisPemasukanController@update');
+    Route::delete('/delete', 'JenisPemasukanController@destroy');
 });
 
 // modul pemasukan

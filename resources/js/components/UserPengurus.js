@@ -283,7 +283,7 @@ export default class UserPengurus extends Component {
 
     handleChange(e) {
         var options = e.target.options;
-        var length = options.length
+        var length = options.length;
         var value = [];
         for (var i = 0; i < length; i++) {
             if (options[i].selected) {

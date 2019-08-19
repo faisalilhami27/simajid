@@ -150,6 +150,7 @@ export default class Navigation extends Component {
     }
 
     openModal() {
+       this.$sl.val('').trigger('change');
        this.setState({
            id: 0,
            title: '',
@@ -163,6 +164,7 @@ export default class Navigation extends Component {
        });
 
         this.$tl = $(this.tl);
+        this.$sl = $(this.sl);
         this.$tl.html("Tambah Data Navigation");
     }
 

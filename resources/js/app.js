@@ -22,3 +22,5 @@ require('./components/Jadwal');
 require('./components/Profile');
 require('./components/JenisDonatur');
 require('./components/JenisPengeluaran');
+require('./components/JenisPemasukan');
+require('./components/Donatur');
