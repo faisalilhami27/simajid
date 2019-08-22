@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PengurusRequest extends FormRequest
+class JabatanRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,7 @@ class PengurusRequest extends FormRequest
     public function rules()
     {
         return [
-            'nama' => 'required|max:50|regex:/^[a-zA-Z ]*$/',
-            'email' => 'required|email|max:60',
-            'no_hp' => 'required|numeric',
-            'status' => 'required'
+            'nama' => 'required|regex:/^[a-zA-Z ]*$/'
         ];
     }
 }

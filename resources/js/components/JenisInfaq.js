@@ -9,7 +9,7 @@ import '../../../public/js/script';
 const $ = require('jquery');
 $.Datatable = require('datatables.net');
 
-export default class JenisPemasukan extends Component {
+export default class JenisInfaq extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -47,7 +47,7 @@ export default class JenisPemasukan extends Component {
                     action: function () {
                         axios({
                             method: 'delete',
-                            url: ROUTE + 'jenis_pemasukan/delete',
+                            url: ROUTE + 'jenis_infaq/delete',
                             data: {
                                 id: id
                             },
@@ -75,7 +75,7 @@ export default class JenisPemasukan extends Component {
         if (this.state.edit === false) {
             axios({
                 method: 'post',
-                url: ROUTE + 'jenis_pemasukan/insert',
+                url: ROUTE + 'jenis_infaq/insert',
                 data: sendData,
                 dataType: 'JSON',
                 config: {headers: {'Content-Type': 'multipart/form-data'}}
@@ -99,7 +99,7 @@ export default class JenisPemasukan extends Component {
             let id = this.state.id;
             axios({
                 method: 'put',
-                url: ROUTE + 'jenis_pemasukan/update',
+                url: ROUTE + 'jenis_infaq/update',
                 data: sendData + '&id=' + id,
                 dataType: 'JSON',
                 config: {headers: {'Content-Type': 'multipart/form-data'}}
@@ -127,7 +127,7 @@ export default class JenisPemasukan extends Component {
         this.$tl = $(this.tl);
         axios({
             method: 'post',
-            url: ROUTE + 'jenis_pemasukan/get',
+            url: ROUTE + 'jenis_infaq/get',
             data: "id=" + id,
             dataType: 'json',
             config: {headers: {'Content-Type': 'multipart/form-data'}}
@@ -138,7 +138,7 @@ export default class JenisPemasukan extends Component {
                     nama: res.data.list.nama,
                     edit: true
                 });
-                self.$tl.html("Update Data Role Level");
+                self.$tl.html("Update Data Jenis Infaq");
             } else {
                 console.log(res.data.msg);
             }
@@ -155,7 +155,7 @@ export default class JenisPemasukan extends Component {
         });
 
         this.$tl = $(this.tl);
-        this.$tl.html("Tambah Data Role Level");
+        this.$tl.html("Tambah Data Jenis Infaq");
     }
 
     componentDidMount() {
@@ -168,7 +168,7 @@ export default class JenisPemasukan extends Component {
             order: [],
 
             ajax: {
-                "url": ROUTE + 'jenis_pemasukan/json',
+                "url": ROUTE + 'jenis_infaq/json',
                 "type": "POST",
                 "headers": {
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
@@ -209,7 +209,7 @@ export default class JenisPemasukan extends Component {
                         <div className="col-xs-12">
                             <div className="card">
                                 <div className="card-header">
-                                    <strong>Daftar Jenis Pengeluaran</strong>
+                                    <strong>Daftar Jenis Infaq</strong>
                                 </div>
                                 <div className="card-body">
                                     <div className="table-responsive">
@@ -219,7 +219,7 @@ export default class JenisPemasukan extends Component {
                                             <thead>
                                             <tr>
                                                 <th width="20px">No</th>
-                                                <th>Nama Jenis</th>
+                                                <th>Nama Jenis Infaq</th>
                                                 <th>Aksi</th>
                                             </tr>
                                             </thead>
@@ -271,6 +271,6 @@ export default class JenisPemasukan extends Component {
     }
 }
 
-if (document.getElementById('jenis_pemasukan')) {
-    ReactDOM.render(<JenisPemasukan/>, document.getElementById('jenis_pemasukan'));
+if (document.getElementById('jenis_infaq')) {
+    ReactDOM.render(<JenisInfaq/>, document.getElementById('jenis_infaq'));
 }

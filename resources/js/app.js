@@ -14,7 +14,7 @@ require('./bootstrap');
 
 require('./components/Login');
 require('./components/Navigation');
-require('./components/Pengurus');
+require('./components/PengurusDKM');
 require('./components/RoleLevel');
 require('./components/UserPengurus');
 require('./components/UserNavigation');
@@ -22,5 +22,8 @@ require('./components/Jadwal');
 require('./components/Profile');
 require('./components/JenisDonatur');
 require('./components/JenisPengeluaran');
-require('./components/JenisPemasukan');
+require('./components/JenisInfaq');
+require('./components/PemasukanInfaq');
+require('./components/Jabatan');
+require('./components/StrukturOrganisasiDKM');
 require('./components/Donatur');

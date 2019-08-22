@@ -20,5 +20,9 @@ class DatabaseSeeder extends Seeder
         $this->call(KonfigurasiSeeder::class);
         $this->call(JenisPengeluaranSeeder::class);
         $this->call(JenisDonaturSeeder::class);
+        $this->call(JenisInfaqSeeder::class);
+        $this->call(DonaturSeeder::class);
+        $this->call(JenisKepengurusanSeeder::class);
+        $this->call(JabatanSeeder::class);
     }
 }

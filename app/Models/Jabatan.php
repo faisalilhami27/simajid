@@ -5,11 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Pengurus extends Model
+class Jabatan extends Model
 {
     use SoftDeletes;
-    protected $table = "pengurus";
+    protected $table = "jabatan";
     protected $primaryKey = "id";
     protected $dates = ['deleted_at', 'updated_at', 'created_at'];
-    protected $fillable = ['nama', 'email', 'no_hp', 'status', 'foto', 'id_jabatan', 'id_jenis'];
+    protected $fillable = ["nama"];
 }

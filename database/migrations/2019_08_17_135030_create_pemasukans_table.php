@@ -17,7 +17,9 @@ class CreatePemasukansTable extends Migration
             $table->bigIncrements('id');
             $table->date('tanggal');
             $table->date('id_pengurus')->nullable();
-            $table->integer('id_jenis');
+            $table->date('id_donatur')->nullable();
+            $table->date('id_pengubah')->nullable();
+            $table->integer('id_jenis_infaq')->nullable();
             $table->integer('jumlah');
             $table->text('keterangan');
             $table->timestamps();

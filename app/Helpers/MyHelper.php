@@ -1,7 +1,10 @@
 <?php
 
 use App\Models\Konfigurasi;
+use App\Models\UserNavigation;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Session;
 
 if (!function_exists('isActiveRoute')) {
     function isActiveRoute($route, $output = 'active')
@@ -115,5 +118,64 @@ if (!function_exists('monthHijriConverter')) {
                 break;
         }
         return $value;
+    }
+}
+
+if (!function_exists('getIdMenu')) {
+    function getIdMenu()
+    {
+        $segment = Request::route()->getName();
+        if (!empty(session('navigations'))) {
+            foreach (session('navigations') as $route) {
+                if (empty($route['child'])) {
+                    if ($route['url'] == $segment) {
+                        Session::put('id_menu', $route['id']);
+                    }
+                } else {
+                    foreach($route['child'] as $child) {
+                        if ($child['url'] == $segment) {
+                            Session::put('id_menu', $child['id']);
+                        }
+                    }
+                }
+            }
+        }
+        return Session::get('id_menu');
+    }
+}
+
+if (!function_exists('checkAccess')) {
+    function checkAccess()
+    {
+        $idUserLevel = Session::get('id_user_level');
+        $idMenu = getIdMenu();
+        $query = UserNavigation::select("delete", "create", "update", "read")
+            ->where('id_user_level', $idUserLevel)
+            ->where('id_menu', $idMenu)
+            ->first();
+
+        $create = false;
+        $update = false;
+        $updateAndDelete = false;
+
+        if ($query->create == 1) {
+            $create = true;
+        }
+
+        if ($query->update == 1 && $query->delete == 1) {
+            $updateAndDelete = true;
+        }
+
+        if ($query->update == 1) {
+            $update = true;
+        }
+
+        $data = [
+            'create' => $create,
+            'update_delete' => $updateAndDelete,
+            'update' => $update
+        ];
+
+        return $data;
     }
 }

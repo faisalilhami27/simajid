@@ -87099,7 +87099,7 @@ __webpack_require__(/*! ./components/Login */ "./resources/js/components/Login.j
 
 __webpack_require__(/*! ./components/Navigation */ "./resources/js/components/Navigation.js");
 
-__webpack_require__(/*! ./components/Pengurus */ "./resources/js/components/Pengurus.js");
+__webpack_require__(/*! ./components/PengurusDKM */ "./resources/js/components/PengurusDKM.js");
 
 __webpack_require__(/*! ./components/RoleLevel */ "./resources/js/components/RoleLevel.js");
 
@@ -87115,7 +87115,13 @@ __webpack_require__(/*! ./components/JenisDonatur */ "./resources/js/components/
 
 __webpack_require__(/*! ./components/JenisPengeluaran */ "./resources/js/components/JenisPengeluaran.js");
 
-__webpack_require__(/*! ./components/JenisPemasukan */ "./resources/js/components/JenisPemasukan.js");
+__webpack_require__(/*! ./components/JenisInfaq */ "./resources/js/components/JenisInfaq.js");
+
+__webpack_require__(/*! ./components/PemasukanInfaq */ "./resources/js/components/PemasukanInfaq.js");
+
+__webpack_require__(/*! ./components/Jabatan */ "./resources/js/components/Jabatan.js");
+
+__webpack_require__(/*! ./components/StrukturOrganisasiDKM */ "./resources/js/components/StrukturOrganisasiDKM.js");
 
 __webpack_require__(/*! ./components/Donatur */ "./resources/js/components/Donatur.js");
 
@@ -87260,7 +87266,8 @@ function (_Component) {
       pria: 1,
       wanita: 0,
       cmb_donatur: [],
-      edit: false
+      edit: false,
+      checkAccess: JSON.parse(_this.props.data)
     };
     _this.openModal = _this.openModal.bind(_assertThisInitialized(_this));
     _this.inputChange = _this.inputChange.bind(_assertThisInitialized(_this));
@@ -87486,7 +87493,7 @@ function (_Component) {
           targets: 3,
           data: null,
           createdCell: function createdCell(td, cellData, rowData, row, col) {
-            if (_this3.props.data) {
+            if (_this3.state.checkAccess.update_delete) {
               react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("center", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
                 "data-toggle": "modal",
                 "data-target": "#infoModalColoredHeader",
@@ -87506,7 +87513,7 @@ function (_Component) {
               }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
                 className: "icon icon-trash"
               })))), td);
-            } else {
+            } else if (_this3.state.checkAccess.update) {
               react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("center", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
                 "data-toggle": "modal",
                 "data-target": "#infoModalColoredHeader",
@@ -87518,6 +87525,8 @@ function (_Component) {
               }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
                 className: "icon icon-pencil-square-o"
               })))), td);
+            } else {
+              react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Tidak ada aksi"), td);
             }
           }
         }]
@@ -87528,20 +87537,26 @@ function (_Component) {
     value: function render() {
       var _this4 = this;
 
+      var button;
+
+      if (this.state.checkAccess.create) {
+        button = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "btn btn-info btn-sm",
+          type: "button",
+          "data-toggle": "modal",
+          "data-target": "#infoModalColoredHeader",
+          onClick: this.openModal,
+          style: {
+            marginBottom: '10px'
+          }
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "icon icon-plus-circle"
+        }), " Tambah");
+      }
+
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "layout-content-body"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-        className: "btn btn-info btn-sm",
-        type: "button",
-        "data-toggle": "modal",
-        "data-target": "#infoModalColoredHeader",
-        onClick: this.openModal,
-        style: {
-          marginBottom: '10px'
-        }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-        className: "icon icon-plus-circle"
-      }), " Tambah"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, button, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row gutter-xs"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-xs-12"
@@ -87765,6 +87780,397 @@ if (document.getElementById('donatur')) {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Donatur, {
     data: data
   }), document.getElementById('donatur'));
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/Jabatan.js":
+/*!********************************************!*\
+  !*** ./resources/js/components/Jabatan.js ***!
+  \********************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Jabatan; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _Route__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Route */ "./resources/js/components/Route.js");
+/* harmony import */ var _public_js_dataTables_bootstrap4_min__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../public/js/dataTables.bootstrap4.min */ "./public/js/dataTables.bootstrap4.min.js");
+/* harmony import */ var _public_js_dataTables_bootstrap4_min__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_public_js_dataTables_bootstrap4_min__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _public_js_jquery_confirm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../public/js/jquery-confirm */ "./public/js/jquery-confirm.js");
+/* harmony import */ var _public_js_jquery_confirm__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_public_js_jquery_confirm__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _public_js_script__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../public/js/script */ "./public/js/script.js");
+/* harmony import */ var _public_js_script__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_public_js_script__WEBPACK_IMPORTED_MODULE_6__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+
+
+
+var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+
+$.Datatable = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
+
+var Jabatan =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(Jabatan, _Component);
+
+  function Jabatan(props) {
+    var _this;
+
+    _classCallCheck(this, Jabatan);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(Jabatan).call(this, props));
+    _this.state = {
+      id: 0,
+      nama: '',
+      edit: false
+    };
+    _this.openModal = _this.openModal.bind(_assertThisInitialized(_this));
+    _this.inputChange = _this.inputChange.bind(_assertThisInitialized(_this));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(Jabatan, [{
+    key: "inputChange",
+    value: function inputChange(e) {
+      this.setState(_defineProperty({}, e.target.name, e.target.value));
+    }
+  }, {
+    key: "handleDelete",
+    value: function handleDelete(id) {
+      $.confirm({
+        content: 'Data yang dihapus tidak akan dapat dikembalikan.',
+        title: 'Apakah yakin ingin menghapus ?',
+        type: 'red',
+        typeAnimated: true,
+        buttons: {
+          cancel: {
+            text: 'Batal',
+            btnClass: 'btn-danger',
+            keys: ['esc'],
+            action: function action() {}
+          },
+          ok: {
+            text: '<i class="icon icon-trash"></i> Hapus',
+            btnClass: 'btn-warning',
+            action: function action() {
+              axios__WEBPACK_IMPORTED_MODULE_2___default()({
+                method: 'delete',
+                url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'jabatan/delete',
+                data: {
+                  id: id
+                },
+                dataType: 'json',
+                config: {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }
+              }).then(function (res) {
+                notification(res.data.status, res.data.msg);
+                setTimeout(function () {
+                  location.reload();
+                }, 1000);
+              })["catch"](function (res) {
+                console.log(res);
+              });
+            }
+          }
+        }
+      });
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var nama = this.state.nama,
+          sendData = "nama=" + nama;
+
+      if (this.state.edit === false) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default()({
+          method: 'post',
+          url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'jabatan/insert',
+          data: sendData,
+          dataType: 'JSON',
+          config: {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        }).then(function (res) {
+          $('#infoModalColoredHeader').remove();
+          notification(res.data.status, res.data.msg);
+          setTimeout(function () {
+            location.reload();
+          }, 1000);
+        })["catch"](function (resp) {
+          if (_.has(resp.response.data, 'errors')) {
+            _.map(resp.response.data.errors, function (val, key) {
+              $('#' + key + '-error').html(val[0]).fadeIn(1000).fadeOut(5000);
+            });
+          }
+
+          alert(resp.response.data.message);
+        });
+      } else {
+        var id = this.state.id;
+        axios__WEBPACK_IMPORTED_MODULE_2___default()({
+          method: 'put',
+          url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'jabatan/update',
+          data: sendData + '&id=' + id,
+          dataType: 'JSON',
+          config: {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        }).then(function (res) {
+          $('#infoModalColoredHeader').remove();
+          notification(res.data.status, res.data.msg);
+          setTimeout(function () {
+            location.reload();
+          }, 1000);
+        })["catch"](function (resp) {
+          if (_.has(resp.response.data, 'errors')) {
+            _.map(resp.response.data.errors, function (val, key) {
+              $('#' + key + '-error').html(val[0]).fadeIn(1000).fadeOut(5000);
+            });
+          }
+
+          alert(resp.response.data.message);
+        });
+      }
+    }
+  }, {
+    key: "handleEdit",
+    value: function handleEdit(id) {
+      var self = this;
+      this.$tl = $(this.tl);
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: 'post',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'jabatan/get',
+        data: "id=" + id,
+        dataType: 'json',
+        config: {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      }).then(function (res) {
+        if (res.data.status == 200) {
+          this.setState({
+            id: res.data.list.id,
+            nama: res.data.list.nama,
+            edit: true
+          });
+          self.$tl.html("Update Data Jabatan");
+        } else {
+          console.log(res.data.msg);
+        }
+      }.bind(this))["catch"](function (res) {
+        console.log(res);
+      });
+    }
+  }, {
+    key: "openModal",
+    value: function openModal() {
+      this.setState({
+        id: 0,
+        nama: '',
+        edit: false
+      });
+      this.$tl = $(this.tl);
+      this.$tl.html("Tambah Data Jabatan");
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      this.$el = $(this.el);
+      this.$el.DataTable({
+        processing: true,
+        serverSide: true,
+        responsive: true,
+        aLengthMenu: [[5, 10, 25, 100], [5, 10, 25, 100]],
+        order: [],
+        ajax: {
+          "url": _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'jabatan/json',
+          "type": "POST",
+          "headers": {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
+          }
+        },
+        columns: [{
+          data: 'DT_RowIndex'
+        }, {
+          data: 'nama'
+        }],
+        columnDefs: [{
+          targets: 2,
+          data: null,
+          createdCell: function createdCell(td, cellData, rowData, row, col) {
+            return react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("center", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+              "data-toggle": "modal",
+              "data-target": "#infoModalColoredHeader",
+              className: "btn btn-success btn-sm btn-edit",
+              id: rowData.id,
+              onClick: function onClick() {
+                return _this2.handleEdit(rowData.id);
+              }
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+              className: "icon icon-pencil-square-o"
+            })), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+              className: "btn btn-danger btn-sm",
+              id: rowData.id,
+              onClick: function onClick() {
+                return _this2.handleDelete(rowData.id);
+              }
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+              className: "icon icon-trash"
+            })))), td);
+          }
+        }]
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this3 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "layout-content-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-info btn-sm",
+        type: "button",
+        "data-toggle": "modal",
+        "data-target": "#infoModalColoredHeader",
+        onClick: this.openModal,
+        style: {
+          marginBottom: '10px'
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "icon icon-plus-circle"
+      }), " Tambah"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row gutter-xs"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-xs-12"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-header"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Daftar Jabatan")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "table-responsive"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+        id: "demo-datatables",
+        className: "table table-striped table-hover table-nowrap dataTable",
+        width: "100%",
+        ref: function ref(el) {
+          return _this3.el = el;
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        width: "20px"
+      }, "No"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Nama Jabatan"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Aksi"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null)))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "infoModalColoredHeader",
+        role: "dialog",
+        className: "modal fade"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-dialog"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-content"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-header bg-primary"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        className: "close",
+        "data-dismiss": "modal"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        "aria-hidden": "true"
+      }, "\xD7"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "sr-only"
+      }, "Close")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
+        className: "modal-title-insert",
+        ref: function ref(tl) {
+          return _this3.tl = tl;
+        }
+      }, "Tambah Data Jabatan")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "form",
+        method: "post"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "nama"
+      }, "Nama Jabatan"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "nama",
+        name: "nama",
+        className: "form-control",
+        type: "text",
+        placeholder: "Masukan nama",
+        maxLength: "60",
+        onChange: this.inputChange,
+        value: this.state.nama,
+        autoComplete: "off"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "text-danger"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        id: "nama-error"
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-footer"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-default",
+        "data-dismiss": "modal",
+        type: "button"
+      }, "Cancel"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-primary",
+        id: "btn-insert-data",
+        onClick: this.handleSubmit,
+        type: "submit"
+      }, "Submit")))))));
+    }
+  }]);
+
+  return Jabatan;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+
+
+if (document.getElementById('jabatan')) {
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Jabatan, null), document.getElementById('jabatan'));
 }
 
 /***/ }),
@@ -88345,16 +88751,16 @@ if (document.getElementById('jenis_donatur')) {
 
 /***/ }),
 
-/***/ "./resources/js/components/JenisPemasukan.js":
-/*!***************************************************!*\
-  !*** ./resources/js/components/JenisPemasukan.js ***!
-  \***************************************************/
+/***/ "./resources/js/components/JenisInfaq.js":
+/*!***********************************************!*\
+  !*** ./resources/js/components/JenisInfaq.js ***!
+  \***********************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return JenisPemasukan; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return JenisInfaq; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
@@ -88400,17 +88806,17 @@ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"
 
 $.Datatable = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
 
-var JenisPemasukan =
+var JenisInfaq =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(JenisPemasukan, _Component);
+  _inherits(JenisInfaq, _Component);
 
-  function JenisPemasukan(props) {
+  function JenisInfaq(props) {
     var _this;
 
-    _classCallCheck(this, JenisPemasukan);
+    _classCallCheck(this, JenisInfaq);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(JenisPemasukan).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(JenisInfaq).call(this, props));
     _this.state = {
       id: 0,
       nama: '',
@@ -88422,7 +88828,7 @@ function (_Component) {
     return _this;
   }
 
-  _createClass(JenisPemasukan, [{
+  _createClass(JenisInfaq, [{
     key: "inputChange",
     value: function inputChange(e) {
       this.setState(_defineProperty({}, e.target.name, e.target.value));
@@ -88448,7 +88854,7 @@ function (_Component) {
             action: function action() {
               axios__WEBPACK_IMPORTED_MODULE_2___default()({
                 method: 'delete',
-                url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'jenis_pemasukan/delete',
+                url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'jenis_infaq/delete',
                 data: {
                   id: id
                 },
@@ -88481,7 +88887,7 @@ function (_Component) {
       if (this.state.edit === false) {
         axios__WEBPACK_IMPORTED_MODULE_2___default()({
           method: 'post',
-          url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'jenis_pemasukan/insert',
+          url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'jenis_infaq/insert',
           data: sendData,
           dataType: 'JSON',
           config: {
@@ -88508,7 +88914,7 @@ function (_Component) {
         var id = this.state.id;
         axios__WEBPACK_IMPORTED_MODULE_2___default()({
           method: 'put',
-          url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'jenis_pemasukan/update',
+          url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'jenis_infaq/update',
           data: sendData + '&id=' + id,
           dataType: 'JSON',
           config: {
@@ -88540,7 +88946,7 @@ function (_Component) {
       this.$tl = $(this.tl);
       axios__WEBPACK_IMPORTED_MODULE_2___default()({
         method: 'post',
-        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'jenis_pemasukan/get',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'jenis_infaq/get',
         data: "id=" + id,
         dataType: 'json',
         config: {
@@ -88555,7 +88961,7 @@ function (_Component) {
             nama: res.data.list.nama,
             edit: true
           });
-          self.$tl.html("Update Data Role Level");
+          self.$tl.html("Update Data Jenis Infaq");
         } else {
           console.log(res.data.msg);
         }
@@ -88572,7 +88978,7 @@ function (_Component) {
         edit: false
       });
       this.$tl = $(this.tl);
-      this.$tl.html("Tambah Data Role Level");
+      this.$tl.html("Tambah Data Jenis Infaq");
     }
   }, {
     key: "componentDidMount",
@@ -88587,7 +88993,7 @@ function (_Component) {
         aLengthMenu: [[5, 10, 25, 100], [5, 10, 25, 100]],
         order: [],
         ajax: {
-          "url": _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'jenis_pemasukan/json',
+          "url": _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'jenis_infaq/json',
           "type": "POST",
           "headers": {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
@@ -88651,7 +89057,7 @@ function (_Component) {
         className: "card"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-header"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Daftar Jenis Pengeluaran")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Daftar Jenis Infaq")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "table-responsive"
@@ -88664,7 +89070,7 @@ function (_Component) {
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         width: "20px"
-      }, "No"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Nama Jenis"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Aksi"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null)))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "No"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Nama Jenis Infaq"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Aksi"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null)))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "infoModalColoredHeader",
         role: "dialog",
         className: "modal fade"
@@ -88725,13 +89131,13 @@ function (_Component) {
     }
   }]);
 
-  return JenisPemasukan;
+  return JenisInfaq;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 
 
-if (document.getElementById('jenis_pemasukan')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(JenisPemasukan, null), document.getElementById('jenis_pemasukan'));
+if (document.getElementById('jenis_infaq')) {
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(JenisInfaq, null), document.getElementById('jenis_infaq'));
 }
 
 /***/ }),
@@ -89892,16 +90298,536 @@ if (document.getElementById('navigation')) {
 
 /***/ }),
 
-/***/ "./resources/js/components/Pengurus.js":
-/*!*********************************************!*\
-  !*** ./resources/js/components/Pengurus.js ***!
-  \*********************************************/
+/***/ "./resources/js/components/PemasukanInfaq.js":
+/*!***************************************************!*\
+  !*** ./resources/js/components/PemasukanInfaq.js ***!
+  \***************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Pengurus; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PemasukanInfaq; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _Route__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Route */ "./resources/js/components/Route.js");
+/* harmony import */ var _public_js_dataTables_bootstrap4_min__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../public/js/dataTables.bootstrap4.min */ "./public/js/dataTables.bootstrap4.min.js");
+/* harmony import */ var _public_js_dataTables_bootstrap4_min__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_public_js_dataTables_bootstrap4_min__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _public_js_jquery_confirm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../public/js/jquery-confirm */ "./public/js/jquery-confirm.js");
+/* harmony import */ var _public_js_jquery_confirm__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_public_js_jquery_confirm__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _public_js_script__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../public/js/script */ "./public/js/script.js");
+/* harmony import */ var _public_js_script__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_public_js_script__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _public_js_datepicker_min__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../public/js/datepicker.min */ "./public/js/datepicker.min.js");
+/* harmony import */ var _public_js_datepicker_min__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_public_js_datepicker_min__WEBPACK_IMPORTED_MODULE_7__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+
+
+
+
+var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+
+$.Datatable = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
+
+var PemasukanInfaq =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(PemasukanInfaq, _Component);
+
+  function PemasukanInfaq(props) {
+    var _this;
+
+    _classCallCheck(this, PemasukanInfaq);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(PemasukanInfaq).call(this, props));
+    _this.state = {
+      id: 0,
+      tanggal: '',
+      id_jenis_infaq: '',
+      jumlah: '',
+      keterangan: '',
+      cmb_jenis: [],
+      edit: false,
+      checkAccess: JSON.parse(_this.props.data)
+    };
+    _this.openModal = _this.openModal.bind(_assertThisInitialized(_this));
+    _this.inputChange = _this.inputChange.bind(_assertThisInitialized(_this));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.reloadJenisInfaq = _this.reloadJenisInfaq.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(PemasukanInfaq, [{
+    key: "inputChange",
+    value: function inputChange(e) {
+      this.setState(_defineProperty({}, e.target.name, e.target.value));
+    }
+  }, {
+    key: "handleDelete",
+    value: function handleDelete(id) {
+      $.confirm({
+        content: 'Data yang dihapus tidak akan dapat dikembalikan.',
+        title: 'Apakah yakin ingin menghapus ?',
+        type: 'red',
+        typeAnimated: true,
+        buttons: {
+          cancel: {
+            text: 'Batal',
+            btnClass: 'btn-danger',
+            keys: ['esc'],
+            action: function action() {}
+          },
+          ok: {
+            text: '<i class="icon icon-trash"></i> Hapus',
+            btnClass: 'btn-warning',
+            action: function action() {
+              axios__WEBPACK_IMPORTED_MODULE_2___default()({
+                method: 'delete',
+                url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pemasukan/delete',
+                data: {
+                  id: id
+                },
+                dataType: 'json',
+                config: {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }
+              }).then(function (res) {
+                notification(res.data.status, res.data.msg);
+                setTimeout(function () {
+                  location.reload();
+                }, 1000);
+              })["catch"](function (res) {
+                console.log(res);
+              });
+            }
+          }
+        }
+      });
+    }
+  }, {
+    key: "reloadJenisInfaq",
+    value: function reloadJenisInfaq() {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: 'get',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pemasukan/jenis',
+        dataType: 'json'
+      }).then(function (res) {
+        _this2.setState({
+          cmb_jenis: res.data
+        });
+      });
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var tanggal = this.state.tanggal,
+          jenis = this.state.id_jenis_infaq,
+          jumlah = this.state.jumlah,
+          keterangan = this.state.no_hp,
+          jenisPemasukan = "infaq",
+          sendData = "tanggal=" + tanggal + "&id_jenis_infaq=" + jenis + "&jumlah=" + jumlah + "&jenis=" + jenisPemasukan + "&keterangan=" + keterangan;
+
+      if (this.state.edit === false) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default()({
+          method: 'post',
+          url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pemasukan/insert',
+          data: sendData,
+          dataType: 'JSON',
+          config: {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        }).then(function (res) {
+          $('#infoModalColoredHeader').remove();
+          notification(res.data.status, res.data.msg);
+          setTimeout(function () {
+            location.reload();
+          }, 1000);
+        })["catch"](function (resp) {
+          if (_.has(resp.response.data, 'errors')) {
+            _.map(resp.response.data.errors, function (val, key) {
+              $('#' + key + '-error').html(val[0]).fadeIn(1000).fadeOut(5000);
+            });
+          }
+
+          alert(resp.response.data.message);
+        });
+      } else {
+        var id = this.state.id;
+        axios__WEBPACK_IMPORTED_MODULE_2___default()({
+          method: 'put',
+          url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pemasukan/update',
+          data: sendData + '&id=' + id,
+          dataType: 'JSON',
+          config: {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        }).then(function (res) {
+          $('#infoModalColoredHeader').remove();
+          notification(res.data.status, res.data.msg);
+          setTimeout(function () {
+            location.reload();
+          }, 1000);
+        })["catch"](function (resp) {
+          if (_.has(resp.response.data, 'errors')) {
+            _.map(resp.response.data.errors, function (val, key) {
+              $('#' + key + '-error').html(val[0]).fadeIn(1000).fadeOut(5000);
+            });
+          }
+
+          alert(resp.response.data.message);
+        });
+      }
+    }
+  }, {
+    key: "handleEdit",
+    value: function handleEdit(id) {
+      var self = this;
+      self.$tl.html("Update Data Pemasukan Infaq");
+      this.$tl = $(this.tl);
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: 'post',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pemasukan/get',
+        data: "id=" + id,
+        dataType: 'json',
+        config: {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      }).then(function (res) {
+        if (res.data.status == 200) {
+          this.setState({
+            id: res.data.list.id,
+            tanggal: res.data.list.tanggal,
+            id_jenis_infaq: res.data.list.id_jenis_infaq,
+            jumlah: res.data.list.jumlah,
+            keterangan: res.data.list.keterangan,
+            edit: true
+          });
+        } else {
+          console.log(res.data.msg);
+        }
+      }.bind(this))["catch"](function (res) {
+        console.log(res);
+      });
+    }
+  }, {
+    key: "openModal",
+    value: function openModal() {
+      this.setState({
+        edit: false
+      });
+      this.$tl = $(this.tl);
+      this.$tl.html("Tambah Data Pemasukan Infaq");
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this3 = this;
+
+      this.reloadJenisInfaq();
+      this.$el = $(this.el);
+      this.$tg = $(this.tg);
+      this.$tg.datepicker({
+        format: 'yyyy-mm-dd',
+        autoclose: true
+      });
+      this.$tg.on('change', this.inputChange);
+      this.$el.DataTable({
+        processing: true,
+        serverSide: true,
+        responsive: true,
+        aLengthMenu: [[5, 10, 25, 100], [5, 10, 25, 100]],
+        order: [],
+        ajax: {
+          "url": _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pemasukan/json',
+          "type": "POST",
+          "headers": {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
+          }
+        },
+        columns: [{
+          data: 'DT_RowIndex'
+        }, {
+          data: 'tanggal'
+        }, {
+          data: 'jenis.jenis_infaq.nama'
+        }, {
+          data: 'jumlah'
+        }, {
+          data: 'keterangan'
+        }],
+        columnDefs: [{
+          targets: 5,
+          data: null,
+          createdCell: function createdCell(td, cellData, rowData, row, col) {
+            if (_this3.state.checkAccess.update_delete) {
+              react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("center", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+                "data-toggle": "modal",
+                "data-target": "#infoModalColoredHeader",
+                className: "btn btn-success btn-sm btn-edit",
+                id: rowData.id,
+                onClick: function onClick() {
+                  return _this3.handleEdit(rowData.id);
+                }
+              }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+                className: "icon icon-pencil-square-o"
+              })), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+                className: "btn btn-danger btn-sm",
+                id: rowData.id,
+                onClick: function onClick() {
+                  return _this3.handleDelete(rowData.id);
+                }
+              }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+                className: "icon icon-trash"
+              })))), td);
+            } else if (_this3.state.checkAccess.update) {
+              react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("center", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+                "data-toggle": "modal",
+                "data-target": "#infoModalColoredHeader",
+                className: "btn btn-success btn-sm btn-edit",
+                id: rowData.id,
+                onClick: function onClick() {
+                  return _this3.handleEdit(rowData.id);
+                }
+              }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+                className: "icon icon-pencil-square-o"
+              })))), td);
+            } else {
+              react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, "Tidak ada aksi"), td);
+            }
+          }
+        }]
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this4 = this;
+
+      var button;
+
+      if (this.state.checkAccess.create) {
+        button = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "btn btn-info btn-sm",
+          type: "button",
+          "data-toggle": "modal",
+          "data-target": "#infoModalColoredHeader",
+          onClick: this.openModal,
+          style: {
+            marginBottom: '10px'
+          }
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "icon icon-plus-circle"
+        }), " Tambah");
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "layout-content-body"
+      }, button, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row gutter-xs"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-xs-12"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-header"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Daftar Pemasukan Infaq")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "table-responsive"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+        id: "demo-datatables",
+        className: "table table-striped table-hover table-nowrap dataTable",
+        width: "100%",
+        ref: function ref(el) {
+          return _this4.el = el;
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        width: "20px"
+      }, "No"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Tanggal"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Jumlah"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Jenis Infaq"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Keterangan"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Aksi"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null)))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "infoModalColoredHeader",
+        role: "dialog",
+        className: "modal fade"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-dialog"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-content"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-header bg-primary"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        className: "close",
+        "data-dismiss": "modal"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        "aria-hidden": "true"
+      }, "\xD7"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "sr-only"
+      }, "Close")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
+        className: "modal-title-insert",
+        ref: function ref(tl) {
+          return _this4.tl = tl;
+        }
+      }, "Tambah")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "form",
+        method: "post"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "tanggal"
+      }, "Tanggal"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "input-with-icon"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        className: "form-control",
+        type: "text",
+        name: "tanggal",
+        id: "tanggal",
+        placeholder: "Masukan Tanggal",
+        value: this.state.tanggal,
+        onChange: this.inputChange,
+        ref: function ref(tg) {
+          return _this4.tg = tg;
+        },
+        "data-date-today-highlight": "true"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "icon icon-calendar input-icon"
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "text-danger"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        id: "tanggal-error"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "id_jenis_infaq"
+      }, "Jenis Infaq"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        name: "id_jenis_infaq",
+        id: "id_jenis_infaq",
+        className: "form-control",
+        onChange: this.inputChange,
+        value: this.state.id_jenis_infaq
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: ""
+      }, "-- Pilih Jenis Donatur --"), this.state.cmb_jenis.map(function (data, index) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: index,
+          value: data.id
+        }, data.nama);
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "text-danger"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        id: "id_jenis_infaq-error"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "jumlah"
+      }, "Jumlah"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "jumlah",
+        name: "jumlah",
+        className: "form-control",
+        type: "text",
+        placeholder: "Masukan jumlah",
+        maxLength: "5",
+        onChange: this.inputChange,
+        value: this.state.jumlah,
+        autoComplete: "off"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "text-danger"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        id: "jumlah-error"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "keterangan"
+      }, "Keterangan"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("textarea", {
+        maxLength: "500",
+        id: "keterangan",
+        placeholder: "Masukan Keterangan",
+        name: "keterangan",
+        value: this.state.keterangan,
+        onChange: this.inputChange,
+        className: "form-control",
+        rows: "3"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "text-danger"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        id: "keterangan-error"
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-footer"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-default",
+        "data-dismiss": "modal",
+        type: "button"
+      }, "Cancel"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-primary",
+        id: "btn-insert-data",
+        onClick: this.handleSubmit,
+        type: "submit"
+      }, "Submit")))))));
+    }
+  }]);
+
+  return PemasukanInfaq;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+
+
+if (document.getElementById('pemasukan')) {
+  var data = document.getElementById('pemasukan').getAttribute('data');
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(PemasukanInfaq, {
+    data: data
+  }), document.getElementById('pemasukan'));
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/PengurusDKM.js":
+/*!************************************************!*\
+  !*** ./resources/js/components/PengurusDKM.js ***!
+  \************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PengurusDKM; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
@@ -89947,17 +90873,17 @@ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"
 
 $.Datatable = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
 
-var Pengurus =
+var PengurusDKM =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(Pengurus, _Component);
+  _inherits(PengurusDKM, _Component);
 
-  function Pengurus(props) {
+  function PengurusDKM(props) {
     var _this;
 
-    _classCallCheck(this, Pengurus);
+    _classCallCheck(this, PengurusDKM);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Pengurus).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(PengurusDKM).call(this, props));
     _this.state = {
       id: 0,
       nama: '',
@@ -89972,7 +90898,7 @@ function (_Component) {
     return _this;
   }
 
-  _createClass(Pengurus, [{
+  _createClass(PengurusDKM, [{
     key: "inputChange",
     value: function inputChange(e) {
       this.setState(_defineProperty({}, e.target.name, e.target.value));
@@ -89998,7 +90924,7 @@ function (_Component) {
             action: function action() {
               axios__WEBPACK_IMPORTED_MODULE_2___default()({
                 method: 'delete',
-                url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/delete',
+                url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/dkm/delete',
                 data: {
                   id: id
                 },
@@ -90034,7 +90960,7 @@ function (_Component) {
       if (this.state.edit === false) {
         axios__WEBPACK_IMPORTED_MODULE_2___default()({
           method: 'post',
-          url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/insert',
+          url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/dkm/insert',
           data: sendData,
           dataType: 'JSON',
           config: {
@@ -90061,7 +90987,7 @@ function (_Component) {
         var id = this.state.id;
         axios__WEBPACK_IMPORTED_MODULE_2___default()({
           method: 'put',
-          url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/update',
+          url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/dkm/update',
           data: sendData + '&id=' + id,
           dataType: 'JSON',
           config: {
@@ -90095,7 +91021,7 @@ function (_Component) {
       var email = e.target.value;
       axios__WEBPACK_IMPORTED_MODULE_2___default()({
         method: 'post',
-        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/cekEmail',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/dkm/cekEmail',
         data: "email=" + email,
         dataType: 'json',
         config: {
@@ -90125,7 +91051,7 @@ function (_Component) {
       var phone = e.target.value;
       axios__WEBPACK_IMPORTED_MODULE_2___default()({
         method: 'post',
-        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/cekNoHp',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/dkm/cekNoHp',
         data: "noHp=" + phone,
         dataType: 'json',
         config: {
@@ -90153,7 +91079,7 @@ function (_Component) {
       this.$tl = $(this.tl);
       axios__WEBPACK_IMPORTED_MODULE_2___default()({
         method: 'post',
-        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/get',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/dkm/get',
         data: "id=" + id,
         dataType: 'json',
         config: {
@@ -90216,7 +91142,7 @@ function (_Component) {
         aLengthMenu: [[5, 10, 25, 100], [5, 10, 25, 100]],
         order: [],
         ajax: {
-          "url": _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/json',
+          "url": _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/dkm/json',
           "type": "POST",
           "headers": {
             "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
@@ -90428,13 +91354,13 @@ function (_Component) {
     }
   }]);
 
-  return Pengurus;
+  return PengurusDKM;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 
 
 if (document.getElementById('pengurus')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Pengurus, null), document.getElementById('pengurus'));
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(PengurusDKM, null), document.getElementById('pengurus'));
 }
 
 /***/ }),
@@ -91291,6 +92217,507 @@ if (document.getElementById('role_level')) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ROUTE", function() { return ROUTE; });
 var ROUTE = window.location.origin + '/';
+
+/***/ }),
+
+/***/ "./resources/js/components/StrukturOrganisasiDKM.js":
+/*!**********************************************************!*\
+  !*** ./resources/js/components/StrukturOrganisasiDKM.js ***!
+  \**********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return StrukturOrganisasiDKM; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _Route__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Route */ "./resources/js/components/Route.js");
+/* harmony import */ var _public_js_dataTables_bootstrap4_min__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../public/js/dataTables.bootstrap4.min */ "./public/js/dataTables.bootstrap4.min.js");
+/* harmony import */ var _public_js_dataTables_bootstrap4_min__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_public_js_dataTables_bootstrap4_min__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var _public_js_jquery_confirm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../public/js/jquery-confirm */ "./public/js/jquery-confirm.js");
+/* harmony import */ var _public_js_jquery_confirm__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_public_js_jquery_confirm__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _public_js_script__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../public/js/script */ "./public/js/script.js");
+/* harmony import */ var _public_js_script__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_public_js_script__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _public_js_select2_min__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../public/js/select2.min */ "./public/js/select2.min.js");
+/* harmony import */ var _public_js_select2_min__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_public_js_select2_min__WEBPACK_IMPORTED_MODULE_7__);
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+
+
+
+
+var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+
+$.Datatable = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
+
+var StrukturOrganisasiDKM =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(StrukturOrganisasiDKM, _Component);
+
+  function StrukturOrganisasiDKM(props) {
+    var _this;
+
+    _classCallCheck(this, StrukturOrganisasiDKM);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(StrukturOrganisasiDKM).call(this, props));
+    _this.state = {
+      id: 0,
+      id_jabatan: '',
+      id_pengurus: '',
+      cmb_pengurus: [],
+      cmb_jabatan: [],
+      access: JSON.parse(_this.props.data),
+      edit: false
+    };
+    _this.openModal = _this.openModal.bind(_assertThisInitialized(_this));
+    _this.inputChange = _this.inputChange.bind(_assertThisInitialized(_this));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.reloadJabatan = _this.reloadJabatan.bind(_assertThisInitialized(_this));
+    _this.reloadPengurus = _this.reloadPengurus.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(StrukturOrganisasiDKM, [{
+    key: "inputChange",
+    value: function inputChange(e) {
+      this.setState(_defineProperty({}, e.target.name, e.target.value));
+    }
+  }, {
+    key: "reloadPengurus",
+    value: function reloadPengurus() {
+      var _this2 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: 'get',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'struktur/getPengurus',
+        dataType: 'json'
+      }).then(function (res) {
+        _this2.setState({
+          cmb_pengurus: res.data
+        });
+      });
+    }
+  }, {
+    key: "reloadJabatan",
+    value: function reloadJabatan() {
+      var _this3 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: 'get',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'struktur/getJabatan',
+        dataType: 'json'
+      }).then(function (res) {
+        _this3.setState({
+          cmb_jabatan: res.data
+        });
+      });
+    }
+  }, {
+    key: "handleDelete",
+    value: function handleDelete(id) {
+      $.confirm({
+        content: 'Data yang dihapus tidak akan dapat dikembalikan.',
+        title: 'Apakah yakin ingin menghapus ?',
+        type: 'red',
+        typeAnimated: true,
+        buttons: {
+          cancel: {
+            text: 'Batal',
+            btnClass: 'btn-danger',
+            keys: ['esc'],
+            action: function action() {}
+          },
+          ok: {
+            text: '<i class="icon icon-trash"></i> Hapus',
+            btnClass: 'btn-warning',
+            action: function action() {
+              axios__WEBPACK_IMPORTED_MODULE_2___default()({
+                method: 'delete',
+                url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'struktur/dkm/delete',
+                data: {
+                  id: id
+                },
+                dataType: 'json',
+                config: {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }
+              }).then(function (res) {
+                notification(res.data.status, res.data.msg);
+                setTimeout(function () {
+                  location.reload();
+                }, 1000);
+              })["catch"](function (res) {
+                console.log(res);
+              });
+            }
+          }
+        }
+      });
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var idJenisPengurus = this.state.id_jabatan,
+          idPengurus = this.state.id_pengurus,
+          sendData = "id_jabatan=" + idJenisPengurus + "&id_pengurus=" + idPengurus;
+
+      if (this.state.edit === false) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default()({
+          method: 'post',
+          url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'struktur/dkm/insert',
+          data: sendData,
+          dataType: 'JSON',
+          config: {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        }).then(function (res) {
+          $('#infoModalColoredHeader').remove();
+          notification(res.data.status, res.data.msg);
+          setTimeout(function () {
+            location.reload();
+          }, 1000);
+        })["catch"](function (resp) {
+          if (_.has(resp.response.data, 'errors')) {
+            _.map(resp.response.data.errors, function (val, key) {
+              $('#' + key + '-error').html(val[0]).fadeIn(1000).fadeOut(5000);
+            });
+          }
+
+          alert(resp.response.data.message);
+        });
+      } else {
+        var id = this.state.id;
+        axios__WEBPACK_IMPORTED_MODULE_2___default()({
+          method: 'put',
+          url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'struktur/dkm/update',
+          data: sendData + '&id=' + id,
+          dataType: 'JSON',
+          config: {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        }).then(function (res) {
+          $('#infoModalColoredHeader').remove();
+          notification(res.data.status, res.data.msg);
+          setTimeout(function () {
+            location.reload();
+          }, 1000);
+        })["catch"](function (resp) {
+          if (_.has(resp.response.data, 'errors')) {
+            _.map(resp.response.data.errors, function (val, key) {
+              $('#' + key + '-error').html(val[0]).fadeIn(1000).fadeOut(5000);
+            });
+          }
+
+          alert(resp.response.data.message);
+        });
+      }
+    }
+  }, {
+    key: "handleEdit",
+    value: function handleEdit(id) {
+      var self = this;
+      this.$tl = $(this.tl);
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: 'post',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'struktur/dkm/get',
+        data: "id=" + id,
+        dataType: 'json',
+        config: {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      }).then(function (res) {
+        if (res.data.status == 200) {
+          this.setState({
+            id: res.data.list.id,
+            id_jabatan: res.data.list.id_jabatan,
+            id_pengurus: res.data.list.id_pengurus,
+            edit: true
+          });
+          self.$tl.html("Update Data Struktur Organisasi DKM");
+        } else {
+          console.log(res.data.msg);
+        }
+      }.bind(this))["catch"](function (res) {
+        console.log(res);
+      });
+    }
+  }, {
+    key: "openModal",
+    value: function openModal() {
+      this.setState({
+        edit: false
+      });
+      this.$tl = $(this.tl);
+      this.$tl.html("Tambah Data Struktur Organisasi DKM");
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this4 = this;
+
+      this.reloadJabatan();
+      this.reloadPengurus();
+      this.$el = $(this.el);
+      this.$sl = $(this.sl);
+      this.$jb = $(this.jb);
+      this.$sl.select2({
+        width: '100%'
+      });
+      this.$sl.on('change', this.inputChange);
+      this.$jb.select2({
+        width: '100%'
+      });
+      this.$jb.on('change', this.inputChange);
+      this.$el.DataTable({
+        processing: true,
+        serverSide: true,
+        responsive: true,
+        aLengthMenu: [[5, 10, 25, 100], [5, 10, 25, 100]],
+        order: [],
+        ajax: {
+          "url": _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'struktur/dkm/json',
+          "type": "POST",
+          "headers": {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
+          }
+        },
+        columns: [{
+          data: 'DT_RowIndex'
+        }, {
+          data: 'jabatan.nama'
+        }, {
+          data: 'pengurus.nama'
+        }],
+        columnDefs: [{
+          targets: 3,
+          data: null,
+          createdCell: function createdCell(td, cellData, rowData, row, col) {
+            if (_this4.state.access.update_delete) {
+              react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("center", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+                "data-toggle": "modal",
+                "data-target": "#infoModalColoredHeader",
+                className: "btn btn-success btn-sm btn-edit",
+                id: rowData.id,
+                onClick: function onClick() {
+                  return _this4.handleEdit(rowData.id);
+                }
+              }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+                className: "icon icon-pencil-square-o"
+              })), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+                className: "btn btn-danger btn-sm",
+                id: rowData.id,
+                onClick: function onClick() {
+                  return _this4.handleDelete(rowData.id);
+                }
+              }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+                className: "icon icon-trash"
+              })))), td);
+            } else if (_this4.state.access.update) {
+              react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("center", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+                "data-toggle": "modal",
+                "data-target": "#infoModalColoredHeader",
+                className: "btn btn-success btn-sm btn-edit",
+                id: rowData.id,
+                onClick: function onClick() {
+                  return _this4.handleEdit(rowData.id);
+                }
+              }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+                className: "icon icon-pencil-square-o"
+              })))), td);
+            } else {
+              react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("center", null, "Tidak ada akses")), td);
+            }
+          }
+        }]
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this5 = this;
+
+      var button;
+
+      if (this.state.access.create) {
+        button = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+          className: "btn btn-info btn-sm",
+          type: "button",
+          "data-toggle": "modal",
+          "data-target": "#infoModalColoredHeader",
+          onClick: this.openModal,
+          style: {
+            marginBottom: '10px'
+          }
+        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+          className: "icon icon-plus-circle"
+        }), " Tambah");
+      }
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "layout-content-body"
+      }, button, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row gutter-xs"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-xs-12"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-header"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Daftar Struktur Organisasi DKM")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "table-responsive"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+        id: "demo-datatables",
+        className: "table table-striped table-hover table-nowrap dataTable",
+        width: "100%",
+        ref: function ref(el) {
+          return _this5.el = el;
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        width: "20px"
+      }, "No"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Jabatan"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Nama Pengurus"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Aksi"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null)))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "infoModalColoredHeader",
+        role: "dialog",
+        className: "modal fade"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-dialog"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-content"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-header bg-primary"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        className: "close",
+        "data-dismiss": "modal"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        "aria-hidden": "true"
+      }, "\xD7"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "sr-only"
+      }, "Close")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
+        className: "modal-title-insert",
+        ref: function ref(tl) {
+          return _this5.tl = tl;
+        }
+      }, "Tambah Data Role Level")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "form",
+        method: "post"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "id_pengurus",
+        className: "form-label"
+      }, "Pengurus"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "id_pengurus",
+        ref: function ref(sl) {
+          return _this5.sl = sl;
+        },
+        onChange: this.inputChange,
+        value: this.state.id_pengurus,
+        name: "id_pengurus",
+        className: "form-control"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: ""
+      }, "-- Pilih Pengurus --"), this.state.cmb_pengurus.map(function (data, index) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: index,
+          value: data.id
+        }, data.nama);
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "text-danger"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        id: "id_pengurus-error"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "id_jabatan",
+        className: "form-label"
+      }, "Jabatan"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        id: "id_jabatan",
+        ref: function ref(jb) {
+          return _this5.jb = jb;
+        },
+        onChange: this.inputChange,
+        value: this.state.id_jabatan,
+        name: "id_jabatan",
+        className: "form-control"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: ""
+      }, "-- Pilih Jabatan --"), this.state.cmb_jabatan.map(function (data, index) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: index,
+          value: data.id
+        }, data.nama);
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "text-danger"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        id: "id_jabatan-error"
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-footer"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-default",
+        "data-dismiss": "modal",
+        type: "button"
+      }, "Cancel"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-primary",
+        id: "btn-insert-data",
+        onClick: this.handleSubmit,
+        type: "submit"
+      }, "Submit")))))));
+    }
+  }]);
+
+  return StrukturOrganisasiDKM;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+
+
+if (document.getElementById('struktur')) {
+  var data = document.getElementById('struktur').getAttribute('data');
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(StrukturOrganisasiDKM, {
+    data: data
+  }), document.getElementById('struktur'));
+}
 
 /***/ }),
 

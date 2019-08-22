@@ -89,7 +89,6 @@
         var path = window.location.pathname;
         path = path[0] == '/' ? path.substr(1) : path; //it will remove the dash in the URL
         $("ul.list-menu .sub-menu a").each(function() {
-            console.log("oces");
             var href = $(this).attr('href');
             var pathHref = href.split('/').slice(3).join('/');
 

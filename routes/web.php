@@ -49,14 +49,16 @@ Route::group(['prefix' => 'navigation', 'middleware' => 'auth:pengurus'], functi
 
 // modul pengurus
 Route::group(['prefix' => 'pengurus', 'middleware' => 'auth:pengurus'], function () {
-    Route::get('/', 'PengurusController@index')->name('pengurus');
-    Route::post('/json', 'PengurusController@datatable');
-    Route::post('/get', 'PengurusController@edit');
-    Route::post('/insert', 'PengurusController@store');
-    Route::post('/cekEmail', 'PengurusController@cekEmail');
-    Route::post('/cekNoHp', 'PengurusController@cekNoHp');
-    Route::put('/update', 'PengurusController@update');
-    Route::delete('/delete', 'PengurusController@destroy');
+    Route::prefix('dkm')->group(function () {
+        Route::get('/', 'PengurusDKMController@index')->name('pengurus.dkm');
+        Route::post('/json', 'PengurusDKMController@datatable');
+        Route::post('/get', 'PengurusDKMController@edit');
+        Route::post('/insert', 'PengurusDKMController@store');
+        Route::post('/cekEmail', 'PengurusDKMController@cekEmail');
+        Route::post('/cekNoHp', 'PengurusDKMController@cekNoHp');
+        Route::put('/update', 'PengurusDKMController@update');
+        Route::delete('/delete', 'PengurusDKMController@destroy');
+    });
 });
 
 // modul role level
@@ -133,24 +135,34 @@ Route::group(['prefix' => 'jenis_pengeluaran', 'middleware' => 'auth:pengurus'],
     Route::delete('/delete', 'JenisPengeluaranController@destroy');
 });
 
-// modul jenis pemasukan
-Route::group(['prefix' => 'jenis_pemasukan', 'middleware' => 'auth:pengurus'], function () {
-    Route::get('/', 'JenisPemasukanController@index')->name('jenis_pemasukan');
-    Route::post('/json', 'JenisPemasukanController@datatable');
-    Route::post('/get', 'JenisPemasukanController@edit');
-    Route::post('/insert', 'JenisPemasukanController@store');
-    Route::put('/update', 'JenisPemasukanController@update');
-    Route::delete('/delete', 'JenisPemasukanController@destroy');
+// modul jenis infaq
+Route::group(['prefix' => 'jenis_infaq', 'middleware' => 'auth:pengurus'], function () {
+    Route::get('/', 'JenisInfaqController@index')->name('jenis_infaq');
+    Route::post('/json', 'JenisInfaqController@datatable');
+    Route::post('/get', 'JenisInfaqController@edit');
+    Route::post('/insert', 'JenisInfaqController@store');
+    Route::put('/update', 'JenisInfaqController@update');
+    Route::delete('/delete', 'JenisInfaqController@destroy');
 });
 
 // modul pemasukan
 Route::group(['prefix' => 'pemasukan', 'middleware' => 'auth:pengurus'], function () {
-    Route::get('/', 'PemasukanController@index')->name('pemasukan');
-    Route::post('/json', 'PemasukanController@datatable');
     Route::post('/get', 'PemasukanController@edit');
     Route::post('/insert', 'PemasukanController@store');
     Route::put('/update', 'PemasukanController@update');
     Route::delete('/delete', 'PemasukanController@destroy');
+
+    Route::prefix('infaq')->group(function () {
+        Route::get('/', 'PemasukanController@index')->name('pemasukan.infaq');
+        Route::post('/json', 'PemasukanController@datatable');
+        Route::post('/jenis', 'PemasukanController@getJenisInfaq');
+    });
+
+    Route::prefix('shodaqoh')->group(function () {
+        Route::get('/', 'PemasukanController@index')->name('pemasukan.shodaqoh');
+        Route::post('/json2', 'PemasukanController@datatable2');
+        Route::post('/donatur', 'PemasukanController@getDonatur');
+    });
 });
 
 // modul pengeluaran
@@ -161,6 +173,41 @@ Route::group(['prefix' => 'pengeluaran', 'middleware' => 'auth:pengurus'], funct
     Route::post('/insert', 'PengeluaranController@store');
     Route::put('/update', 'PengeluaranController@update');
     Route::delete('/delete', 'PengeluaranController@destroy');
+});
+
+// modul jabatan
+Route::group(['prefix' => 'jabatan', 'middleware' => 'auth:pengurus'], function () {
+    Route::get('/', 'JabatanController@index')->name('jabatan');
+    Route::post('/json', 'JabatanController@datatable');
+    Route::post('/get', 'JabatanController@edit');
+    Route::post('/insert', 'JabatanController@store');
+    Route::put('/update', 'JabatanController@update');
+    Route::delete('/delete', 'JabatanController@destroy');
+});
+
+// modul struktur organisasi
+Route::group(['prefix' => 'struktur', 'middleware' => 'auth:pengurus'], function () {
+    Route::post('/get', 'StrukturOrganisasiController@edit');
+    Route::get('/getJabatan', 'StrukturOrganisasiController@getJabatan');
+    Route::get('/getPengurus', 'StrukturOrganisasiController@getPengurus');
+    Route::post('/insert', 'StrukturOrganisasiController@store');
+    Route::put('/update', 'StrukturOrganisasiController@update');
+    Route::delete('/delete', 'StrukturOrganisasiController@destroy');
+
+    Route::prefix('dkm')->group(function () {
+        Route::get('/', 'StrukturOrganisasiController@index')->name('struktur.dkm');
+        Route::post('/json', 'StrukturOrganisasiController@datatable');
+    });
+
+    Route::prefix('majelis')->group(function () {
+        Route::get('/', 'StrukturOrganisasiController@index')->name('struktur.majelis');
+        Route::post('/json', 'StrukturOrganisasiController@datatable2');
+    });
+
+    Route::prefix('remaja')->group(function () {
+        Route::get('/', 'JabatanController@index')->name('pengurus.remaja');
+        Route::post('/json', 'JabatanController@datatable3');
+    });
 });
 
 // modul konfigurasi web

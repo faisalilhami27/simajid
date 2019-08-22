@@ -8,7 +8,7 @@
                     <div class="card bg-primary no-border">
                         <div class="card-values">
                             <div class="p-x">
-                                <small>Jumlah Pengurus</small>
+                                <small>Jumlah PengurusDKM</small>
                                 <h3 class="card-title fw-l">{{ $getJumlahPengurus }}</h3>
                             </div>
                         </div>
@@ -44,7 +44,7 @@
                     <div class="card bg-info no-border">
                         <div class="card-values">
                             <div class="p-x">
-                                <small>Total Pemasukan Per Bulan</small>
+                                <small>Total PemasukanInfaq Per Bulan</small>
                                 <h3 class="card-title fw-l">0</h3>
                             </div>
                         </div>
@@ -93,7 +93,7 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Pemasukan Per Bulan</h4>
+                            <h4 class="card-title">PemasukanInfaq Per Bulan</h4>
                         </div>
                         <div class="card-body">
                             <canvas id="myChart1" height="150"></canvas>

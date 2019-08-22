@@ -10,21 +10,16 @@ import '../../../public/js/datepicker.min';
 const $ = require('jquery');
 $.Datatable = require('datatables.net');
 
-export default class Donatur extends Component {
+export default class PemasukanInfaq extends Component {
     constructor(props) {
         super(props);
         this.state = {
             id: 0,
-            nama: '',
-            id_jenis: '',
-            tempat_lahir: '',
-            tanggal_lahir: '',
-            alamat: '',
-            no_hp: '',
-            jenis_kelamin: '',
-            pria: 1,
-            wanita: 0,
-            cmb_donatur: [],
+            tanggal: '',
+            id_jenis_infaq: '',
+            jumlah: '',
+            keterangan: '',
+            cmb_jenis: [],
             edit: false,
             checkAccess: JSON.parse(this.props.data)
         };
@@ -32,7 +27,7 @@ export default class Donatur extends Component {
         this.openModal = this.openModal.bind(this);
         this.inputChange = this.inputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.reloadJenisDonatur = this.reloadJenisDonatur.bind(this);
+        this.reloadJenisInfaq = this.reloadJenisInfaq.bind(this);
     }
 
     inputChange(e) {
@@ -59,7 +54,7 @@ export default class Donatur extends Component {
                     action: function () {
                         axios({
                             method: 'delete',
-                            url: ROUTE + 'donatur/delete',
+                            url: ROUTE + 'pemasukan/delete',
                             data: {
                                 id: id
                             },
@@ -79,39 +74,35 @@ export default class Donatur extends Component {
         });
     }
 
-    reloadJenisDonatur() {
+    reloadJenisInfaq() {
         axios({
             method: 'get',
-            url: ROUTE + 'donatur/jenis',
+            url: ROUTE + 'pemasukan/jenis',
             dataType: 'json'
         }).then(res => {
             this.setState({
-                cmb_donatur: res.data
+                cmb_jenis: res.data
             })
         })
     }
 
     handleSubmit(e) {
         e.preventDefault();
-        let nama = this.state.nama,
-            tempatLahir = this.state.tempat_lahir,
-            tanggalLahir = this.state.tanggal_lahir,
-            noHp = this.state.no_hp,
-            alamat = this.state.alamat,
-            jenisKelamin = this.state.jenis_kelamin,
-            jenis = this.state.id_jenis,
-            sendData = "nama=" + nama +
-                "&id_jenis=" + jenis +
-                "&tempat_lahir=" + tempatLahir +
-                "&tanggal_lahir=" + tanggalLahir +
-                "&no_hp=" + noHp +
-                "&alamat=" + alamat +
-                "&jenis_kelamin=" + jenisKelamin;
+        let tanggal = this.state.tanggal,
+            jenis = this.state.id_jenis_infaq,
+            jumlah = this.state.jumlah,
+            keterangan = this.state.no_hp,
+            jenisPemasukan = "infaq",
+            sendData = "tanggal=" + tanggal +
+                "&id_jenis_infaq=" + jenis +
+                "&jumlah=" + jumlah +
+                "&jenis=" + jenisPemasukan +
+                "&keterangan=" + keterangan;
 
         if (this.state.edit === false) {
             axios({
                 method: 'post',
-                url: ROUTE + 'donatur/insert',
+                url: ROUTE + 'pemasukan/insert',
                 data: sendData,
                 dataType: 'JSON',
                 config: {headers: {'Content-Type': 'multipart/form-data'}}
@@ -135,7 +126,7 @@ export default class Donatur extends Component {
             let id = this.state.id;
             axios({
                 method: 'put',
-                url: ROUTE + 'donatur/update',
+                url: ROUTE + 'pemasukan/update',
                 data: sendData + '&id=' + id,
                 dataType: 'JSON',
                 config: {headers: {'Content-Type': 'multipart/form-data'}}
@@ -160,10 +151,11 @@ export default class Donatur extends Component {
 
     handleEdit(id) {
         const self = this;
+        self.$tl.html("Update Data Pemasukan Infaq");
         this.$tl = $(this.tl);
         axios({
             method: 'post',
-            url: ROUTE + 'donatur/get',
+            url: ROUTE + 'pemasukan/get',
             data: "id=" + id,
             dataType: 'json',
             config: {headers: {'Content-Type': 'multipart/form-data'}}
@@ -171,17 +163,12 @@ export default class Donatur extends Component {
             if (res.data.status == 200) {
                 this.setState({
                     id: res.data.list.id,
-                    nama: res.data.list.nama,
-                    id_jenis: res.data.list.id_jenis,
-                    tempat_lahir: res.data.list.tempat_lahir,
-                    tanggal_lahir: res.data.list.tanggal_lahir,
-                    alamat: res.data.list.alamat,
-                    no_hp: res.data.list.no_hp,
-                    jenis_kelamin: res.data.list.jenis_kelamin,
+                    tanggal: res.data.list.tanggal,
+                    id_jenis_infaq: res.data.list.id_jenis_infaq,
+                    jumlah: res.data.list.jumlah,
+                    keterangan: res.data.list.keterangan,
                     edit: true
                 });
-                self.$tl.html("Update Data Donatur");
-                $('input:radio[name=jenis_kelamin][value='+res.data.list.jenis_kelamin+']')[0].checked = true;
             } else {
                 console.log(res.data.msg);
             }
@@ -192,17 +179,16 @@ export default class Donatur extends Component {
 
     openModal() {
         this.setState({
-            id: 0,
-            nama: '',
             edit: false
         });
 
         this.$tl = $(this.tl);
-        this.$tl.html("Tambah Data Donatur");
+        this.$tl.html("Tambah Data Pemasukan Infaq");
     }
 
     componentDidMount() {
-        this.reloadJenisDonatur();
+        this.reloadJenisInfaq();
+
         this.$el = $(this.el);
         this.$tg = $(this.tg);
         this.$tg.datepicker({
@@ -218,7 +204,7 @@ export default class Donatur extends Component {
             order: [],
 
             ajax: {
-                "url": ROUTE + 'donatur/json',
+                "url": ROUTE + 'pemasukan/json',
                 "type": "POST",
                 "headers": {
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
@@ -227,13 +213,15 @@ export default class Donatur extends Component {
 
             columns: [
                 {data: 'DT_RowIndex'},
-                {data: 'nama'},
-                {data: 'jenis.nama'}
+                {data: 'tanggal'},
+                {data: 'jenis.jenis_infaq.nama'},
+                {data: 'jumlah'},
+                {data: 'keterangan'}
             ],
 
             columnDefs: [
                 {
-                    targets: 3,
+                    targets: 5,
                     data: null,
                     createdCell: (td, cellData, rowData, row, col) => {
                         if (this.state.checkAccess.update_delete) {
@@ -280,7 +268,7 @@ export default class Donatur extends Component {
                         <div className="col-xs-12">
                             <div className="card">
                                 <div className="card-header">
-                                    <strong>Daftar Donatur</strong>
+                                    <strong>Daftar Pemasukan Infaq</strong>
                                 </div>
                                 <div className="card-body">
                                     <div className="table-responsive">
@@ -290,8 +278,10 @@ export default class Donatur extends Component {
                                             <thead>
                                             <tr>
                                                 <th width="20px">No</th>
-                                                <th>Nama Donatur</th>
-                                                <th>Jenis Donatur</th>
+                                                <th>Tanggal</th>
+                                                <th>Jumlah</th>
+                                                <th>Jenis Infaq</th>
+                                                <th>Keterangan</th>
                                                 <th>Aksi</th>
                                             </tr>
                                             </thead>
@@ -312,97 +302,57 @@ export default class Donatur extends Component {
                                     <span aria-hidden="true">×</span>
                                     <span className="sr-only">Close</span>
                                 </button>
-                                <h4 className="modal-title-insert" ref={tl => this.tl = tl}>Tambah Data Role Level</h4>
+                                <h4 className="modal-title-insert" ref={tl => this.tl = tl}>Tambah</h4>
                             </div>
                             <form className="form" method="post">
                                 <div className="modal-body">
                                     <div className="form-group">
-                                        <label htmlFor="nama">Nama Lengkap</label>
-                                        <input id="nama" name="nama" className="form-control" type="text"
-                                               placeholder="Masukan nama" maxLength="60"
-                                               onChange={this.inputChange}
-                                               value={this.state.nama}
-                                               autoComplete="off"/>
+                                        <label htmlFor="tanggal">Tanggal</label>
+                                        <div className="input-with-icon">
+                                            <input className="form-control" type="text"
+                                                   name="tanggal"
+                                                   id="tanggal"
+                                                   placeholder="Masukan Tanggal"
+                                                   value={this.state.tanggal}
+                                                   onChange={this.inputChange}
+                                                   ref={tg => this.tg = tg}
+                                                   data-date-today-highlight="true"/>
+                                            <span className="icon icon-calendar input-icon"></span>
+                                        </div>
                                         <span className="text-danger">
-                                            <strong id="nama-error"></strong>
+                                            <strong id="tanggal-error"></strong>
                                         </span>
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="id_jenis">Jenis Donatur</label>
-                                        <select name="id_jenis" id="id_jenis" className="form-control" onChange={this.inputChange} value={this.state.id_jenis}>
+                                        <label htmlFor="id_jenis_infaq">Jenis Infaq</label>
+                                        <select name="id_jenis_infaq" id="id_jenis_infaq" className="form-control" onChange={this.inputChange} value={this.state.id_jenis_infaq}>
                                             <option value="">-- Pilih Jenis Donatur --</option>
-                                            {this.state.cmb_donatur.map((data, index) => {
+                                            {this.state.cmb_jenis.map((data, index) => {
                                                 return (
                                                     <option key={index} value={data.id}>{data.nama}</option>
                                                 )
                                             })}
                                         </select>
                                         <span className="text-danger">
-                                            <strong id="id_jenis-error"></strong>
+                                            <strong id="id_jenis_infaq-error"></strong>
                                         </span>
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="tempat_lahir">Tempat Lahir</label>
-                                        <input id="tempat_lahir" name="tempat_lahir" className="form-control" type="text"
-                                               placeholder="Masukan Tempat Lahir" maxLength="60"
+                                        <label htmlFor="jumlah">Jumlah</label>
+                                        <input id="jumlah" name="jumlah" className="form-control" type="text"
+                                               placeholder="Masukan jumlah" maxLength="5"
                                                onChange={this.inputChange}
-                                               value={this.state.tempat_lahir}
+                                               value={this.state.jumlah}
                                                autoComplete="off"/>
                                         <span className="text-danger">
-                                            <strong id="tempat_lahir-error"></strong>
+                                            <strong id="jumlah-error"></strong>
                                         </span>
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="no_hp">Nomor Handphone</label>
-                                        <input id="no_hp" name="no_hp" className="form-control" type="text"
-                                               placeholder="Masukan Nomor Handphone" maxLength="15"
-                                               onChange={this.inputChange}
-                                               value={this.state.no_hp}
-                                               autoComplete="off"/>
+                                        <label htmlFor="keterangan">Keterangan</label>
+                                        <textarea maxLength="500" id="keterangan" placeholder="Masukan Keterangan" name="keterangan" value={this.state.keterangan} onChange={this.inputChange} className="form-control" rows="3"></textarea>
                                         <span className="text-danger">
-                                            <strong id="no_hp-error"></strong>
-                                        </span>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="tanggal_lahir">Tanggal Lahir</label>
-                                        <div className="input-with-icon">
-                                            <input className="form-control" type="text"
-                                                   name="tanggal_lahir"
-                                                   id="tanggal_lahir"
-                                                   placeholder="Masukan Tanggal Lahir"
-                                                   value={this.state.tanggal_lahir}
-                                                   onChange={this.inputChange}
-                                                   ref={tg => this.tg = tg}
-                                                   data-date-today-highlight="true"/>
-                                                <span className="icon icon-calendar input-icon"></span>
-                                        </div>
-                                        <span className="text-danger">
-                                            <strong id="tanggal_lahir-error"></strong>
-                                        </span>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="jenis_kelamin">Jenis Kelamin</label><br/>
-                                        <label className="custom-control custom-control-primary custom-radio custom-control-inline">
-                                            <input className="custom-control-input" id="jenis_kelamin" value={this.state.pria}
-                                                   onChange={this.inputChange} type="radio" name="jenis_kelamin"/>
-                                            <span className="custom-control-indicator"></span>
-                                            <span className="custom-control-label">Laki-laki</span>
-                                        </label>
-                                        <label className="custom-control custom-control-primary custom-radio custom-control-inline">
-                                            <input className="custom-control-input" id="jenis_kelamin" value={this.state.wanita}
-                                                   onChange={this.inputChange} type="radio" name="jenis_kelamin"/>
-                                            <span className="custom-control-indicator"></span>
-                                            <span className="custom-control-label">Perempuan</span>
-                                        </label>
-                                        <span className="text-danger">
-                                            <strong id="jenis_kelamin-error"></strong>
-                                        </span>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="alamat">Alamat</label>
-                                        <textarea maxLength="500" id="alamat" placeholder="Masukan Alamat" name="alamat" value={this.state.alamat} onChange={this.inputChange} className="form-control" rows="3"></textarea>
-                                        <span className="text-danger">
-                                            <strong id="alamat-error"></strong>
+                                            <strong id="keterangan-error"></strong>
                                         </span>
                                     </div>
                                 </div>
@@ -421,7 +371,7 @@ export default class Donatur extends Component {
     }
 }
 
-if (document.getElementById('donatur')) {
-    var data = document.getElementById('donatur').getAttribute('data');
-    ReactDOM.render(<Donatur data={data}/>, document.getElementById('donatur'));
+if (document.getElementById('pemasukan')) {
+    var data = document.getElementById('pemasukan').getAttribute('data');
+    ReactDOM.render(<PemasukanInfaq data={data}/>, document.getElementById('pemasukan'));
 }

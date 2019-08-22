@@ -2,51 +2,54 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\JenisPemasukanRequest;
-use App\Models\JenisPemasukan;
-use App\Models\UserPengurus;
+use App\Http\Requests\StrukturOrganisasiRequest;
+use App\Models\Jabatan;
+use App\Models\Pengurus;
+use App\Models\StrukturOrganisasi;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
-class JenisPemasukanController extends Controller
+class StrukturOrganisasiController extends Controller
 {
     public function index()
     {
-        $user = UserPengurus::with('pengurusRole')
-            ->find(Auth::id());
-
-        /*
-            checking is treasure or not
-        */
-        $isTrasure = false;
-        foreach ($user->pengurusRole as $userRole) {
-            $isTrasure = RoleIdentifierController::hasTreasure($userRole->id_user_level);
-
-            if ($isTrasure) {
-                break;
-            }
-        }
-
-        if ($isTrasure) {
-            return view('jenis_pemasukan.index');
-        } else {
-            return view('error.denied');
-        }
+        $checkAccess = json_encode(checkAccess());
+        return view('struktur_organisasi.dkm', compact('checkAccess'));
     }
 
     public function datatable()
     {
-        $data = JenisPemasukan::orderBy('id', 'desc')->get();
+        $data = StrukturOrganisasi::with(['jabatan' => function($query) {
+            $query->orderBy('id', 'ASC');
+        }])
+        ->whereHas('pengurus', function ($query) {
+            $query->where('id_jenis', 1);
+        })->get();
         return DataTables::of($data)->addIndexColumn()->make(true);
     }
 
-    public function store(JenisPemasukanRequest $request)
+    public function getJabatan()
     {
-        $nama = htmlspecialchars($request->nama);
+        $jabatan = Jabatan::all();
+        return response()->json($jabatan);
+    }
 
-        $insert = JenisPemasukan::create([
-            'nama' => $nama,
+    public function getPengurus()
+    {
+        $pengurus = Pengurus::where('id', '!=', 1)
+            ->where('id_jenis', 1)
+            ->get();
+        return response()->json($pengurus);
+    }
+
+    public function store(StrukturOrganisasiRequest $request)
+    {
+        $idJabatan = $request->id_jabatan;
+        $idPengurus = $request->id_pengurus;
+
+        $insert = StrukturOrganisasi::create([
+            'id_jabatan' => $idJabatan,
+            'id_pengurus' => $idPengurus,
         ]);
 
         if ($insert) {
@@ -60,7 +63,7 @@ class JenisPemasukanController extends Controller
     {
         $id = $request->id;
 
-        $getData = JenisPemasukan::where('id', $id)->first();
+        $getData = StrukturOrganisasi::where('id', $id)->first();
 
         if ($getData) {
             return response()->json(['status' => 200, 'list' => $getData]);
@@ -69,12 +72,12 @@ class JenisPemasukanController extends Controller
         }
     }
 
-    public function update(JenisPemasukanRequest $request)
+    public function update(StrukturOrganisasiRequest $request)
     {
         $data = $request->all();
         $id = $request['id'];
 
-        $update = JenisPemasukan::find($id)->update($data);
+        $update = StrukturOrganisasi::find($id)->update($data);
 
         if ($update) {
             return response()->json(['status' => 200, 'msg' => 'Data berhasil diubah']);
@@ -87,7 +90,7 @@ class JenisPemasukanController extends Controller
     {
         $id = $request->id;
 
-        $delete = JenisPemasukan::find($id)->delete();
+        $delete = StrukturOrganisasi::find($id)->delete();
 
         if ($delete) {
             return response()->json(['status' => 200, 'msg' => 'Data berhasil dihapus']);

@@ -13,7 +13,7 @@ class PemasukanRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -23,8 +23,20 @@ class PemasukanRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            //
-        ];
+        if (request('jenis') == 'infaq') {
+            return [
+                'tanggal' => 'required',
+                'id_jenis_infaq' => 'requird',
+                'jumlah' => 'required|numeric',
+                'keterangan' => 'required|regex:/^([a-zA-Z0-9-., ]*)$/'
+            ];
+        } else {
+            return [
+                'tanggal' => 'required',
+                'id_donatur' => 'requird',
+                'jumlah' => 'required|numeric',
+                'keterangan' => 'required|regex:/^([a-zA-Z0-9-., ]*)$/'
+            ];
+        }
     }
 }

@@ -3,13 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PengurusRequest;
+use App\Models\Jabatan;
 use App\Models\Pengurus;
 use App\Models\UserPengurus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
-class PengurusController extends Controller
+class PengurusDKMController extends Controller
 {
     public function index()
     {
@@ -38,18 +39,26 @@ class PengurusController extends Controller
         return DataTables::of($data)->addIndexColumn()->make(true);
     }
 
+    public function getJabatan()
+    {
+        $jabatan = Jabatan::all();
+        return response()->json($jabatan);
+    }
+
     public function store(PengurusRequest $request)
     {
         $nama = htmlspecialchars($request->nama);
         $email = htmlspecialchars($request->email);
         $noHp = htmlspecialchars($request->no_hp);
         $status = $request->status;
+        $idJenis = 1;
 
         $insert = Pengurus::create([
             'nama' => $nama,
             'email' => $email,
             'no_hp' => $noHp,
             'status' => $status,
+            'id_jenis' => $idJenis,
         ]);
 
         if ($insert) {

@@ -19,7 +19,6 @@ class UserPengurusSeeder extends Seeder
                 'id_pengurus' => 1,
                 'username' => 'faisal27',
                 'password' => Hash::make('barca1899'),
-                'id_user_level' => 1,
                 'status' => 1,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')

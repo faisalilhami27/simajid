@@ -50,7 +50,7 @@ class RoleController extends Controller
 
         $userNavigation = UserNavigation::with(['menu' => function ($query) {
             $query->orderBy('order_num', 'ASC');
-            $query->orderBy('order_sub', 'ASC');
+            $query->orderBy('order_sub', 'DESC');
         }])
             ->where('id_user_level', $idUserLevel)
             ->get();

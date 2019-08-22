@@ -3,7 +3,7 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class JenisPemasukanSeeder extends Seeder
+class JenisInfaqSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -12,16 +12,13 @@ class JenisPemasukanSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('jenis_pemasukan')->insert([
+        DB::table('jenis_infaq')->insert([
             [
-                'nama' => 'Infaq',
+                'nama' => 'Infaq Jumat',
             ],
             [
-                'nama' => 'Shodaqoh',
-            ],
-            [
-                'nama' => 'Iuran',
-            ],
+                'nama' => 'Infaq Zakat',
+            ]
         ]);
     }
 }

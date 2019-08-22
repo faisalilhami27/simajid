@@ -16,7 +16,7 @@ class DonaturController extends Controller
     {
         $user = UserPengurus::with('pengurusRole')
             ->find(Auth::id());
-
+        $checkAccess = json_encode(checkAccess());
         /*
             checking is treasure or not
         */
@@ -66,7 +66,7 @@ class DonaturController extends Controller
         }
 
         if ($isTrasure OR $isAdministrator OR $isHead OR $isViceChairman) {
-            return view('donatur.index', compact('isAdministrator'));
+            return view('donatur.index', compact('checkAccess'));
         } else {
             return view('error.denied');
         }

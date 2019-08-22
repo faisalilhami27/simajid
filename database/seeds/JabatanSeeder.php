@@ -4,7 +4,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\DB;
 
-class RoleLevelSeeder extends Seeder
+class JabatanSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,29 +13,34 @@ class RoleLevelSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('role_level')->insert([
+        DB::table('jabatan')->insert([
             [
-                'nama' => 'Administrator',
+                'nama' => 'Ketua',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'nama' => 'Ketua DKM',
+                'nama' => 'Wakil Ketua',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'nama' => 'Wakil Ketua DKM',
+                'nama' => 'Sekretaris 1',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'nama' => 'Sekretaris',
+                'nama' => 'Sekretaris 2',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'nama' => 'Bendahara',
+                'nama' => 'Bendahara 1',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+            [
+                'nama' => 'Bendahara 2',
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]

@@ -18,10 +18,7 @@ class JenisDonaturSeeder extends Seeder
             ],
             [
                 'nama' => 'Donatur Tidak Tetap',
-            ],
-            [
-                'nama' => 'Donatur Bebas',
-            ],
+            ]
         ]);
     }
 }

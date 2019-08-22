@@ -142,7 +142,7 @@
                     headers: {
                         "X-CSRF-TOKEN": "{{ csrf_token() }}",
                     },
-                    url: "{{ URL('pengurus/cekNoHp') }}",
+                    url: "{{ URL('pengurus') }}",
                     type: "POST",
                     data: "noHp=" + noHp,
                     dataType: "json",

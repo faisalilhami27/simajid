@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateJenisPemasukansTable extends Migration
+class CreateJabatansTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateJenisPemasukansTable extends Migration
      */
     public function up()
     {
-        Schema::create('jenis_pemasukan', function (Blueprint $table) {
+        Schema::create('jabatan', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nama', 50);
+            $table->string('nama', 30);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -28,6 +28,6 @@ class CreateJenisPemasukansTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('jenis_pemasukan');
+        Schema::dropIfExists('jabatan');
     }
 }

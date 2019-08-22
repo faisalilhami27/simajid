@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateUserPengurusTable extends Migration
+class CreateJenisInfaqsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,9 @@ class CreateUserPengurusTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_pengurus', function (Blueprint $table) {
+        Schema::create('jenis_infaq', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('id_pengurus');
-            $table->string('username', 20)->unique();
-            $table->string('password');
-            $table->integer('status');
+            $table->string('nama', 50);
             $table->timestamps();
             $table->softDeletes();
         });
@@ -31,6 +28,6 @@ class CreateUserPengurusTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_pengurus');
+        Schema::dropIfExists('jenis_infaq');
     }
 }
