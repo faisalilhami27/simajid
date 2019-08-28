@@ -3,67 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StrukturOrganisasiRequest;
-use App\Models\Jabatan;
-use App\Models\Pengurus;
 use App\Models\StrukturOrganisasi;
 use Illuminate\Http\Request;
-use Yajra\DataTables\DataTables;
 
 class StrukturOrganisasiController extends Controller
 {
     public function index()
     {
-        $checkAccess = json_encode(checkAccess());
-        return view('struktur_organisasi.dkm', compact('checkAccess'));
+        $data = StrukturOrganisasi::where('kode', 'DKM')->first();
+        $value = (!is_null($data)) ? $data->value : "";
+        $checkAccess = checkAccess();
+        return view('struktur_organisasi.dkm', compact('value', 'checkAccess'));
     }
 
-    public function datatable()
+    public function show()
     {
-        $data = StrukturOrganisasi::with(['jabatan' => function($query) {
-            $query->orderBy('id', 'ASC');
-        }])
-        ->whereHas('pengurus', function ($query) {
-            $query->where('id_jenis', 1);
-        })->get();
-        return DataTables::of($data)->addIndexColumn()->make(true);
-    }
-
-    public function getJabatan()
-    {
-        $jabatan = Jabatan::all();
-        return response()->json($jabatan);
-    }
-
-    public function getPengurus()
-    {
-        $pengurus = Pengurus::where('id', '!=', 1)
-            ->where('id_jenis', 1)
-            ->get();
-        return response()->json($pengurus);
-    }
-
-    public function store(StrukturOrganisasiRequest $request)
-    {
-        $idJabatan = $request->id_jabatan;
-        $idPengurus = $request->id_pengurus;
-
-        $insert = StrukturOrganisasi::create([
-            'id_jabatan' => $idJabatan,
-            'id_pengurus' => $idPengurus,
-        ]);
-
-        if ($insert) {
-            return response()->json(['status' => 200, 'msg' => 'Data berhasil ditambahkan']);
-        } else {
-            return response()->json(['status' => 500, 'msg' => 'Data gagal ditambahkan']);
-        }
+        $data = StrukturOrganisasi::where('kode', 'DKM')->first()['value'];
+        return response()->json(['data' => $data]);
     }
 
     public function edit(Request $request)
     {
-        $id = $request->id;
+        $kode = $request->kode;
 
-        $getData = StrukturOrganisasi::where('id', $id)->first();
+        $getData = StrukturOrganisasi::where('kode', $kode)->first()['value'];
 
         if ($getData) {
             return response()->json(['status' => 200, 'list' => $getData]);
@@ -74,28 +37,17 @@ class StrukturOrganisasiController extends Controller
 
     public function update(StrukturOrganisasiRequest $request)
     {
-        $data = $request->all();
-        $id = $request['id'];
+        $value = $request->value;
+        $kode = $request->kode;
 
-        $update = StrukturOrganisasi::find($id)->update($data);
+        $update = StrukturOrganisasi::where('kode', $kode)->update([
+            'value' => $value,
+        ]);
 
         if ($update) {
             return response()->json(['status' => 200, 'msg' => 'Data berhasil diubah']);
         } else {
             return response()->json(['status' => 500, 'msg' => 'Data gagal diubah']);
-        }
-    }
-
-    public function destroy(Request $request)
-    {
-        $id = $request->id;
-
-        $delete = StrukturOrganisasi::find($id)->delete();
-
-        if ($delete) {
-            return response()->json(['status' => 200, 'msg' => 'Data berhasil dihapus']);
-        } else {
-            return response()->json(['status' => 500, 'msg' => 'Data gagal dihapus']);
         }
     }
 }

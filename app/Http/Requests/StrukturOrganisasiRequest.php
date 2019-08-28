@@ -24,8 +24,7 @@ class StrukturOrganisasiRequest extends FormRequest
     public function rules()
     {
         return [
-            'id_jabatan' => 'required',
-            'id_pengurus' => 'required'
+            'value' => 'required'
         ];
     }
 }

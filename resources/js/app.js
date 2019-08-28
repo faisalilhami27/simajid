@@ -25,5 +25,4 @@ require('./components/JenisPengeluaran');
 require('./components/JenisInfaq');
 require('./components/PemasukanInfaq');
 require('./components/Jabatan');
-require('./components/StrukturOrganisasiDKM');
 require('./components/Donatur');

@@ -14,11 +14,9 @@ class CreateStrukturOrganisasisTable extends Migration
     public function up()
     {
         Schema::create('struktur_organisasi', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->integer('id_jabatan')->nullable();
-            $table->integer('id_pengurus')->nullable();
+            $table->string('kode')->unique();
+            $table->text('value')->nullable();
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 

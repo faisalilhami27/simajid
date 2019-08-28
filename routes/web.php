@@ -187,26 +187,20 @@ Route::group(['prefix' => 'jabatan', 'middleware' => 'auth:pengurus'], function 
 
 // modul struktur organisasi
 Route::group(['prefix' => 'struktur', 'middleware' => 'auth:pengurus'], function () {
-    Route::post('/get', 'StrukturOrganisasiController@edit');
-    Route::get('/getJabatan', 'StrukturOrganisasiController@getJabatan');
-    Route::get('/getPengurus', 'StrukturOrganisasiController@getPengurus');
-    Route::post('/insert', 'StrukturOrganisasiController@store');
-    Route::put('/update', 'StrukturOrganisasiController@update');
-    Route::delete('/delete', 'StrukturOrganisasiController@destroy');
+    Route::get('/get', 'StrukturOrganisasiController@edit')->name('struktur.edit');
+    Route::get('/show', 'StrukturOrganisasiController@show')->name('struktur.show');
+    Route::put('/update', 'StrukturOrganisasiController@update')->name('struktur.update');
 
     Route::prefix('dkm')->group(function () {
         Route::get('/', 'StrukturOrganisasiController@index')->name('struktur.dkm');
-        Route::post('/json', 'StrukturOrganisasiController@datatable');
     });
 
     Route::prefix('majelis')->group(function () {
         Route::get('/', 'StrukturOrganisasiController@index')->name('struktur.majelis');
-        Route::post('/json', 'StrukturOrganisasiController@datatable2');
     });
 
     Route::prefix('remaja')->group(function () {
         Route::get('/', 'JabatanController@index')->name('pengurus.remaja');
-        Route::post('/json', 'JabatanController@datatable3');
     });
 });
 

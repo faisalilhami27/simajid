@@ -166,6 +166,7 @@ return [
          * Package Service Providers...
          */
         Maatwebsite\Excel\ExcelServiceProvider::class,
+        Unisharp\Ckeditor\ServiceProvider::class,
         /*
          * Application Service Providers...
          */
