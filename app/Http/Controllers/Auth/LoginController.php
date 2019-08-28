@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Models\PengurusLog;
+use App\Models\UserPengurus;
 use Carbon\Carbon;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Support\Facades\Auth;
@@ -50,6 +51,14 @@ class LoginController extends Controller
 
     public function staffLogin(LoginRequest $request)
     {
+        $cekuser = UserPengurus::with('pengurus')
+            ->where('username', $request->username)
+            ->first();
+
+        if ($cekuser->pengurus->status != 1) {
+            return response()->json(['status' => 500, 'msg' => 'Akun anda di nonaktifkan silahkan hubungi Administrator']);
+        }
+
         if (Auth::guard('pengurus')->attempt([
             'username' => $request->username,
             'password' => $request->password
@@ -72,6 +81,8 @@ class LoginController extends Controller
                     'last_login_at' => Carbon::now()
                 ]);
             }
+        } else {
+            return response()->json(['status' => 500, 'msg' => 'Username atau Password salah']);
         }
         return back()->withInput($request->only('username', 'remember'));
     }

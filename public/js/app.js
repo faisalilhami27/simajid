@@ -89546,7 +89546,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
 /* harmony import */ var _Route__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Route */ "./resources/js/components/Route.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _public_js_script__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../public/js/script */ "./public/js/script.js");
+/* harmony import */ var _public_js_script__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_public_js_script__WEBPACK_IMPORTED_MODULE_4__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -89568,6 +89574,8 @@ function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || func
 
 
 
+
+
 var Login =
 /*#__PURE__*/
 function (_Component) {
@@ -89580,9 +89588,13 @@ function (_Component) {
 
     _this = _possibleConstructorReturn(this, _getPrototypeOf(Login).call(this, props));
     _this.state = {
-      token: ''
+      token: '',
+      username: '',
+      password: ''
     };
     _this.getToken = _this.getToken.bind(_assertThisInitialized(_this));
+    _this.handleChange = _this.handleChange.bind(_assertThisInitialized(_this));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -89595,9 +89607,47 @@ function (_Component) {
       });
     }
   }, {
+    key: "handleChange",
+    value: function handleChange(e) {
+      this.setState(_defineProperty({}, e.target.name, e.target.value));
+    }
+  }, {
     key: "componentDidMount",
     value: function componentDidMount() {
       this.getToken();
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var username = this.state.username,
+          passowrd = this.state.password;
+      axios__WEBPACK_IMPORTED_MODULE_3___default()({
+        method: 'post',
+        url: _Route__WEBPACK_IMPORTED_MODULE_2__["ROUTE"] + 'staff/login',
+        data: {
+          "username": username,
+          "password": passowrd
+        },
+        dataType: 'json'
+      }).then(function (res) {
+        if (res.data.status === 500) {
+          notification(res.data.status, res.data.msg);
+        } else {
+          notification(200, "Login berhasil dan akan dialihkan ke halaman utama");
+          setTimeout(function () {
+            $(location).attr('href', _Route__WEBPACK_IMPORTED_MODULE_2__["ROUTE"] + "choose/roles");
+          }, 1000);
+        }
+      }.bind(this))["catch"](function (resp) {
+        if (_.has(resp.response.data, 'errors')) {
+          _.map(resp.response.data.errors, function (val, key) {
+            $('#' + key + '-error').html(val[0]).fadeIn(1000).fadeOut(5000);
+          });
+        }
+
+        alert(resp.response.data.message);
+      });
     }
   }, {
     key: "render",
@@ -89621,7 +89671,7 @@ function (_Component) {
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "login-form"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
-        action: _Route__WEBPACK_IMPORTED_MODULE_2__["ROUTE"] + "staff/login",
+        action: "",
         method: "post"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         type: "hidden",
@@ -89635,6 +89685,8 @@ function (_Component) {
         className: "input-with-icon"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         id: "username",
+        onChange: this.handleChange,
+        value: this.state.username,
         className: "form-control",
         type: "text",
         name: "username",
@@ -89656,6 +89708,8 @@ function (_Component) {
         className: "input-with-icon"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
         id: "password",
+        onChange: this.handleChange,
+        value: this.state.password,
         className: "form-control",
         type: "password",
         maxLength: "12",
@@ -89668,6 +89722,7 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
         id: "password-error"
       })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        onClick: this.handleSubmit,
         className: "btn btn-primary btn-block",
         id: "btn-login",
         type: "submit"
