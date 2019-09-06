@@ -65,7 +65,7 @@ class NavigationSeeder extends Seeder
             ],
             [
                 'id' => 5,
-                'title' => 'DKM',
+                'title' => 'Pengurus',
                 'url' => 'pengurus.dkm',
                 'icon' => 'icon icon-user-plus',
                 'order_num' => 5,
@@ -126,7 +126,7 @@ class NavigationSeeder extends Seeder
             [
                 'id' => 10,
                 'title' => 'Pemasukan Keuangan',
-                'url' => 'pemasukan/infaq',
+                'url' => 'pemasukan.infaq',
                 'icon' => 'icon icon-money',
                 'order_num' => 10,
                 'order_sub' => 0,
@@ -138,7 +138,7 @@ class NavigationSeeder extends Seeder
             [
                 'id' => 11,
                 'title' => 'Riwayat Pemasukan Infaq',
-                'url' => 'pemasukan/infaq',
+                'url' => 'pemasukan.infaq',
                 'icon' => 'icon icon-server',
                 'order_num' => 11,
                 'order_sub' => 0,
@@ -150,7 +150,7 @@ class NavigationSeeder extends Seeder
             [
                 'id' => 12,
                 'title' => 'Riwayat Pemasukan Shodaqoh',
-                'url' => 'pemasukan/shodaqoh',
+                'url' => 'pemasukan.shodaqoh',
                 'icon' => 'icon icon-server',
                 'order_num' => 12,
                 'order_sub' => 0,
@@ -199,6 +199,30 @@ class NavigationSeeder extends Seeder
                 'id' => 22,
                 'title' => 'DKM',
                 'url' => 'struktur.dkm',
+                'icon' => 'icon icon-th',
+                'order_num' => 15,
+                'order_sub' => 0,
+                'is_main_menu' => 21,
+                'is_aktif' => 'y',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+            [
+                'id' => 23,
+                'title' => 'Majelis Taklim',
+                'url' => 'struktur.majelis',
+                'icon' => 'icon icon-th',
+                'order_num' => 15,
+                'order_sub' => 0,
+                'is_main_menu' => 21,
+                'is_aktif' => 'y',
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+            [
+                'id' => 24,
+                'title' => 'Remaja Mesjid',
+                'url' => 'struktur.remaja',
                 'icon' => 'icon icon-th',
                 'order_num' => 15,
                 'order_sub' => 0,

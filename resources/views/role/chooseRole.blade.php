@@ -56,7 +56,7 @@
         </p>
     </div>
 </center>
-<a href="{{ route('logout') }}" class="btn btn-danger pull-right" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+<a href="{{ route('logout') }}" style="margin-right: 10px" class="btn btn-danger pull-right" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
     <i class="icon icon-sign-out"></i> <strong>Logout</strong>
 </a>
 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

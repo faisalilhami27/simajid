@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Pengeluaran extends Model
 {
     use SoftDeletes;
-    protected $table = "pemasukan";
+    protected $table = "pengeluaran";
     protected $primaryKey = "id";
     protected $dates = ['deleted_at', 'updated_at', 'created_at'];
     protected $fillable = ["tanggal", "id_pengurus", "id_jenis", "jumlah", "keterangan"];

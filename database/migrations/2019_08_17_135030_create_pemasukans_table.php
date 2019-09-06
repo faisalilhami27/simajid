@@ -16,10 +16,11 @@ class CreatePemasukansTable extends Migration
         Schema::create('pemasukan', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->date('tanggal');
-            $table->date('id_pengurus')->nullable();
-            $table->date('id_donatur')->nullable();
-            $table->date('id_pengubah')->nullable();
+            $table->integer('id_pengurus')->nullable();
+            $table->integer('id_donatur')->nullable();
+            $table->integer('id_pengubah')->nullable();
             $table->integer('id_jenis_infaq')->nullable();
+            $table->integer('id_jenis_pemasukan')->nullable();
             $table->integer('jumlah');
             $table->text('keterangan');
             $table->timestamps();

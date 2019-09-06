@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\PemasukanRequest;
+use App\Models\Donatur;
 use App\Models\JenisInfaq;
 use App\Models\JenisPemasukan;
 use App\Models\Pemasukan;
@@ -105,7 +106,7 @@ class PemasukanController extends Controller
         }
 
         if ($isTrasure OR $isHead OR $isViceChairman) {
-            return view('pemasukan.infaq', compact('checkAccess'));
+            return view('pemasukan.shodaqoh', compact('checkAccess'));
         } else {
             return view('error.denied');
         }
@@ -113,8 +114,8 @@ class PemasukanController extends Controller
 
     public function datatable()
     {
-        $data = Pemasukan::with('jenis.jenisInfaq')
-            ->where('id_jenis', 1)
+        $data = Pemasukan::with(['jenisInfaq', 'jenisPemasukan'])
+            ->where('id_jenis_pemasukan', 1)
             ->orderBy('id', 'desc')
             ->get();
         return DataTables::of($data)->addIndexColumn()->make(true);
@@ -122,8 +123,8 @@ class PemasukanController extends Controller
 
     public function datatable2()
     {
-        $data = Pemasukan::with(['jenis.jenisInfaq', 'donatur'])
-            ->where('id_jenis', 2)
+        $data = Pemasukan::with(['donatur'])
+            ->where('id_jenis_pemasukan', 2)
             ->orderBy('id', 'desc')
             ->get();
         return DataTables::of($data)->addIndexColumn()->make(true);
@@ -135,23 +136,30 @@ class PemasukanController extends Controller
         return response()->json($jenis);
     }
 
+    public function getDonatur()
+    {
+        $donatur = Donatur::all();
+        return response()->json($donatur);
+    }
+
     public function store(PemasukanRequest $request)
     {
         $tanggal = $request->tanggal;
         $pengurus = Auth::user()->id_pengurus;
-        $jumlah = $request->jumlah;
+        $jumlah = str_replace( ',', '', $request->jumlah);
         $jenis = $request->jenis;
         $idDonatur = $request->id_donatur;
         $idJenisInfaq = $request->id_jenis_infaq;
         $keterangan = $request->keterangan;
 
-        if ($jenis == "infaq") {
+        if ($jenis == 1) {
            $data = [
                'tanggal' => $tanggal,
                'id_pengurus' => $pengurus,
                'jumlah' => $jumlah,
                'id_jenis_infaq' => $idJenisInfaq,
-               'keterangan' => $keterangan
+               'keterangan' => $keterangan,
+               'id_jenis_pemasukan' => $jenis,
            ];
         } else {
             $data = [
@@ -159,7 +167,8 @@ class PemasukanController extends Controller
                 'id_pengurus' => $pengurus,
                 'jumlah' => $jumlah,
                 'id_donatur' => $idDonatur,
-                'keterangan' => $keterangan
+                'keterangan' => $keterangan,
+                'id_jenis_pemasukan' => $jenis,
             ];
         }
 

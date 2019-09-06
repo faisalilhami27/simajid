@@ -2,28 +2,29 @@ import React, {Component, Fragment} from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import {ROUTE} from "./Route";
-import '../../../public/js/dataTables.bootstrap4.min';
-import '../../../public/js/jquery-confirm';
-import '../../../public/js/script';
+import script from './MyScript';
 
 const $ = require('jquery');
 $.Datatable = require('datatables.net');
 
-export default class PengurusDKM extends Component {
+export default class PemasukanShodaqah extends Component {
     constructor(props) {
         super(props);
         this.state = {
             id: 0,
-            nama: '',
-            email: '',
-            no_hp: '',
-            status: '',
-            edit: false
+            tanggal: '',
+            id_donatur: '',
+            jumlah: '',
+            keterangan: '',
+            cmb_donatur: [],
+            edit: false,
+            checkAccess: JSON.parse(this.props.data)
         };
 
         this.openModal = this.openModal.bind(this);
         this.inputChange = this.inputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.reloadDonatur = this.reloadDonatur.bind(this);
     }
 
     inputChange(e) {
@@ -50,7 +51,7 @@ export default class PengurusDKM extends Component {
                     action: function () {
                         axios({
                             method: 'delete',
-                            url: ROUTE + 'pengurus/dkm/delete',
+                            url: ROUTE + 'pemasukan/delete',
                             data: {
                                 id: id
                             },
@@ -70,18 +71,35 @@ export default class PengurusDKM extends Component {
         });
     }
 
+    reloadDonatur() {
+        axios({
+            method: 'post',
+            url: ROUTE + 'pemasukan/shodaqoh/donatur',
+            dataType: 'json'
+        }).then(res => {
+            this.setState({
+                cmb_donatur: res.data
+            })
+        })
+    }
+
     handleSubmit(e) {
         e.preventDefault();
-        let nama = this.state.nama,
-            email = this.state.email,
-            status = this.state.status,
-            no_hp = this.state.no_hp,
-            sendData = "nama=" + nama + "&email=" + email + "&no_hp=" + no_hp + "&status=" + status;
+        let tanggal = this.state.tanggal,
+            jenis = this.state.id_donatur,
+            jumlah = this.state.jumlah,
+            keterangan = this.state.keterangan,
+            jenisPemasukan = 2,
+            sendData = "tanggal=" + tanggal +
+                "&id_donatur=" + jenis +
+                "&jumlah=" + jumlah +
+                "&jenis=" + jenisPemasukan +
+                "&keterangan=" + keterangan;
 
         if (this.state.edit === false) {
             axios({
                 method: 'post',
-                url: ROUTE + 'pengurus/dkm/insert',
+                url: ROUTE + 'pemasukan/insert',
                 data: sendData,
                 dataType: 'JSON',
                 config: {headers: {'Content-Type': 'multipart/form-data'}}
@@ -105,7 +123,7 @@ export default class PengurusDKM extends Component {
             let id = this.state.id;
             axios({
                 method: 'put',
-                url: ROUTE + 'pengurus/dkm/update',
+                url: ROUTE + 'pemasukan/update',
                 data: sendData + '&id=' + id,
                 dataType: 'JSON',
                 config: {headers: {'Content-Type': 'multipart/form-data'}}
@@ -128,62 +146,12 @@ export default class PengurusDKM extends Component {
         }
     }
 
-    checkEmail(e) {
-        const self = this;
-        this.$em = $(this.em);
-        this.$bt = $(this.bt);
-        let email = e.target.value;
-        axios({
-            method: 'post',
-            url: ROUTE + 'pengurus/dkm/cekEmail',
-            data: "email=" + email,
-            dataType: 'json',
-            config: {headers: {'Content-Type': 'multipart/form-data'}}
-        }).then(function (res) {
-            if (res.data.status == 200) {
-                self.$em.html("");
-                self.$bt.removeAttr('disabled');
-            } else {
-                self.$em.html(res.data.msg);
-                self.$ur.css("color", "red");
-                self.$bt.attr('disabled', 'disabled');
-            }
-        }.bind(this)).catch(function (res) {
-            console.log(res);
-        })
-    }
-
-    checkPhoneNumber(e) {
-        const self = this;
-        this.$ph = $(this.ph);
-        this.$bt = $(this.bt);
-        let phone = e.target.value;
-        axios({
-            method: 'post',
-            url: ROUTE + 'pengurus/dkm/cekNoHp',
-            data: "noHp=" + phone,
-            dataType: 'json',
-            config: {headers: {'Content-Type': 'multipart/form-data'}}
-        }).then(function (res) {
-            if (res.data.status == 200) {
-                self.$ph.html("");
-                self.$bt.removeAttr('disabled');
-            } else {
-                self.$ph.html(res.data.msg);
-                self.$ph.css("color", "red");
-                self.$bt.attr('disabled', 'disabled');
-            }
-        }.bind(this)).catch(function (res) {
-            console.log(res);
-        })
-    }
-
     handleEdit(id) {
-        const self = this;
         this.$tl = $(this.tl);
+        this.$tl.html("Update Data Pemasukan Shodaqah");
         axios({
             method: 'post',
-            url: ROUTE + 'pengurus/dkm/get',
+            url: ROUTE + 'pemasukan/get',
             data: "id=" + id,
             dataType: 'json',
             config: {headers: {'Content-Type': 'multipart/form-data'}}
@@ -191,13 +159,12 @@ export default class PengurusDKM extends Component {
             if (res.data.status == 200) {
                 this.setState({
                     id: res.data.list.id,
-                    nama: res.data.list.nama,
-                    email: res.data.list.email,
-                    no_hp: res.data.list.no_hp,
-                    status: res.data.list.status,
+                    tanggal: res.data.list.tanggal,
+                    id_donatur: res.data.list.id_donatur,
+                    jumlah: res.data.list.jumlah,
+                    keterangan: res.data.list.keterangan,
                     edit: true
                 });
-                self.$tl.html("Update Data Pengurus");
             } else {
                 console.log(res.data.msg);
             }
@@ -208,31 +175,41 @@ export default class PengurusDKM extends Component {
 
     openModal() {
         this.setState({
-            id: 0,
-            nama: '',
-            email: '',
-            foto: '',
-            no_hp: '',
-            status: '',
             edit: false
         });
 
         this.$tl = $(this.tl);
-        this.$tl.html("Tambah Data Pengurus");
+        this.$tl.html("Tambah Data Pemasukan Shodaqah");
     }
 
     componentDidMount() {
-        var styles = {
-            status: function (row, type, data) {
-                if (data.status == 1) {
-                    return '<span class="label label-success">Aktif</span>';
-                } else {
-                    return '<span class="label label-danger">Tidak Aktif</span>';
-                }
+        this.reloadDonatur();
+        this.$jm = $(this.jm);
+        this.$el = $(this.el);
+        this.$tg = $(this.tg);
+        this.$dn = $(this.dn);
+        this.$dn.select2({
+            width: '100%'
+        });
+        this.$dn.on('change', this.inputChange);
+
+        let cleave = new Cleave(this.$jm, {
+            numeral: true,
+            numeralThousandsGroupStyle: 'thousand'
+        });
+        this.$jm.on('change', this.inputChange);
+        this.$tg.datepicker({
+            format: 'yyyy-mm-dd',
+            autoclose: true
+        });
+        this.$tg.on('change', this.inputChange);
+
+        let styles = {
+            format: function (row, type, data) {
+                return formatRupiah(data.jumlah, 'Rp. ');
             }
         };
 
-        this.$el = $(this.el);
         this.$el.DataTable({
             processing: true,
             serverSide: true,
@@ -241,7 +218,7 @@ export default class PengurusDKM extends Component {
             order: [],
 
             ajax: {
-                "url": ROUTE + 'pengurus/dkm/json',
+                "url": ROUTE + 'pemasukan/shodaqoh/json',
                 "type": "POST",
                 "headers": {
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
@@ -250,42 +227,61 @@ export default class PengurusDKM extends Component {
 
             columns: [
                 {data: 'DT_RowIndex'},
-                {data: 'nama'},
-                {data: 'email'},
-                {data: 'no_hp'},
-                {data: 'status', render: styles.status},
+                {data: 'tanggal'},
+                {data: 'jumlah', render: styles.format},
+                {data: 'donatur.nama'},
             ],
 
             columnDefs: [
                 {
-                    targets: 5,
+                    targets: 4,
                     data: null,
-                    createdCell: (td, cellData, rowData, row, col) =>
-                        ReactDOM.render(
-                            <div>
-                                <center>
-                                    <button data-toggle="modal" data-target="#infoModalColoredHeader" className="btn btn-success btn-sm btn-edit" id={rowData.id} onClick={() => this.handleEdit(rowData.id)}><i className="icon icon-pencil-square-o"></i></button> <button className="btn btn-danger btn-sm" id={rowData.id} onClick={() => this.handleDelete(rowData.id)}><i className="icon icon-trash"></i></button>
-                                </center>
-                            </div>, td
-                        )
+                    createdCell: (td, cellData, rowData, row, col) => {
+                        if (this.state.checkAccess.update_delete) {
+                            ReactDOM.render(
+                                <div>
+                                    <center>
+                                        <button data-toggle="modal" data-target="#infoModalColoredHeader" className="btn btn-success btn-sm btn-edit" id={rowData.id} onClick={() => this.handleEdit(rowData.id)}><i className="icon icon-pencil-square-o"></i></button> <button className="btn btn-danger btn-sm" id={rowData.id} onClick={() => this.handleDelete(rowData.id)}><i className="icon icon-trash"></i></button>
+                                    </center>
+                                </div>, td
+                            )
+                        } else if (this.state.checkAccess.update) {
+                            ReactDOM.render(
+                                <div>
+                                    <center>
+                                        <button data-toggle="modal" data-target="#infoModalColoredHeader" className="btn btn-success btn-sm btn-edit" id={rowData.id} onClick={() => this.handleEdit(rowData.id)}><i className="icon icon-pencil-square-o"></i></button>
+                                    </center>
+                                </div>, td
+                            )
+                        } else {
+                            ReactDOM.render(
+                                <div>Tidak ada aksi</div>, td
+                            )
+                        }
+                    }
                 }
             ]
         });
     }
 
     render() {
+        let button;
+        if (this.state.checkAccess.create) {
+            button = <button className="btn btn-info btn-sm" type="button" data-toggle="modal"
+                             data-target="#infoModalColoredHeader" onClick={this.openModal}
+                             style={{marginBottom: '10px'}}><i className="icon icon-plus-circle"></i> Tambah
+            </button>
+        }
+
         return (
             <Fragment>
                 <div className="layout-content-body">
-                    <button className="btn btn-info btn-sm" type="button" data-toggle="modal"
-                            data-target="#infoModalColoredHeader" onClick={this.openModal}
-                            style={{marginBottom: '10px'}}><i className="icon icon-plus-circle"></i> Tambah
-                    </button>
+                    {button}
                     <div className="row gutter-xs">
                         <div className="col-xs-12">
                             <div className="card">
                                 <div className="card-header">
-                                    <strong>Daftar Pengurus</strong>
+                                    <strong>Daftar Pemasukan Shodaqah</strong>
                                 </div>
                                 <div className="card-body">
                                     <div className="table-responsive">
@@ -295,10 +291,9 @@ export default class PengurusDKM extends Component {
                                             <thead>
                                             <tr>
                                                 <th width="20px">No</th>
-                                                <th>Nama Lengkap</th>
-                                                <th>Email</th>
-                                                <th>No HP</th>
-                                                <th>Status Pengurus</th>
+                                                <th>Tanggal</th>
+                                                <th>Jumlah</th>
+                                                <th>Donatur</th>
                                                 <th>Aksi</th>
                                             </tr>
                                             </thead>
@@ -319,62 +314,65 @@ export default class PengurusDKM extends Component {
                                     <span aria-hidden="true">×</span>
                                     <span className="sr-only">Close</span>
                                 </button>
-                                <h4 className="modal-title-insert" ref={tl => this.tl = tl}>Tambah Data Pengurus</h4>
+                                <h4 className="modal-title-insert" ref={tl => this.tl = tl}>Tambah</h4>
                             </div>
                             <form className="form" method="post">
                                 <div className="modal-body">
                                     <div className="form-group">
-                                        <label htmlFor="nama">Nama Lengkap</label>
-                                        <input id="nama" name="nama" className="form-control" type="text"
-                                               placeholder="Masukan nama" maxLength="60"
-                                               onChange={this.inputChange}
-                                               value={this.state.nama}
-                                               autoComplete="off"/>
+                                        <label htmlFor="tanggal">Tanggal</label>
+                                        <div className="input-with-icon">
+                                            <input className="form-control" type="text"
+                                                   name="tanggal"
+                                                   id="tanggal"
+                                                   placeholder="Masukan Tanggal"
+                                                   value={this.state.tanggal}
+                                                   onChange={this.inputChange}
+                                                   ref={tg => this.tg = tg}
+                                                   data-date-today-highlight="true"/>
+                                            <span className="icon icon-calendar input-icon"></span>
+                                        </div>
                                         <span className="text-danger">
-                                    <strong id="nama-error"></strong>
-                                </span>
+                                            <strong id="tanggal-error"></strong>
+                                        </span>
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="email">Email</label>
-                                        <input id="email" name="email" className="form-control" type="text"
-                                               placeholder="Masukan email" maxLength="60"
-                                               onChange={this.inputChange}
-                                               onKeyUp={this.checkEmail.bind(this)}
-                                               value={this.state.email}
-                                               autoComplete="off"/>
-                                        <span className="text-danger">
-                                    <strong ref={em => this.em = em} id="email-error"></strong>
-                                </span>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="no_hp">Nomor Handphone</label>
-                                        <input id="no_hp" name="no_hp" className="form-control" type="text"
-                                               placeholder="Masukan nomor hp" maxLength="15"
-                                               onChange={this.inputChange}
-                                               onKeyUp={this.checkPhoneNumber.bind(this)}
-                                               value={this.state.no_hp}
-                                               autoComplete="off"/>
-                                        <span className="text-danger">
-                                    <strong ref={ph => this.ph = ph} id="noHp-error"></strong>
-                                </span>
-                                    </div>
-                                    <div className="form-group">
-                                        <label htmlFor="no_hp">Status</label>
-                                        <select name="status" id="status" onChange={this.inputChange}
-                                                value={this.state.status} className="form-control">
-                                            <option value="">Pilih Status</option>
-                                            <option value="1">Aktif</option>
-                                            <option value="0">Tidak Aktif</option>
+                                        <label htmlFor="id_donatur">Donatur</label>
+                                        <select name="id_donatur" id="id_donatur" className="form-control" ref={dn => this.dn = dn} onChange={this.inputChange} value={this.state.id_donatur}>
+                                            <option value="">-- Pilih Donatur --</option>
+                                            {this.state.cmb_donatur.map((data, index) => {
+                                                return (
+                                                    <option key={index} value={data.id}>{data.nama}</option>
+                                                )
+                                            })}
                                         </select>
                                         <span className="text-danger">
-                                    <strong id="status-error"></strong>
-                                </span>
+                                            <strong id="id_donatur-error"></strong>
+                                        </span>
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="jumlah">Jumlah</label>
+                                        <input id="jumlah" name="jumlah" className="form-control" type="text"
+                                               placeholder="Masukan jumlah" maxLength="15"
+                                               onChange={this.inputChange}
+                                               value={this.state.jumlah}
+                                               ref={jm => this.jm = jm}
+                                               autoComplete="off"/>
+                                        <span className="text-danger">
+                                            <strong id="jumlah-error"></strong>
+                                        </span>
+                                    </div>
+                                    <div className="form-group">
+                                        <label htmlFor="keterangan">Keterangan</label>
+                                        <textarea maxLength="500" id="keterangan" placeholder="Masukan Keterangan" name="keterangan" value={this.state.keterangan} onChange={this.inputChange} className="form-control" rows="3"></textarea>
+                                        <span className="text-danger">
+                                            <strong id="keterangan-error"></strong>
+                                        </span>
                                     </div>
                                 </div>
                                 <div className="modal-footer">
                                     <button className="btn btn-default" data-dismiss="modal" type="button">Cancel
                                     </button>
-                                    <button ref={bt => this.bt = bt} className="btn btn-primary" id="btn-insert-data" onClick={this.handleSubmit} type="submit">Submit
+                                    <button className="btn btn-primary" id="btn-insert-data" onClick={this.handleSubmit} type="submit">Submit
                                     </button>
                                 </div>
                             </form>
@@ -386,6 +384,7 @@ export default class PengurusDKM extends Component {
     }
 }
 
-if (document.getElementById('pengurus')) {
-    ReactDOM.render(<PengurusDKM/>, document.getElementById('pengurus'));
+if (document.getElementById('pemasukan_shodaqoh')) {
+    var data = document.getElementById('pemasukan_shodaqoh').getAttribute('data');
+    ReactDOM.render(<PemasukanShodaqah data={data}/>, document.getElementById('pemasukan_shodaqoh'));
 }

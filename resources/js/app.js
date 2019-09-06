@@ -14,7 +14,7 @@ require('./bootstrap');
 
 require('./components/Login');
 require('./components/Navigation');
-require('./components/PengurusDKM');
+require('./components/Pengurus');
 require('./components/RoleLevel');
 require('./components/UserPengurus');
 require('./components/UserNavigation');
@@ -24,5 +24,7 @@ require('./components/JenisDonatur');
 require('./components/JenisPengeluaran');
 require('./components/JenisInfaq');
 require('./components/PemasukanInfaq');
+require('./components/PemasukanShodaqah');
+require('./components/Pengeluaran');
 require('./components/Jabatan');
 require('./components/Donatur');

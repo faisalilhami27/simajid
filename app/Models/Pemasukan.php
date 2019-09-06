@@ -11,15 +11,20 @@ class Pemasukan extends Model
     protected $table = "pemasukan";
     protected $primaryKey = "id";
     protected $dates = ['deleted_at', 'updated_at', 'created_at'];
-    protected $fillable = ["tanggal", "id_pengurus", "id_jenis_infaq", "id_donatur", "id_pengubah", "jumlah", "keterangan"];
+    protected $fillable = ["tanggal", "id_pengurus", "id_jenis_pemasukan", "id_jenis_infaq", "id_donatur", "id_pengubah", "jumlah", "keterangan"];
 
-    public function jenis()
+    public function jenisInfaq()
     {
-        return $this->hasOne(JenisInfaq::class, 'id', 'id_jenis');
+        return $this->hasOne(JenisInfaq::class, 'id', 'id_jenis_infaq');
+    }
+
+    public function jenisPemasukan()
+    {
+        return $this->hasOne(JenisPemasukan::class, 'id', 'id_jenis_pemasukan');
     }
 
     public function donatur()
     {
-        return $this->hasOne(Donatur::class, 'id', 'id_doantur');
+        return $this->hasOne(Donatur::class, 'id', 'id_donatur');
     }
 }

@@ -19,7 +19,6 @@ class CreatePengurusTable extends Migration
             $table->string('email', 100)->unique();
             $table->string('foto', 255)->nullable();
             $table->string('no_hp', 15)->nullable();
-            $table->integer('id_jenis')->nullable();
             $table->integer('status')->nullable();
             $table->timestamps();
             $table->softDeletes();

@@ -7,13 +7,13 @@ import script from './MyScript';
 const $ = require('jquery');
 $.Datatable = require('datatables.net');
 
-export default class PemasukanInfaq extends Component {
+export default class Pengeluaran extends Component {
     constructor(props) {
         super(props);
         this.state = {
             id: 0,
             tanggal: '',
-            id_jenis_infaq: '',
+            id_jenis: '',
             jumlah: '',
             keterangan: '',
             cmb_jenis: [],
@@ -24,7 +24,7 @@ export default class PemasukanInfaq extends Component {
         this.openModal = this.openModal.bind(this);
         this.inputChange = this.inputChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.reloadJenisInfaq = this.reloadJenisInfaq.bind(this);
+        this.reloadJenisPengeluaran = this.reloadJenisPengeluaran.bind(this);
     }
 
     inputChange(e) {
@@ -51,7 +51,7 @@ export default class PemasukanInfaq extends Component {
                     action: function () {
                         axios({
                             method: 'delete',
-                            url: ROUTE + 'pemasukan/delete',
+                            url: ROUTE + 'pengeluaran/delete',
                             data: {
                                 id: id
                             },
@@ -71,10 +71,10 @@ export default class PemasukanInfaq extends Component {
         });
     }
 
-    reloadJenisInfaq() {
+    reloadJenisPengeluaran() {
         axios({
             method: 'post',
-            url: ROUTE + 'pemasukan/infaq/jenis',
+            url: ROUTE + 'pengeluaran/jenis',
             dataType: 'json'
         }).then(res => {
             this.setState({
@@ -86,20 +86,19 @@ export default class PemasukanInfaq extends Component {
      handleSubmit(e) {
         e.preventDefault();
         let tanggal = this.state.tanggal,
-            jenis = this.state.id_jenis_infaq,
+            jenis = this.state.id_jenis,
             jumlah = this.state.jumlah,
             keterangan = this.state.keterangan,
-            jenisPemasukan = 1,
             sendData = "tanggal=" + tanggal +
-                "&id_jenis_infaq=" + jenis +
+                "&id_jenis=" + jenis +
                 "&jumlah=" + jumlah +
-                "&jenis=" + jenisPemasukan +
+                "&id_jenis=" + jenis +
                 "&keterangan=" + keterangan;
 
         if (this.state.edit === false) {
             axios({
                 method: 'post',
-                url: ROUTE + 'pemasukan/insert',
+                url: ROUTE + 'pengeluaran/insert',
                 data: sendData,
                 dataType: 'JSON',
                 config: {headers: {'Content-Type': 'multipart/form-data'}}
@@ -123,7 +122,7 @@ export default class PemasukanInfaq extends Component {
             let id = this.state.id;
             axios({
                 method: 'put',
-                url: ROUTE + 'pemasukan/update',
+                url: ROUTE + 'pengeluaran/update',
                 data: sendData + '&id=' + id,
                 dataType: 'JSON',
                 config: {headers: {'Content-Type': 'multipart/form-data'}}
@@ -148,10 +147,10 @@ export default class PemasukanInfaq extends Component {
 
     handleEdit(id) {
         this.$tl = $(this.tl);
-        this.$tl.html("Update Data Pemasukan Infaq");
+        this.$tl.html("Update Data Pengeluaran Keuangan");
         axios({
             method: 'post',
-            url: ROUTE + 'pemasukan/get',
+            url: ROUTE + 'pengeluaran/get',
             data: "id=" + id,
             dataType: 'json',
             config: {headers: {'Content-Type': 'multipart/form-data'}}
@@ -160,7 +159,7 @@ export default class PemasukanInfaq extends Component {
                 this.setState({
                     id: res.data.list.id,
                     tanggal: res.data.list.tanggal,
-                    id_jenis_infaq: res.data.list.id_jenis_infaq,
+                    id_jenis: res.data.list.id_jenis,
                     jumlah: res.data.list.jumlah,
                     keterangan: res.data.list.keterangan,
                     edit: true
@@ -179,11 +178,11 @@ export default class PemasukanInfaq extends Component {
         });
 
         this.$tl = $(this.tl);
-        this.$tl.html("Tambah Data Pemasukan Infaq");
+        this.$tl.html("Tambah Data Pengeluaran Keuangan");
     }
 
     componentDidMount() {
-        this.reloadJenisInfaq();
+        this.reloadJenisPengeluaran();
         this.$jm = $(this.jm);
         this.$el = $(this.el);
         this.$tg = $(this.tg);
@@ -213,7 +212,7 @@ export default class PemasukanInfaq extends Component {
             order: [],
 
             ajax: {
-                "url": ROUTE + 'pemasukan/infaq/json',
+                "url": ROUTE + 'pengeluaran/json',
                 "type": "POST",
                 "headers": {
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
@@ -224,7 +223,7 @@ export default class PemasukanInfaq extends Component {
                 {data: 'DT_RowIndex'},
                 {data: 'tanggal'},
                 {data: 'jumlah', render: styles.format},
-                {data: 'jenis_infaq.nama'},
+                {data: 'jenis.nama'},
                 {data: 'keterangan'}
             ],
 
@@ -277,7 +276,7 @@ export default class PemasukanInfaq extends Component {
                         <div className="col-xs-12">
                             <div className="card">
                                 <div className="card-header">
-                                    <strong>Daftar Pemasukan Infaq</strong>
+                                    <strong>Daftar Pengeluaran Keuangan</strong>
                                 </div>
                                 <div className="card-body">
                                     <div className="table-responsive">
@@ -289,7 +288,7 @@ export default class PemasukanInfaq extends Component {
                                                 <th width="20px">No</th>
                                                 <th>Tanggal</th>
                                                 <th>Jumlah</th>
-                                                <th>Jenis Infaq</th>
+                                                <th>Jenis Pengeluaran</th>
                                                 <th>Keterangan</th>
                                                 <th>Aksi</th>
                                             </tr>
@@ -333,8 +332,8 @@ export default class PemasukanInfaq extends Component {
                                         </span>
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="id_jenis_infaq">Jenis Infaq</label>
-                                        <select name="id_jenis_infaq" id="id_jenis_infaq" className="form-control" onChange={this.inputChange} value={this.state.id_jenis_infaq}>
+                                        <label htmlFor="id_jenis">Jenis Infaq</label>
+                                        <select name="id_jenis" id="id_jenis" className="form-control" ref={jn => this.jn = jn} onChange={this.inputChange} value={this.state.id_jenis}>
                                             <option value="">-- Pilih Jenis Infaq --</option>
                                             {this.state.cmb_jenis.map((data, index) => {
                                                 return (
@@ -343,7 +342,7 @@ export default class PemasukanInfaq extends Component {
                                             })}
                                         </select>
                                         <span className="text-danger">
-                                            <strong id="id_jenis_infaq-error"></strong>
+                                            <strong id="id_jenis-error"></strong>
                                         </span>
                                     </div>
                                     <div className="form-group">
@@ -381,7 +380,7 @@ export default class PemasukanInfaq extends Component {
     }
 }
 
-if (document.getElementById('pemasukan_infaq')) {
-    var data = document.getElementById('pemasukan_infaq').getAttribute('data');
-    ReactDOM.render(<PemasukanInfaq data={data}/>, document.getElementById('pemasukan_infaq'));
+if (document.getElementById('pengeluaran')) {
+    var data = document.getElementById('pengeluaran').getAttribute('data');
+    ReactDOM.render(<Pengeluaran data={data}/>, document.getElementById('pengeluaran'));
 }

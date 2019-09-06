@@ -13,7 +13,7 @@ class PengeluaranRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,10 @@ class PengeluaranRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'tanggal' => 'required',
+            'id_jenis' => 'required',
+            'jumlah' => 'required',
+            'keterangan' => 'required|regex:/^([a-zA-Z0-9-., ]*)$/'
         ];
     }
 }

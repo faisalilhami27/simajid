@@ -8,7 +8,7 @@
                     <div class="card bg-primary no-border">
                         <div class="card-values">
                             <div class="p-x">
-                                <small>Jumlah PengurusDKM</small>
+                                <small>Jumlah Pengurus</small>
                                 <h3 class="card-title fw-l">{{ $getJumlahPengurus }}</h3>
                             </div>
                         </div>
@@ -26,8 +26,8 @@
                     <div class="card bg-danger no-border">
                         <div class="card-values">
                             <div class="p-x">
-                                <small>Total Pengeluaran Per Bulan</small>
-                                <h3 class="card-title fw-l">0</h3>
+                                <small>Total Pemasukan Per Bulan</small>
+                                <h3 class="card-title fw-l">Rp. {{ number_format($pemasukan, '0', '.', '.') }}</h3>
                             </div>
                         </div>
                         <div class="card-chart">
@@ -44,8 +44,8 @@
                     <div class="card bg-info no-border">
                         <div class="card-values">
                             <div class="p-x">
-                                <small>Total PemasukanInfaq Per Bulan</small>
-                                <h3 class="card-title fw-l">0</h3>
+                                <small>Total Pengeluaran Per Bulan</small>
+                                <h3 class="card-title fw-l">Rp. {{ number_format($pengeluaran, '0', '.', '.') }}</h3>
                             </div>
                         </div>
                         <div class="card-chart">
@@ -62,8 +62,8 @@
                     <div class="card bg-warning no-border">
                         <div class="card-values">
                             <div class="p-x">
-                                <small>Saldo Saat ini</small>
-                                <h3 class="card-title fw-l">0</h3>
+                                <small>Saldo Bulan ini</small>
+                                <h3 class="card-title fw-l">Rp. {{ number_format($saldo, '0', '.', '.') }}</h3>
                             </div>
                         </div>
                         <div class="card-chart">
@@ -81,7 +81,7 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">Pengeluaran Per Bulan</h4>
+                            <h4 class="card-title">Pemasukan Per Bulan</h4>
                         </div>
                         <div class="card-body">
                             <div class="card-chart">
@@ -93,7 +93,7 @@
                 <div class="col-md-6">
                     <div class="card">
                         <div class="card-body">
-                            <h4 class="card-title">PemasukanInfaq Per Bulan</h4>
+                            <h4 class="card-title">Pengeluaran Per Bulan</h4>
                         </div>
                         <div class="card-body">
                             <canvas id="myChart1" height="150"></canvas>

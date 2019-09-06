@@ -23,18 +23,18 @@ class PemasukanRequest extends FormRequest
      */
     public function rules()
     {
-        if (request('jenis') == 'infaq') {
+        if (request('jenis') == 1) {
             return [
                 'tanggal' => 'required',
-                'id_jenis_infaq' => 'requird',
-                'jumlah' => 'required|numeric',
+                'id_jenis_infaq' => 'required',
+                'jumlah' => 'required',
                 'keterangan' => 'required|regex:/^([a-zA-Z0-9-., ]*)$/'
             ];
         } else {
             return [
                 'tanggal' => 'required',
-                'id_donatur' => 'requird',
-                'jumlah' => 'required|numeric',
+                'id_donatur' => 'required',
+                'jumlah' => 'required',
                 'keterangan' => 'required|regex:/^([a-zA-Z0-9-., ]*)$/'
             ];
         }

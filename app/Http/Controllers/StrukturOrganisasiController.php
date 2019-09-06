@@ -16,6 +16,34 @@ class StrukturOrganisasiController extends Controller
         return view('struktur_organisasi.dkm', compact('value', 'checkAccess'));
     }
 
+    public function majelisTaklimPage()
+    {
+        $data = StrukturOrganisasi::where('kode', 'majelis')->first();
+        $value = (!is_null($data)) ? $data->value : "";
+        $checkAccess = checkAccess();
+        return view('struktur_organisasi.majelis', compact('value', 'checkAccess'));
+    }
+
+    public function remajaMesjidPage()
+    {
+        $data = StrukturOrganisasi::where('kode', 'remaja')->first();
+        $value = (!is_null($data)) ? $data->value : "";
+        $checkAccess = checkAccess();
+        return view('struktur_organisasi.remaja', compact('value', 'checkAccess'));
+    }
+
+    public function showMajelisTaklim()
+    {
+        $data = StrukturOrganisasi::where('kode', 'majelis')->first()['value'];
+        return response()->json(['data' => $data]);
+    }
+
+    public function showRemajaMesjid()
+    {
+        $data = StrukturOrganisasi::where('kode', 'remaja')->first()['value'];
+        return response()->json(['data' => $data]);
+    }
+
     public function show()
     {
         $data = StrukturOrganisasi::where('kode', 'DKM')->first()['value'];

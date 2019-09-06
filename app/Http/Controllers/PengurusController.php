@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\DataTables;
 
-class PengurusDKMController extends Controller
+class PengurusController extends Controller
 {
     public function index()
     {
@@ -35,7 +35,7 @@ class PengurusDKMController extends Controller
 
     public function datatable()
     {
-        $data = Pengurus::all();
+        $data = Pengurus::where('id', '!=', 1);
         return DataTables::of($data)->addIndexColumn()->make(true);
     }
 

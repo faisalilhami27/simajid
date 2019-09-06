@@ -50,14 +50,14 @@ Route::group(['prefix' => 'navigation', 'middleware' => 'auth:pengurus'], functi
 // modul pengurus
 Route::group(['prefix' => 'pengurus', 'middleware' => 'auth:pengurus'], function () {
     Route::prefix('dkm')->group(function () {
-        Route::get('/', 'PengurusDKMController@index')->name('pengurus.dkm');
-        Route::post('/json', 'PengurusDKMController@datatable');
-        Route::post('/get', 'PengurusDKMController@edit');
-        Route::post('/insert', 'PengurusDKMController@store');
-        Route::post('/cekEmail', 'PengurusDKMController@cekEmail');
-        Route::post('/cekNoHp', 'PengurusDKMController@cekNoHp');
-        Route::put('/update', 'PengurusDKMController@update');
-        Route::delete('/delete', 'PengurusDKMController@destroy');
+        Route::get('/', 'PengurusController@index')->name('pengurus.dkm');
+        Route::post('/json', 'PengurusController@datatable');
+        Route::post('/get', 'PengurusController@edit');
+        Route::post('/insert', 'PengurusController@store');
+        Route::post('/cekEmail', 'PengurusController@cekEmail');
+        Route::post('/cekNoHp', 'PengurusController@cekNoHp');
+        Route::put('/update', 'PengurusController@update');
+        Route::delete('/delete', 'PengurusController@destroy');
     });
 });
 
@@ -159,8 +159,8 @@ Route::group(['prefix' => 'pemasukan', 'middleware' => 'auth:pengurus'], functio
     });
 
     Route::prefix('shodaqoh')->group(function () {
-        Route::get('/', 'PemasukanController@index')->name('pemasukan.shodaqoh');
-        Route::post('/json2', 'PemasukanController@datatable2');
+        Route::get('/', 'PemasukanController@shodaqohPage')->name('pemasukan.shodaqoh');
+        Route::post('/json', 'PemasukanController@datatable2');
         Route::post('/donatur', 'PemasukanController@getDonatur');
     });
 });
@@ -170,6 +170,7 @@ Route::group(['prefix' => 'pengeluaran', 'middleware' => 'auth:pengurus'], funct
     Route::get('/', 'PengeluaranController@index')->name('pengeluaran');
     Route::post('/json', 'PengeluaranController@datatable');
     Route::post('/get', 'PengeluaranController@edit');
+    Route::post('/jenis', 'PengeluaranController@getJenisPengeluaran');
     Route::post('/insert', 'PengeluaranController@store');
     Route::put('/update', 'PengeluaranController@update');
     Route::delete('/delete', 'PengeluaranController@destroy');
@@ -189,6 +190,8 @@ Route::group(['prefix' => 'jabatan', 'middleware' => 'auth:pengurus'], function 
 Route::group(['prefix' => 'struktur', 'middleware' => 'auth:pengurus'], function () {
     Route::get('/get', 'StrukturOrganisasiController@edit')->name('struktur.edit');
     Route::get('/show', 'StrukturOrganisasiController@show')->name('struktur.show');
+    Route::get('/showMajelisTaklim', 'StrukturOrganisasiController@showMajelisTaklim')->name('struktur.show_majelis');
+    Route::get('/showRemajaMesjid', 'StrukturOrganisasiController@showRemajaMesjid')->name('struktur.show_remaja');
     Route::put('/update', 'StrukturOrganisasiController@update')->name('struktur.update');
 
     Route::prefix('dkm')->group(function () {
@@ -196,11 +199,11 @@ Route::group(['prefix' => 'struktur', 'middleware' => 'auth:pengurus'], function
     });
 
     Route::prefix('majelis')->group(function () {
-        Route::get('/', 'StrukturOrganisasiController@index')->name('struktur.majelis');
+        Route::get('/', 'StrukturOrganisasiController@majelisTaklimPage')->name('struktur.majelis');
     });
 
     Route::prefix('remaja')->group(function () {
-        Route::get('/', 'JabatanController@index')->name('pengurus.remaja');
+        Route::get('/', 'StrukturOrganisasiController@remajaMesjidPage')->name('struktur.remaja');
     });
 });
 
