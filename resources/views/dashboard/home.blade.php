@@ -85,7 +85,7 @@
                         </div>
                         <div class="card-body">
                             <div class="card-chart">
-                                <canvas id="myChart" height="150"></canvas>
+                                <canvas id="pemasukan" height="80"></canvas>
                             </div>
                         </div>
                     </div>
@@ -96,7 +96,9 @@
                             <h4 class="card-title">Pengeluaran Per Bulan</h4>
                         </div>
                         <div class="card-body">
-                            <canvas id="myChart1" height="150"></canvas>
+                            <div class="card-chart">
+                                <canvas id="pengeluaran" height="80"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -104,3 +106,107 @@
         </div>
     </div>
 @stop
+@push('scripts')
+    <script>
+        let url = "{{ route('chart') }}";
+        let pemasukan = [];
+        let pengeluaran = [];
+        let bulanPemasukan = [];
+        let bulanPengeluaran = [];
+
+        $(document).ready(function () {
+            getPemasukan(url, bulanPemasukan, pemasukan);
+            getPengeluaran(url, bulanPengeluaran, pengeluaran);
+        });
+
+        function getPemasukan(url, bulan, pemasukan) {
+            $.ajax({
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                },
+                url: url,
+                type: "GET",
+                dataType: 'json',
+                success: function (data) {
+                    for (var i in data.pemasukan) {
+                        pemasukan.push(data.pemasukan[i].jumlah);
+                        bulan.push(data.pemasukan[i].bulan);
+                    }
+                    var ctx = document.getElementById("pemasukan").getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: bulan,
+                            datasets: [
+                                {
+                                    label: 'Pemasukan Keuangan',
+                                    data: pemasukan,
+                                    backgroundColor: "#f25f2c",
+                                    borderColor: "#f25f2c",
+                                    borderWidth: 1
+                                }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                },
+                error: function (xhr, status, error) {
+                    alert(status + " : " + error);
+                }
+            });
+        }
+
+        function getPengeluaran(url, bulan, pengeluaran) {
+            $.ajax({
+                headers: {
+                    "X-CSRF-TOKEN": "{{ csrf_token() }}",
+                },
+                url: url,
+                type: "GET",
+                dataType: 'json',
+                success: function (data) {
+                    for (var i in data.pengeluaran) {
+                        pengeluaran.push(data.pengeluaran[i].jumlah);
+                        bulan.push(data.pengeluaran[i].bulan);
+                    }
+                    var ctx = document.getElementById("pengeluaran").getContext('2d');
+                    var myChart = new Chart(ctx, {
+                        type: 'bar',
+                        data: {
+                            labels: bulan,
+                            datasets: [
+                                {
+                                    label: 'Pengeluaran Keuangan',
+                                    data: pemasukan,
+                                    backgroundColor: "#7c55fb",
+                                    borderColor: "#7c55fb",
+                                    borderWidth: 1
+                                }
+                            ]
+                        },
+                        options: {
+                            scales: {
+                                yAxes: [{
+                                    ticks: {
+                                        beginAtZero: true
+                                    }
+                                }]
+                            }
+                        }
+                    });
+                },
+                error: function (xhr, status, error) {
+                    alert(status + " : " + error);
+                }
+            });
+        }
+    </script>
+@endpush

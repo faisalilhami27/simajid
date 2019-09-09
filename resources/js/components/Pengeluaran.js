@@ -332,9 +332,9 @@ export default class Pengeluaran extends Component {
                                         </span>
                                     </div>
                                     <div className="form-group">
-                                        <label htmlFor="id_jenis">Jenis Infaq</label>
+                                        <label htmlFor="id_jenis">Jenis Pengeluaran</label>
                                         <select name="id_jenis" id="id_jenis" className="form-control" ref={jn => this.jn = jn} onChange={this.inputChange} value={this.state.id_jenis}>
-                                            <option value="">-- Pilih Jenis Infaq --</option>
+                                            <option value="">-- Pilih Jenis Pengeluaran --</option>
                                             {this.state.cmb_jenis.map((data, index) => {
                                                 return (
                                                     <option key={index} value={data.id}>{data.nama}</option>

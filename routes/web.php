@@ -28,6 +28,9 @@ Route::get('/choose/roles', 'RoleController@chooseRole')
 Route::post('/choose/role', 'RoleController@pickRole')
     ->middleware('auth:pengurus')
     ->name('role.pick');
+Route::get('/chart', 'DashboardController@chartKeuangan')
+    ->middleware('auth:pengurus')
+    ->name('chart');
 
 // modul profile
 Route::group(['prefix' => 'profile', 'middleware' => 'auth:pengurus'], function () {

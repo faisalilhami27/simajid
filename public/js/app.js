@@ -92550,7 +92550,7 @@ function (_Component) {
         className: "form-group"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
         htmlFor: "id_jenis"
-      }, "Jenis Infaq"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+      }, "Jenis Pengeluaran"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
         name: "id_jenis",
         id: "id_jenis",
         className: "form-control",
@@ -92561,7 +92561,7 @@ function (_Component) {
         value: this.state.id_jenis
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: ""
-      }, "-- Pilih Jenis Infaq --"), this.state.cmb_jenis.map(function (data, index) {
+      }, "-- Pilih Jenis Pengeluaran --"), this.state.cmb_jenis.map(function (data, index) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
           key: index,
           value: data.id
