@@ -9,7 +9,7 @@ import '../../../public/js/script';
 const $ = require('jquery');
 $.Datatable = require('datatables.net');
 
-export default class Pengurus extends Component {
+export default class PengurusDKM extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -197,7 +197,7 @@ export default class Pengurus extends Component {
                     status: res.data.list.status,
                     edit: true
                 });
-                self.$tl.html("Update Data Pengurus");
+                self.$tl.html("Update Data PengurusDKM");
             } else {
                 console.log(res.data.msg);
             }
@@ -218,7 +218,7 @@ export default class Pengurus extends Component {
         });
 
         this.$tl = $(this.tl);
-        this.$tl.html("Tambah Data Pengurus");
+        this.$tl.html("Tambah Data PengurusDKM");
     }
 
     componentDidMount() {
@@ -387,5 +387,5 @@ export default class Pengurus extends Component {
 }
 
 if (document.getElementById('pengurus')) {
-    ReactDOM.render(<Pengurus/>, document.getElementById('pengurus'));
+    ReactDOM.render(<PengurusDKM/>, document.getElementById('pengurus'));
 }

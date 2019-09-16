@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', 'Pengurus')
+@section('title', 'PengurusDKMDKM')
 @section('content')
     <div class="layout-content" id="user_pengurus"></div>
 @stop

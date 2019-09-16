@@ -8,7 +8,7 @@
                     <div class="card bg-primary no-border">
                         <div class="card-values">
                             <div class="p-x">
-                                <small>Jumlah Pengurus</small>
+                                <small>Jumlah PengurusDKM</small>
                                 <h3 class="card-title fw-l">{{ $getJumlahPengurus }}</h3>
                             </div>
                         </div>

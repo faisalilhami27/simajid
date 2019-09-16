@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\JenisPengurus;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,9 +23,9 @@ class DatabaseSeeder extends Seeder
         $this->call(JenisDonaturSeeder::class);
         $this->call(JenisInfaqSeeder::class);
         $this->call(DonaturSeeder::class);
-        $this->call(JenisKepengurusanSeeder::class);
         $this->call(JabatanSeeder::class);
         $this->call(StrukturOrganisasiSeeder::class);
         $this->call(JenisPemasukanSeeder::class);
+        $this->call(JenisPengurusSeeder::class);
     }
 }

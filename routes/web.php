@@ -52,15 +52,27 @@ Route::group(['prefix' => 'navigation', 'middleware' => 'auth:pengurus'], functi
 
 // modul pengurus
 Route::group(['prefix' => 'pengurus', 'middleware' => 'auth:pengurus'], function () {
+    Route::get('/jabatan', 'PengurusController@getJabatan');
+    Route::post('/get', 'PengurusController@edit');
+    Route::post('/insert', 'PengurusController@store');
+    Route::post('/cekEmail', 'PengurusController@cekEmail');
+    Route::post('/cekNoHp', 'PengurusController@cekNoHp');
+    Route::put('/update', 'PengurusController@update');
+    Route::delete('/delete', 'PengurusController@destroy');
+
     Route::prefix('dkm')->group(function () {
         Route::get('/', 'PengurusController@index')->name('pengurus.dkm');
-        Route::post('/json', 'PengurusController@datatable');
-        Route::post('/get', 'PengurusController@edit');
-        Route::post('/insert', 'PengurusController@store');
-        Route::post('/cekEmail', 'PengurusController@cekEmail');
-        Route::post('/cekNoHp', 'PengurusController@cekNoHp');
-        Route::put('/update', 'PengurusController@update');
-        Route::delete('/delete', 'PengurusController@destroy');
+        Route::post('/json', 'PengurusController@datatable1');
+    });
+
+    Route::prefix('majelis')->group(function () {
+        Route::get('/', 'PengurusController@index')->name('pengurus.majelis');
+        Route::post('/json', 'PengurusController@datatable2');
+    });
+
+    Route::prefix('remaja')->group(function () {
+        Route::get('/', 'PengurusController@index')->name('pengurus.remaja');
+        Route::post('/json', 'PengurusController@datatable3');
     });
 });
 
@@ -126,6 +138,16 @@ Route::group(['prefix' => 'jenis_donatur', 'middleware' => 'auth:pengurus'], fun
     Route::post('/insert', 'JenisDonaturController@store');
     Route::put('/update', 'JenisDonaturController@update');
     Route::delete('/delete', 'JenisDonaturController@destroy');
+});
+
+// modul jenis pengurus
+Route::group(['prefix' => 'jenis_pengurus', 'middleware' => 'auth:pengurus'], function () {
+    Route::get('/', 'JenisPengurusController@index')->name('jenis_pengurus');
+    Route::post('/json', 'JenisPengurusController@datatable');
+    Route::post('/get', 'JenisPengurusController@edit');
+    Route::post('/insert', 'JenisPengurusController@store');
+    Route::put('/update', 'JenisPengurusController@update');
+    Route::delete('/delete', 'JenisPengurusController@destroy');
 });
 
 // modul jenis pengeluaran

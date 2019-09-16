@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PengurusRequest;
 use App\Models\Jabatan;
+use App\Models\JenisPengurus;
 use App\Models\Pengurus;
 use App\Models\UserPengurus;
 use Illuminate\Http\Request;
@@ -33,7 +34,19 @@ class PengurusController extends Controller
         }
     }
 
-    public function datatable()
+    public function datatable1()
+    {
+        $data = Pengurus::where('id', '!=', 1);
+        return DataTables::of($data)->addIndexColumn()->make(true);
+    }
+
+    public function datatable2()
+    {
+        $data = Pengurus::where('id', '!=', 1);
+        return DataTables::of($data)->addIndexColumn()->make(true);
+    }
+
+    public function datatable3()
     {
         $data = Pengurus::where('id', '!=', 1);
         return DataTables::of($data)->addIndexColumn()->make(true);
@@ -51,7 +64,8 @@ class PengurusController extends Controller
         $email = htmlspecialchars($request->email);
         $noHp = htmlspecialchars($request->no_hp);
         $status = $request->status;
-        $idJenis = 1;
+        $idJenis = $request->id_jenis;
+        $idJabatan = $request->id_jabatan;
 
         $insert = Pengurus::create([
             'nama' => $nama,

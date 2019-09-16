@@ -20,6 +20,8 @@ class PengurusSeeder extends Seeder
                 'foto' => null,
                 'no_hp' => '085795118959',
                 'status' => 1,
+                'id_pengurus' => null,
+                'id_jabatan' => null,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ]

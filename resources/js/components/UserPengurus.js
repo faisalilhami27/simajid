@@ -226,7 +226,7 @@ export default class UserPengurus extends Component {
                     status: res.data.user.status,
                     edit: true
                 });
-                self.$tl.html("Update Data User Pengurus");
+                self.$tl.html("Update Data User PengurusDKM");
                 self.$lv.select2().val(res.data.item).trigger('change')
             } else {
                 console.log(res.data.msg);
@@ -271,7 +271,7 @@ export default class UserPengurus extends Component {
         this.$us = $(this.us);
         this.$lv = $(this.lv);
         this.$tl = $(this.tl);
-        this.$tl.html("Tambah Data User Pengurus");
+        this.$tl.html("Tambah Data User PengurusDKM");
 
         if (this.state.edit) {
             this.$pa.show();

@@ -66,7 +66,7 @@ class UserNavigationSeeder extends Seeder
             ],
             [
                 'id_user_level' => 1,
-                'id_menu' => 15,
+                'id_menu' => 6,
                 'create' => 1,
                 'read' => 1,
                 'update' => 1,
@@ -76,7 +76,17 @@ class UserNavigationSeeder extends Seeder
             ],
             [
                 'id_user_level' => 1,
-                'id_menu' => 16,
+                'id_menu' => 7,
+                'create' => 1,
+                'read' => 1,
+                'update' => 1,
+                'delete' => 1,
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+            [
+                'id_user_level' => 1,
+                'id_menu' => 10,
                 'create' => 1,
                 'read' => 1,
                 'update' => 1,
@@ -125,112 +135,12 @@ class UserNavigationSeeder extends Seeder
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
             [
-                'id_user_level' => 5,
-                'id_menu' => 2,
+                'id_user_level' => 1,
+                'id_menu' => 21,
                 'create' => 0,
                 'read' => 1,
                 'update' => 0,
                 'delete' => 0,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-            [
-                'id_user_level' => 5,
-                'id_menu' => 6,
-                'create' => 1,
-                'read' => 1,
-                'update' => 1,
-                'delete' => 1,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-            [
-                'id_user_level' => 5,
-                'id_menu' => 7,
-                'create' => 1,
-                'read' => 1,
-                'update' => 1,
-                'delete' => 1,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-            [
-                'id_user_level' => 5,
-                'id_menu' => 8,
-                'create' => 1,
-                'read' => 1,
-                'update' => 1,
-                'delete' => 1,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-            [
-                'id_user_level' => 5,
-                'id_menu' => 9,
-                'create' => 1,
-                'read' => 1,
-                'update' => 1,
-                'delete' => 1,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-            [
-                'id_user_level' => 5,
-                'id_menu' => 10,
-                'create' => 1,
-                'read' => 1,
-                'update' => 1,
-                'delete' => 1,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-            [
-                'id_user_level' => 5,
-                'id_menu' => 11,
-                'create' => 1,
-                'read' => 1,
-                'update' => 1,
-                'delete' => 1,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-            [
-                'id_user_level' => 5,
-                'id_menu' => 12,
-                'create' => 1,
-                'read' => 1,
-                'update' => 1,
-                'delete' => 1,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-            [
-                'id_user_level' => 5,
-                'id_menu' => 13,
-                'create' => 1,
-                'read' => 1,
-                'update' => 1,
-                'delete' => 1,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-            [
-                'id_user_level' => 5,
-                'id_menu' => 14,
-                'create' => 1,
-                'read' => 1,
-                'update' => 1,
-                'delete' => 1,
-                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
-                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
-            ],
-            [
-                'id_user_level' => 1,
-                'id_menu' => 21,
-                'create' => 1,
-                'read' => 1,
-                'update' => 1,
-                'delete' => 1,
                 'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
             ],
@@ -257,6 +167,26 @@ class UserNavigationSeeder extends Seeder
             [
                 'id_user_level' => 1,
                 'id_menu' => 24,
+                'create' => 1,
+                'read' => 1,
+                'update' => 1,
+                'delete' => 1,
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+            [
+                'id_user_level' => 1,
+                'id_menu' => 25,
+                'create' => 1,
+                'read' => 1,
+                'update' => 1,
+                'delete' => 1,
+                'created_at' => Carbon::now()->format('Y-m-d H:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d H:i:s')
+            ],
+            [
+                'id_user_level' => 1,
+                'id_menu' => 26,
                 'create' => 1,
                 'read' => 1,
                 'update' => 1,
