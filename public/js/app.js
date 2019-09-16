@@ -87768,7 +87768,7 @@ __webpack_require__(/*! ./components/Login */ "./resources/js/components/Login.j
 
 __webpack_require__(/*! ./components/Navigation */ "./resources/js/components/Navigation.js");
 
-__webpack_require__(/*! ./components/PengurusDKM */ "./resources/js/components/Pengurus.js");
+__webpack_require__(/*! ./components/PengurusDKM */ "./resources/js/components/PengurusDKM.js");
 
 __webpack_require__(/*! ./components/RoleLevel */ "./resources/js/components/RoleLevel.js");
 
@@ -90512,7 +90512,7 @@ function (_Component) {
         className: "card"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-header"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Daftar Jenis PengurusDKM")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Daftar Jenis Pengurus")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "table-responsive"
@@ -90525,7 +90525,7 @@ function (_Component) {
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         width: "20px"
-      }, "No"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Nama Jenis PengurusDKM"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Aksi"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null)))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "No"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Nama Jenis Pengurus"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Aksi"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null)))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "infoModalColoredHeader",
         role: "dialog",
         className: "modal fade"
@@ -90732,7 +90732,7 @@ function (_Component) {
         style: {
           textAlign: 'center'
         }
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Login PengurusDKM ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("b", null, "Login Pengurus ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "mosque-name"
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "login-form"
@@ -93030,16 +93030,16 @@ if (document.getElementById('pengeluaran')) {
 
 /***/ }),
 
-/***/ "./resources/js/components/Pengurus.js":
-/*!*********************************************!*\
-  !*** ./resources/js/components/PengurusDKM.js.js ***!
-  \*********************************************/
+/***/ "./resources/js/components/PengurusDKM.js":
+/*!************************************************!*\
+  !*** ./resources/js/components/PengurusDKM.js ***!
+  \************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Pengurus; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PengurusDKM; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
@@ -93085,17 +93085,17 @@ var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js"
 
 $.Datatable = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
 
-var Pengurus =
+var PengurusDKM =
 /*#__PURE__*/
 function (_Component) {
-  _inherits(Pengurus, _Component);
+  _inherits(PengurusDKM, _Component);
 
-  function Pengurus(props) {
+  function PengurusDKM(props) {
     var _this;
 
-    _classCallCheck(this, Pengurus);
+    _classCallCheck(this, PengurusDKM);
 
-    _this = _possibleConstructorReturn(this, _getPrototypeOf(Pengurus).call(this, props));
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(PengurusDKM).call(this, props));
     _this.state = {
       id: 0,
       nama: '',
@@ -93110,7 +93110,7 @@ function (_Component) {
     return _this;
   }
 
-  _createClass(Pengurus, [{
+  _createClass(PengurusDKM, [{
     key: "inputChange",
     value: function inputChange(e) {
       this.setState(_defineProperty({}, e.target.name, e.target.value));
@@ -93425,7 +93425,7 @@ function (_Component) {
         className: "card"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-header"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Daftar PengurusDKM")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Daftar Pengurus")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "table-responsive"
@@ -93438,7 +93438,7 @@ function (_Component) {
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         width: "20px"
-      }, "No"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Nama Lengkap"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Email"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "No HP"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Status PengurusDKM"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Aksi"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null)))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, "No"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Nama Lengkap"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Email"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "No HP"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Status Pengurus"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Aksi"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null)))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         id: "infoModalColoredHeader",
         role: "dialog",
         className: "modal fade"
@@ -93461,7 +93461,7 @@ function (_Component) {
         ref: function ref(tl) {
           return _this3.tl = tl;
         }
-      }, "Tambah Data PengurusDKM")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      }, "Tambah Data Pengurus")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "form",
         method: "post"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -93566,13 +93566,13 @@ function (_Component) {
     }
   }]);
 
-  return Pengurus;
+  return PengurusDKM;
 }(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
 
 
 
 if (document.getElementById('pengurus')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(Pengurus, null), document.getElementById('pengurus'));
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(PengurusDKM, null), document.getElementById('pengurus'));
 }
 
 /***/ }),
@@ -95662,7 +95662,7 @@ function (_Component) {
         className: "card"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-header"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Daftar User PengurusDKM")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Daftar User Pengurus")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "table-responsive"
@@ -95696,7 +95696,7 @@ function (_Component) {
         ref: function ref(tl) {
           return _this5.tl = tl;
         }
-      }, "Tambah Data User PengurusDKM")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+      }, "Tambah Data User Pengurus")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "form",
         method: "post"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -95720,7 +95720,7 @@ function (_Component) {
         className: "form-control"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
         value: ""
-      }, "-- Pilih PengurusDKM --"), this.state.cmb_pengurus.map(function (data, index) {
+      }, "-- Pilih Pengurus --"), this.state.cmb_pengurus.map(function (data, index) {
         return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
           key: index,
           value: data.id

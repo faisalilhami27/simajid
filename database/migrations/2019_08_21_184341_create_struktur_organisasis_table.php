@@ -14,7 +14,7 @@ class CreateStrukturOrganisasisTable extends Migration
     public function up()
     {
         Schema::create('struktur_organisasi', function (Blueprint $table) {
-            $table->string('kode')->unique();
+            $table->string('kode', 50)->unique();
             $table->text('value')->nullable();
             $table->timestamps();
         });
