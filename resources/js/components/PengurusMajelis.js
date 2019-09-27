@@ -92,9 +92,9 @@ export default class PengurusMajelis extends Component {
                 .then(function (res) {
                     $('#infoModalColoredHeader').remove();
                     notification(res.data.status, res.data.msg);
-                    // setTimeout(function () {
-                    //     location.reload();
-                    // }, 1000);
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1000);
                 })
                 .catch(function (resp) {
                     if (_.has(resp.response.data, 'errors')) {

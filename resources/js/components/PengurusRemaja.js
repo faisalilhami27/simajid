@@ -92,9 +92,9 @@ export default class PengurusRemaja extends Component {
                 .then(function (res) {
                     $('#infoModalColoredHeader').remove();
                     notification(res.data.status, res.data.msg);
-                    // setTimeout(function () {
-                    //     location.reload();
-                    // }, 1000);
+                    setTimeout(function () {
+                        location.reload();
+                    }, 1000);
                 })
                 .catch(function (resp) {
                     if (_.has(resp.response.data, 'errors')) {
@@ -307,7 +307,7 @@ export default class PengurusRemaja extends Component {
                         <div className="col-xs-12">
                             <div className="card">
                                 <div className="card-header">
-                                    <strong>Daftar Pengurus</strong>
+                                    <strong>Daftar Pengurus Remaja Mesjid</strong>
                                 </div>
                                 <div className="card-body">
                                     <div className="table-responsive">

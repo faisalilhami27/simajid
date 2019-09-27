@@ -88948,7 +88948,8 @@ function (_Component) {
         bLengthChange: false,
         responsive: true,
         searching: false,
-        aLengthMenu: [[10, 25, 100], [10, 25, 100]],
+        paging: false,
+        aLengthMenu: [[31], [31]],
         order: [],
         ajax: {
           "url": _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'jadwal/json',
@@ -93186,9 +93187,10 @@ function (_Component) {
           }
         }).then(function (res) {
           $('#infoModalColoredHeader').remove();
-          notification(res.data.status, res.data.msg); // setTimeout(function () {
-          //     location.reload();
-          // }, 1000);
+          notification(res.data.status, res.data.msg);
+          setTimeout(function () {
+            location.reload();
+          }, 1000);
         })["catch"](function (resp) {
           if (_.has(resp.response.data, 'errors')) {
             _.map(resp.response.data.errors, function (val, key) {
@@ -93462,7 +93464,7 @@ function (_Component) {
         className: "card"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-header"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Daftar Pengurus")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Daftar Pengurus DKM")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "table-responsive"
@@ -93787,9 +93789,10 @@ function (_Component) {
           }
         }).then(function (res) {
           $('#infoModalColoredHeader').remove();
-          notification(res.data.status, res.data.msg); // setTimeout(function () {
-          //     location.reload();
-          // }, 1000);
+          notification(res.data.status, res.data.msg);
+          setTimeout(function () {
+            location.reload();
+          }, 1000);
         })["catch"](function (resp) {
           if (_.has(resp.response.data, 'errors')) {
             _.map(resp.response.data.errors, function (val, key) {
@@ -94388,9 +94391,10 @@ function (_Component) {
           }
         }).then(function (res) {
           $('#infoModalColoredHeader').remove();
-          notification(res.data.status, res.data.msg); // setTimeout(function () {
-          //     location.reload();
-          // }, 1000);
+          notification(res.data.status, res.data.msg);
+          setTimeout(function () {
+            location.reload();
+          }, 1000);
         })["catch"](function (resp) {
           if (_.has(resp.response.data, 'errors')) {
             _.map(resp.response.data.errors, function (val, key) {
@@ -94664,7 +94668,7 @@ function (_Component) {
         className: "card"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-header"
-      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Daftar Pengurus")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Daftar Pengurus Remaja Mesjid")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "card-body"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "table-responsive"

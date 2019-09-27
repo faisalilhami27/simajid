@@ -46,7 +46,8 @@ export default class Jadwal extends Component {
             bLengthChange: false,
             responsive: true,
             searching: false,
-            aLengthMenu: [[10, 25, 100], [10, 25, 100]],
+            paging: false,
+            aLengthMenu: [[31], [31]],
             order: [],
 
             ajax: {
