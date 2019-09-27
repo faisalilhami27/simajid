@@ -261,11 +261,13 @@ export default class Pengeluaran extends Component {
 
     render() {
         let button;
-        if (this.state.checkAccess.create) {
-            button = <button className="btn btn-info btn-sm" type="button" data-toggle="modal"
+        if (this.state.checkAccess != null) {
+            if (this.state.checkAccess.create) {
+                button = <button className="btn btn-info btn-sm" type="button" data-toggle="modal"
                                  data-target="#infoModalColoredHeader" onClick={this.openModal}
                                  style={{marginBottom: '10px'}}><i className="icon icon-plus-circle"></i> Tambah
-                         </button>
+                </button>
+            }
         }
 
         return (

@@ -15,6 +15,8 @@ require('./bootstrap');
 require('./components/Login');
 require('./components/Navigation');
 require('./components/PengurusDKM');
+require('./components/PengurusMajelis');
+require('./components/PengurusRemaja');
 require('./components/RoleLevel');
 require('./components/UserPengurus');
 require('./components/UserNavigation');

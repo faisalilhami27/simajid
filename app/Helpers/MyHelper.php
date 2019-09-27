@@ -158,16 +158,18 @@ if (!function_exists('checkAccess')) {
         $update = false;
         $updateAndDelete = false;
 
-        if ($query->create == 1) {
-            $create = true;
-        }
+        if (!is_null($query)) {
+            if ($query->create == 1) {
+                $create = true;
+            }
 
-        if ($query->update == 1 && $query->delete == 1) {
-            $updateAndDelete = true;
-        }
+            if ($query->update == 1 && $query->delete == 1) {
+                $updateAndDelete = true;
+            }
 
-        if ($query->update == 1) {
-            $update = true;
+            if ($query->update == 1) {
+                $update = true;
+            }
         }
 
         $data = [

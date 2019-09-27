@@ -66,12 +66,12 @@ Route::group(['prefix' => 'pengurus', 'middleware' => 'auth:pengurus'], function
     });
 
     Route::prefix('majelis')->group(function () {
-        Route::get('/', 'PengurusController@index')->name('pengurus.majelis');
+        Route::get('/', 'PengurusController@majelisPage')->name('pengurus.majelis');
         Route::post('/json', 'PengurusController@datatable2');
     });
 
     Route::prefix('remaja')->group(function () {
-        Route::get('/', 'PengurusController@index')->name('pengurus.remaja');
+        Route::get('/', 'PengurusController@remajaPage')->name('pengurus.remaja');
         Route::post('/json', 'PengurusController@datatable3');
     });
 });

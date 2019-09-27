@@ -87770,6 +87770,10 @@ __webpack_require__(/*! ./components/Navigation */ "./resources/js/components/Na
 
 __webpack_require__(/*! ./components/PengurusDKM */ "./resources/js/components/PengurusDKM.js");
 
+__webpack_require__(/*! ./components/PengurusMajelis */ "./resources/js/components/PengurusMajelis.js");
+
+__webpack_require__(/*! ./components/PengurusRemaja */ "./resources/js/components/PengurusRemaja.js");
+
 __webpack_require__(/*! ./components/RoleLevel */ "./resources/js/components/RoleLevel.js");
 
 __webpack_require__(/*! ./components/UserPengurus */ "./resources/js/components/UserPengurus.js");
@@ -92849,19 +92853,21 @@ function (_Component) {
 
       var button;
 
-      if (this.state.checkAccess.create) {
-        button = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
-          className: "btn btn-info btn-sm",
-          type: "button",
-          "data-toggle": "modal",
-          "data-target": "#infoModalColoredHeader",
-          onClick: this.openModal,
-          style: {
-            marginBottom: '10px'
-          }
-        }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
-          className: "icon icon-plus-circle"
-        }), " Tambah");
+      if (this.state.checkAccess != null) {
+        if (this.state.checkAccess.create) {
+          button = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+            className: "btn btn-info btn-sm",
+            type: "button",
+            "data-toggle": "modal",
+            "data-target": "#infoModalColoredHeader",
+            onClick: this.openModal,
+            style: {
+              marginBottom: '10px'
+            }
+          }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+            className: "icon icon-plus-circle"
+          }), " Tambah");
+        }
       }
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -93047,12 +93053,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
 /* harmony import */ var _Route__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Route */ "./resources/js/components/Route.js");
-/* harmony import */ var _public_js_dataTables_bootstrap4_min__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../public/js/dataTables.bootstrap4.min */ "./public/js/dataTables.bootstrap4.min.js");
-/* harmony import */ var _public_js_dataTables_bootstrap4_min__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_public_js_dataTables_bootstrap4_min__WEBPACK_IMPORTED_MODULE_4__);
-/* harmony import */ var _public_js_jquery_confirm__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../public/js/jquery-confirm */ "./public/js/jquery-confirm.js");
-/* harmony import */ var _public_js_jquery_confirm__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_public_js_jquery_confirm__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _public_js_script__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../public/js/script */ "./public/js/script.js");
-/* harmony import */ var _public_js_script__WEBPACK_IMPORTED_MODULE_6___default = /*#__PURE__*/__webpack_require__.n(_public_js_script__WEBPACK_IMPORTED_MODULE_6__);
+/* harmony import */ var _MyScript__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./MyScript */ "./resources/js/components/MyScript.js");
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
@@ -93072,8 +93073,6 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
-
 
 
 
@@ -93102,11 +93101,14 @@ function (_Component) {
       email: '',
       no_hp: '',
       status: '',
+      id_jabatan: '',
+      cmb_jabatan: [],
       edit: false
     };
     _this.openModal = _this.openModal.bind(_assertThisInitialized(_this));
     _this.inputChange = _this.inputChange.bind(_assertThisInitialized(_this));
     _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.reloadJabatan = _this.reloadJabatan.bind(_assertThisInitialized(_this));
     return _this;
   }
 
@@ -93136,7 +93138,7 @@ function (_Component) {
             action: function action() {
               axios__WEBPACK_IMPORTED_MODULE_2___default()({
                 method: 'delete',
-                url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/dkm/delete',
+                url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/delete',
                 data: {
                   id: id
                 },
@@ -93167,12 +93169,14 @@ function (_Component) {
           email = this.state.email,
           status = this.state.status,
           no_hp = this.state.no_hp,
-          sendData = "nama=" + nama + "&email=" + email + "&no_hp=" + no_hp + "&status=" + status;
+          jabatan = this.state.id_jabatan,
+          pengurus = 1,
+          sendData = "nama=" + nama + "&email=" + email + "&no_hp=" + no_hp + "&status=" + status + "&id_pengurus=" + pengurus + "&id_jabatan=" + jabatan;
 
       if (this.state.edit === false) {
         axios__WEBPACK_IMPORTED_MODULE_2___default()({
           method: 'post',
-          url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/dkm/insert',
+          url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/insert',
           data: sendData,
           dataType: 'JSON',
           config: {
@@ -93182,10 +93186,9 @@ function (_Component) {
           }
         }).then(function (res) {
           $('#infoModalColoredHeader').remove();
-          notification(res.data.status, res.data.msg);
-          setTimeout(function () {
-            location.reload();
-          }, 1000);
+          notification(res.data.status, res.data.msg); // setTimeout(function () {
+          //     location.reload();
+          // }, 1000);
         })["catch"](function (resp) {
           if (_.has(resp.response.data, 'errors')) {
             _.map(resp.response.data.errors, function (val, key) {
@@ -93199,7 +93202,7 @@ function (_Component) {
         var id = this.state.id;
         axios__WEBPACK_IMPORTED_MODULE_2___default()({
           method: 'put',
-          url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/dkm/update',
+          url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/update',
           data: sendData + '&id=' + id,
           dataType: 'JSON',
           config: {
@@ -93227,13 +93230,14 @@ function (_Component) {
   }, {
     key: "checkEmail",
     value: function checkEmail(e) {
-      var self = this;
+      var _this2 = this;
+
       this.$em = $(this.em);
       this.$bt = $(this.bt);
       var email = e.target.value;
       axios__WEBPACK_IMPORTED_MODULE_2___default()({
         method: 'post',
-        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/dkm/cekEmail',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/cekEmail',
         data: "email=" + email,
         dataType: 'json',
         config: {
@@ -93242,28 +93246,32 @@ function (_Component) {
           }
         }
       }).then(function (res) {
-        if (res.data.status == 200) {
-          self.$em.html("");
-          self.$bt.removeAttr('disabled');
+        if (res.data.status === 200) {
+          _this2.$em.html("");
+
+          _this2.$bt.removeAttr('disabled');
         } else {
-          self.$em.html(res.data.msg);
-          self.$ur.css("color", "red");
-          self.$bt.attr('disabled', 'disabled');
+          _this2.$em.html(res.data.msg);
+
+          _this2.$em.css("color", "red");
+
+          _this2.$bt.attr('disabled', 'disabled');
         }
-      }.bind(this))["catch"](function (res) {
+      })["catch"](function (res) {
         console.log(res);
       });
     }
   }, {
     key: "checkPhoneNumber",
     value: function checkPhoneNumber(e) {
-      var self = this;
+      var _this3 = this;
+
       this.$ph = $(this.ph);
       this.$bt = $(this.bt);
       var phone = e.target.value;
       axios__WEBPACK_IMPORTED_MODULE_2___default()({
         method: 'post',
-        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/dkm/cekNoHp',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/cekNoHp',
         data: "noHp=" + phone,
         dataType: 'json',
         config: {
@@ -93272,26 +93280,31 @@ function (_Component) {
           }
         }
       }).then(function (res) {
-        if (res.data.status == 200) {
-          self.$ph.html("");
-          self.$bt.removeAttr('disabled');
+        if (res.data.status === 200) {
+          _this3.$ph.html("");
+
+          _this3.$bt.removeAttr('disabled');
         } else {
-          self.$ph.html(res.data.msg);
-          self.$ph.css("color", "red");
-          self.$bt.attr('disabled', 'disabled');
+          _this3.$ph.html(res.data.msg);
+
+          _this3.$ph.css("color", "red");
+
+          _this3.$bt.attr('disabled', 'disabled');
         }
-      }.bind(this))["catch"](function (res) {
+      })["catch"](function (res) {
         console.log(res);
       });
     }
   }, {
     key: "handleEdit",
     value: function handleEdit(id) {
-      var self = this;
+      var _this4 = this;
+
       this.$tl = $(this.tl);
+      this.$m = $(this.m);
       axios__WEBPACK_IMPORTED_MODULE_2___default()({
         method: 'post',
-        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/dkm/get',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/get',
         data: "id=" + id,
         dataType: 'json',
         config: {
@@ -93300,8 +93313,8 @@ function (_Component) {
           }
         }
       }).then(function (res) {
-        if (res.data.status == 200) {
-          this.setState({
+        if (res.data.status === 200) {
+          _this4.setState({
             id: res.data.list.id,
             nama: res.data.list.nama,
             email: res.data.list.email,
@@ -93309,11 +93322,14 @@ function (_Component) {
             status: res.data.list.status,
             edit: true
           });
-          self.$tl.html("Update Data PengurusDKM");
+
+          _this4.$tl.html("Update Data Pengurus DKM");
+
+          _this4.$m.select2().val(res.data.list.id_jabatan).trigger('change');
         } else {
           console.log(res.data.msg);
         }
-      }.bind(this))["catch"](function (res) {
+      })["catch"](function (res) {
         console.log(res);
       });
     }
@@ -93330,13 +93346,34 @@ function (_Component) {
         edit: false
       });
       this.$tl = $(this.tl);
-      this.$tl.html("Tambah Data PengurusDKM");
+      this.$tl.html("Tambah Data Pengurus DKM");
+    }
+  }, {
+    key: "reloadJabatan",
+    value: function reloadJabatan() {
+      var _this5 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: 'GET',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/jabatan',
+        dataType: 'JSON'
+      }).then(function (res) {
+        _this5.setState({
+          cmb_jabatan: res.data
+        });
+      });
     }
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      var _this2 = this;
+      var _this6 = this;
 
+      this.reloadJabatan();
+      this.$m = $(this.m);
+      this.$m.select2({
+        width: '100%'
+      });
+      this.$m.on('change', this.inputChange);
       var styles = {
         status: function status(row, type, data) {
           if (data.status == 1) {
@@ -93382,7 +93419,7 @@ function (_Component) {
               className: "btn btn-success btn-sm btn-edit",
               id: rowData.id,
               onClick: function onClick() {
-                return _this2.handleEdit(rowData.id);
+                return _this6.handleEdit(rowData.id);
               }
             }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
               className: "icon icon-pencil-square-o"
@@ -93390,7 +93427,7 @@ function (_Component) {
               className: "btn btn-danger btn-sm",
               id: rowData.id,
               onClick: function onClick() {
-                return _this2.handleDelete(rowData.id);
+                return _this6.handleDelete(rowData.id);
               }
             }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
               className: "icon icon-trash"
@@ -93402,7 +93439,7 @@ function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      var _this3 = this;
+      var _this7 = this;
 
       return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "layout-content-body"
@@ -93434,7 +93471,7 @@ function (_Component) {
         className: "table table-striped table-hover table-nowrap dataTable",
         width: "100%",
         ref: function ref(el) {
-          return _this3.el = el;
+          return _this7.el = el;
         }
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
         width: "20px"
@@ -93459,7 +93496,7 @@ function (_Component) {
       }, "Close")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
         className: "modal-title-insert",
         ref: function ref(tl) {
-          return _this3.tl = tl;
+          return _this7.tl = tl;
         }
       }, "Tambah Data Pengurus")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
         className: "form",
@@ -93503,7 +93540,7 @@ function (_Component) {
         className: "text-danger"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
         ref: function ref(em) {
-          return _this3.em = em;
+          return _this7.em = em;
         },
         id: "email-error"
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -93525,9 +93562,32 @@ function (_Component) {
         className: "text-danger"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
         ref: function ref(ph) {
-          return _this3.ph = ph;
+          return _this7.ph = ph;
         },
-        id: "noHp-error"
+        id: "no_hp-error"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "id_jabatan"
+      }, "Jabatan"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        name: "id_jabatan",
+        ref: function ref(m) {
+          return _this7.m = m;
+        },
+        onChange: this.inputChange,
+        value: this.state.id_jabatan,
+        className: "form-control"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: ""
+      }, "-- Pilih Jabatan --"), this.state.cmb_jabatan.map(function (data, i) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: i,
+          value: data.id
+        }, data.nama);
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "text-danger"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        id: "id_jabatan-error"
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "form-group"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
@@ -93556,7 +93616,7 @@ function (_Component) {
         type: "button"
       }, "Cancel"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
         ref: function ref(bt) {
-          return _this3.bt = bt;
+          return _this7.bt = bt;
         },
         className: "btn btn-primary",
         id: "btn-insert-data",
@@ -93573,6 +93633,1208 @@ function (_Component) {
 
 if (document.getElementById('pengurus')) {
   react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(PengurusDKM, null), document.getElementById('pengurus'));
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/PengurusMajelis.js":
+/*!****************************************************!*\
+  !*** ./resources/js/components/PengurusMajelis.js ***!
+  \****************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PengurusMajelis; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _Route__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Route */ "./resources/js/components/Route.js");
+/* harmony import */ var _MyScript__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./MyScript */ "./resources/js/components/MyScript.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+
+var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+
+$.Datatable = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
+
+var PengurusMajelis =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(PengurusMajelis, _Component);
+
+  function PengurusMajelis(props) {
+    var _this;
+
+    _classCallCheck(this, PengurusMajelis);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(PengurusMajelis).call(this, props));
+    _this.state = {
+      id: 0,
+      nama: '',
+      email: '',
+      no_hp: '',
+      status: '',
+      id_jabatan: '',
+      cmb_jabatan: [],
+      edit: false
+    };
+    _this.openModal = _this.openModal.bind(_assertThisInitialized(_this));
+    _this.inputChange = _this.inputChange.bind(_assertThisInitialized(_this));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.reloadJabatan = _this.reloadJabatan.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(PengurusMajelis, [{
+    key: "inputChange",
+    value: function inputChange(e) {
+      this.setState(_defineProperty({}, e.target.name, e.target.value));
+    }
+  }, {
+    key: "handleDelete",
+    value: function handleDelete(id) {
+      $.confirm({
+        content: 'Data yang dihapus tidak akan dapat dikembalikan.',
+        title: 'Apakah yakin ingin menghapus ?',
+        type: 'red',
+        typeAnimated: true,
+        buttons: {
+          cancel: {
+            text: 'Batal',
+            btnClass: 'btn-danger',
+            keys: ['esc'],
+            action: function action() {}
+          },
+          ok: {
+            text: '<i class="icon icon-trash"></i> Hapus',
+            btnClass: 'btn-warning',
+            action: function action() {
+              axios__WEBPACK_IMPORTED_MODULE_2___default()({
+                method: 'delete',
+                url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/delete',
+                data: {
+                  id: id
+                },
+                dataType: 'json',
+                config: {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }
+              }).then(function (res) {
+                notification(res.data.status, res.data.msg);
+                setTimeout(function () {
+                  location.reload();
+                }, 1000);
+              })["catch"](function (res) {
+                console.log(res);
+              });
+            }
+          }
+        }
+      });
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var nama = this.state.nama,
+          email = this.state.email,
+          status = this.state.status,
+          no_hp = this.state.no_hp,
+          jabatan = this.state.id_jabatan,
+          pengurus = 1,
+          sendData = "nama=" + nama + "&email=" + email + "&no_hp=" + no_hp + "&status=" + status + "&id_pengurus=" + pengurus + "&id_jabatan=" + jabatan;
+
+      if (this.state.edit === false) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default()({
+          method: 'post',
+          url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/insert',
+          data: sendData,
+          dataType: 'JSON',
+          config: {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        }).then(function (res) {
+          $('#infoModalColoredHeader').remove();
+          notification(res.data.status, res.data.msg); // setTimeout(function () {
+          //     location.reload();
+          // }, 1000);
+        })["catch"](function (resp) {
+          if (_.has(resp.response.data, 'errors')) {
+            _.map(resp.response.data.errors, function (val, key) {
+              $('#' + key + '-error').html(val[0]).fadeIn(1000).fadeOut(5000);
+            });
+          }
+
+          alert(resp.response.data.message);
+        });
+      } else {
+        var id = this.state.id;
+        axios__WEBPACK_IMPORTED_MODULE_2___default()({
+          method: 'put',
+          url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/update',
+          data: sendData + '&id=' + id,
+          dataType: 'JSON',
+          config: {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        }).then(function (res) {
+          $('#infoModalColoredHeader').remove();
+          notification(res.data.status, res.data.msg);
+          setTimeout(function () {
+            location.reload();
+          }, 1000);
+        })["catch"](function (resp) {
+          if (_.has(resp.response.data, 'errors')) {
+            _.map(resp.response.data.errors, function (val, key) {
+              $('#' + key + '-error').html(val[0]).fadeIn(1000).fadeOut(5000);
+            });
+          }
+
+          alert(resp.response.data.message);
+        });
+      }
+    }
+  }, {
+    key: "checkEmail",
+    value: function checkEmail(e) {
+      var _this2 = this;
+
+      this.$em = $(this.em);
+      this.$bt = $(this.bt);
+      var email = e.target.value;
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: 'post',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/cekEmail',
+        data: "email=" + email,
+        dataType: 'json',
+        config: {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      }).then(function (res) {
+        if (res.data.status === 200) {
+          _this2.$em.html("");
+
+          _this2.$bt.removeAttr('disabled');
+        } else {
+          _this2.$em.html(res.data.msg);
+
+          _this2.$em.css("color", "red");
+
+          _this2.$bt.attr('disabled', 'disabled');
+        }
+      })["catch"](function (res) {
+        console.log(res);
+      });
+    }
+  }, {
+    key: "checkPhoneNumber",
+    value: function checkPhoneNumber(e) {
+      var _this3 = this;
+
+      this.$ph = $(this.ph);
+      this.$bt = $(this.bt);
+      var phone = e.target.value;
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: 'post',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/cekNoHp',
+        data: "noHp=" + phone,
+        dataType: 'json',
+        config: {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      }).then(function (res) {
+        if (res.data.status === 200) {
+          _this3.$ph.html("");
+
+          _this3.$bt.removeAttr('disabled');
+        } else {
+          _this3.$ph.html(res.data.msg);
+
+          _this3.$ph.css("color", "red");
+
+          _this3.$bt.attr('disabled', 'disabled');
+        }
+      })["catch"](function (res) {
+        console.log(res);
+      });
+    }
+  }, {
+    key: "handleEdit",
+    value: function handleEdit(id) {
+      var _this4 = this;
+
+      this.$tl = $(this.tl);
+      this.$m = $(this.m);
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: 'post',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/get',
+        data: "id=" + id,
+        dataType: 'json',
+        config: {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      }).then(function (res) {
+        if (res.data.status === 200) {
+          _this4.setState({
+            id: res.data.list.id,
+            nama: res.data.list.nama,
+            email: res.data.list.email,
+            no_hp: res.data.list.no_hp,
+            status: res.data.list.status,
+            edit: true
+          });
+
+          _this4.$tl.html("Update Data Pengurus Majelis Taklim");
+
+          _this4.$m.select2().val(res.data.list.id_jabatan).trigger('change');
+        } else {
+          console.log(res.data.msg);
+        }
+      })["catch"](function (res) {
+        console.log(res);
+      });
+    }
+  }, {
+    key: "openModal",
+    value: function openModal() {
+      this.setState({
+        id: 0,
+        nama: '',
+        email: '',
+        foto: '',
+        no_hp: '',
+        status: '',
+        edit: false
+      });
+      this.$tl = $(this.tl);
+      this.$tl.html("Tambah Data Pengurus Majelis Taklim");
+    }
+  }, {
+    key: "reloadJabatan",
+    value: function reloadJabatan() {
+      var _this5 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: 'GET',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/jabatan',
+        dataType: 'JSON'
+      }).then(function (res) {
+        _this5.setState({
+          cmb_jabatan: res.data
+        });
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this6 = this;
+
+      this.reloadJabatan();
+      this.$m = $(this.m);
+      this.$m.select2({
+        width: '100%'
+      });
+      this.$m.on('change', this.inputChange);
+      var styles = {
+        status: function status(row, type, data) {
+          if (data.status == 1) {
+            return '<span class="label label-success">Aktif</span>';
+          } else {
+            return '<span class="label label-danger">Tidak Aktif</span>';
+          }
+        }
+      };
+      this.$el = $(this.el);
+      this.$el.DataTable({
+        processing: true,
+        serverSide: true,
+        responsive: true,
+        aLengthMenu: [[5, 10, 25, 100], [5, 10, 25, 100]],
+        order: [],
+        ajax: {
+          "url": _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/majelis/json',
+          "type": "POST",
+          "headers": {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
+          }
+        },
+        columns: [{
+          data: 'DT_RowIndex'
+        }, {
+          data: 'nama'
+        }, {
+          data: 'email'
+        }, {
+          data: 'no_hp'
+        }, {
+          data: 'status',
+          render: styles.status
+        }],
+        columnDefs: [{
+          targets: 5,
+          data: null,
+          createdCell: function createdCell(td, cellData, rowData, row, col) {
+            return react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("center", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+              "data-toggle": "modal",
+              "data-target": "#infoModalColoredHeader",
+              className: "btn btn-success btn-sm btn-edit",
+              id: rowData.id,
+              onClick: function onClick() {
+                return _this6.handleEdit(rowData.id);
+              }
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+              className: "icon icon-pencil-square-o"
+            })), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+              className: "btn btn-danger btn-sm",
+              id: rowData.id,
+              onClick: function onClick() {
+                return _this6.handleDelete(rowData.id);
+              }
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+              className: "icon icon-trash"
+            })))), td);
+          }
+        }]
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this7 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "layout-content-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-info btn-sm",
+        type: "button",
+        "data-toggle": "modal",
+        "data-target": "#infoModalColoredHeader",
+        onClick: this.openModal,
+        style: {
+          marginBottom: '10px'
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "icon icon-plus-circle"
+      }), " Tambah"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row gutter-xs"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-xs-12"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-header"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Daftar Pengurus Majelis Taklim")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "table-responsive"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+        id: "demo-datatables",
+        className: "table table-striped table-hover table-nowrap dataTable",
+        width: "100%",
+        ref: function ref(el) {
+          return _this7.el = el;
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        width: "20px"
+      }, "No"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Nama Lengkap"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Email"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "No HP"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Status Pengurus"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Aksi"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null)))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "infoModalColoredHeader",
+        role: "dialog",
+        className: "modal fade"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-dialog"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-content"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-header bg-primary"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        className: "close",
+        "data-dismiss": "modal"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        "aria-hidden": "true"
+      }, "\xD7"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "sr-only"
+      }, "Close")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
+        className: "modal-title-insert",
+        ref: function ref(tl) {
+          return _this7.tl = tl;
+        }
+      }, "Tambah Data Pengurus")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "form",
+        method: "post"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "nama"
+      }, "Nama Lengkap"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "nama",
+        name: "nama",
+        className: "form-control",
+        type: "text",
+        placeholder: "Masukan nama",
+        maxLength: "60",
+        onChange: this.inputChange,
+        value: this.state.nama,
+        autoComplete: "off"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "text-danger"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        id: "nama-error"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "email"
+      }, "Email"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "email",
+        name: "email",
+        className: "form-control",
+        type: "text",
+        placeholder: "Masukan email",
+        maxLength: "60",
+        onChange: this.inputChange,
+        onKeyUp: this.checkEmail.bind(this),
+        value: this.state.email,
+        autoComplete: "off"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "text-danger"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        ref: function ref(em) {
+          return _this7.em = em;
+        },
+        id: "email-error"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "no_hp"
+      }, "Nomor Handphone"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "no_hp",
+        name: "no_hp",
+        className: "form-control",
+        type: "text",
+        placeholder: "Masukan nomor hp",
+        maxLength: "15",
+        onChange: this.inputChange,
+        onKeyUp: this.checkPhoneNumber.bind(this),
+        value: this.state.no_hp,
+        autoComplete: "off"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "text-danger"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        ref: function ref(ph) {
+          return _this7.ph = ph;
+        },
+        id: "no_hp-error"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "id_jabatan"
+      }, "Jabatan"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        name: "id_jabatan",
+        ref: function ref(m) {
+          return _this7.m = m;
+        },
+        onChange: this.inputChange,
+        value: this.state.id_jabatan,
+        className: "form-control"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: ""
+      }, "-- Pilih Jabatan --"), this.state.cmb_jabatan.map(function (data, i) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: i,
+          value: data.id
+        }, data.nama);
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "text-danger"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        id: "id_jabatan-error"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "no_hp"
+      }, "Status"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        name: "status",
+        id: "status",
+        onChange: this.inputChange,
+        value: this.state.status,
+        className: "form-control"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: ""
+      }, "Pilih Status"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "1"
+      }, "Aktif"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "0"
+      }, "Tidak Aktif")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "text-danger"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        id: "status-error"
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-footer"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-default",
+        "data-dismiss": "modal",
+        type: "button"
+      }, "Cancel"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        ref: function ref(bt) {
+          return _this7.bt = bt;
+        },
+        className: "btn btn-primary",
+        id: "btn-insert-data",
+        onClick: this.handleSubmit,
+        type: "submit"
+      }, "Submit")))))));
+    }
+  }]);
+
+  return PengurusMajelis;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+
+
+if (document.getElementById('pengurus-majelis')) {
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(PengurusMajelis, null), document.getElementById('pengurus-majelis'));
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/PengurusRemaja.js":
+/*!***************************************************!*\
+  !*** ./resources/js/components/PengurusRemaja.js ***!
+  \***************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return PengurusRemaja; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+/* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(react_dom__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var _Route__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./Route */ "./resources/js/components/Route.js");
+/* harmony import */ var _MyScript__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./MyScript */ "./resources/js/components/MyScript.js");
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); return Constructor; }
+
+function _possibleConstructorReturn(self, call) { if (call && (_typeof(call) === "object" || typeof call === "function")) { return call; } return _assertThisInitialized(self); }
+
+function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) { return o.__proto__ || Object.getPrototypeOf(o); }; return _getPrototypeOf(o); }
+
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
+
+function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
+
+
+
+
+
+
+var $ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+
+$.Datatable = __webpack_require__(/*! datatables.net */ "./node_modules/datatables.net/js/jquery.dataTables.js");
+
+var PengurusRemaja =
+/*#__PURE__*/
+function (_Component) {
+  _inherits(PengurusRemaja, _Component);
+
+  function PengurusRemaja(props) {
+    var _this;
+
+    _classCallCheck(this, PengurusRemaja);
+
+    _this = _possibleConstructorReturn(this, _getPrototypeOf(PengurusRemaja).call(this, props));
+    _this.state = {
+      id: 0,
+      nama: '',
+      email: '',
+      no_hp: '',
+      status: '',
+      id_jabatan: '',
+      cmb_jabatan: [],
+      edit: false
+    };
+    _this.openModal = _this.openModal.bind(_assertThisInitialized(_this));
+    _this.inputChange = _this.inputChange.bind(_assertThisInitialized(_this));
+    _this.handleSubmit = _this.handleSubmit.bind(_assertThisInitialized(_this));
+    _this.reloadJabatan = _this.reloadJabatan.bind(_assertThisInitialized(_this));
+    return _this;
+  }
+
+  _createClass(PengurusRemaja, [{
+    key: "inputChange",
+    value: function inputChange(e) {
+      this.setState(_defineProperty({}, e.target.name, e.target.value));
+    }
+  }, {
+    key: "handleDelete",
+    value: function handleDelete(id) {
+      $.confirm({
+        content: 'Data yang dihapus tidak akan dapat dikembalikan.',
+        title: 'Apakah yakin ingin menghapus ?',
+        type: 'red',
+        typeAnimated: true,
+        buttons: {
+          cancel: {
+            text: 'Batal',
+            btnClass: 'btn-danger',
+            keys: ['esc'],
+            action: function action() {}
+          },
+          ok: {
+            text: '<i class="icon icon-trash"></i> Hapus',
+            btnClass: 'btn-warning',
+            action: function action() {
+              axios__WEBPACK_IMPORTED_MODULE_2___default()({
+                method: 'delete',
+                url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/delete',
+                data: {
+                  id: id
+                },
+                dataType: 'json',
+                config: {
+                  headers: {
+                    'Content-Type': 'multipart/form-data'
+                  }
+                }
+              }).then(function (res) {
+                notification(res.data.status, res.data.msg);
+                setTimeout(function () {
+                  location.reload();
+                }, 1000);
+              })["catch"](function (res) {
+                console.log(res);
+              });
+            }
+          }
+        }
+      });
+    }
+  }, {
+    key: "handleSubmit",
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      var nama = this.state.nama,
+          email = this.state.email,
+          status = this.state.status,
+          no_hp = this.state.no_hp,
+          jabatan = this.state.id_jabatan,
+          pengurus = 1,
+          sendData = "nama=" + nama + "&email=" + email + "&no_hp=" + no_hp + "&status=" + status + "&id_pengurus=" + pengurus + "&id_jabatan=" + jabatan;
+
+      if (this.state.edit === false) {
+        axios__WEBPACK_IMPORTED_MODULE_2___default()({
+          method: 'post',
+          url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/insert',
+          data: sendData,
+          dataType: 'JSON',
+          config: {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        }).then(function (res) {
+          $('#infoModalColoredHeader').remove();
+          notification(res.data.status, res.data.msg); // setTimeout(function () {
+          //     location.reload();
+          // }, 1000);
+        })["catch"](function (resp) {
+          if (_.has(resp.response.data, 'errors')) {
+            _.map(resp.response.data.errors, function (val, key) {
+              $('#' + key + '-error').html(val[0]).fadeIn(1000).fadeOut(5000);
+            });
+          }
+
+          alert(resp.response.data.message);
+        });
+      } else {
+        var id = this.state.id;
+        axios__WEBPACK_IMPORTED_MODULE_2___default()({
+          method: 'put',
+          url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/update',
+          data: sendData + '&id=' + id,
+          dataType: 'JSON',
+          config: {
+            headers: {
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+        }).then(function (res) {
+          $('#infoModalColoredHeader').remove();
+          notification(res.data.status, res.data.msg);
+          setTimeout(function () {
+            location.reload();
+          }, 1000);
+        })["catch"](function (resp) {
+          if (_.has(resp.response.data, 'errors')) {
+            _.map(resp.response.data.errors, function (val, key) {
+              $('#' + key + '-error').html(val[0]).fadeIn(1000).fadeOut(5000);
+            });
+          }
+
+          alert(resp.response.data.message);
+        });
+      }
+    }
+  }, {
+    key: "checkEmail",
+    value: function checkEmail(e) {
+      var _this2 = this;
+
+      this.$em = $(this.em);
+      this.$bt = $(this.bt);
+      var email = e.target.value;
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: 'post',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/cekEmail',
+        data: "email=" + email,
+        dataType: 'json',
+        config: {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      }).then(function (res) {
+        if (res.data.status === 200) {
+          _this2.$em.html("");
+
+          _this2.$bt.removeAttr('disabled');
+        } else {
+          _this2.$em.html(res.data.msg);
+
+          _this2.$em.css("color", "red");
+
+          _this2.$bt.attr('disabled', 'disabled');
+        }
+      })["catch"](function (res) {
+        console.log(res);
+      });
+    }
+  }, {
+    key: "checkPhoneNumber",
+    value: function checkPhoneNumber(e) {
+      var _this3 = this;
+
+      this.$ph = $(this.ph);
+      this.$bt = $(this.bt);
+      var phone = e.target.value;
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: 'post',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/cekNoHp',
+        data: "noHp=" + phone,
+        dataType: 'json',
+        config: {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      }).then(function (res) {
+        if (res.data.status === 200) {
+          _this3.$ph.html("");
+
+          _this3.$bt.removeAttr('disabled');
+        } else {
+          _this3.$ph.html(res.data.msg);
+
+          _this3.$ph.css("color", "red");
+
+          _this3.$bt.attr('disabled', 'disabled');
+        }
+      })["catch"](function (res) {
+        console.log(res);
+      });
+    }
+  }, {
+    key: "handleEdit",
+    value: function handleEdit(id) {
+      var _this4 = this;
+
+      this.$tl = $(this.tl);
+      this.$m = $(this.m);
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: 'post',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/get',
+        data: "id=" + id,
+        dataType: 'json',
+        config: {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        }
+      }).then(function (res) {
+        if (res.data.status === 200) {
+          _this4.setState({
+            id: res.data.list.id,
+            nama: res.data.list.nama,
+            email: res.data.list.email,
+            no_hp: res.data.list.no_hp,
+            status: res.data.list.status,
+            edit: true
+          });
+
+          _this4.$tl.html("Update Data Pengurus Remaja Mesjid");
+
+          _this4.$m.select2().val(res.data.list.id_jabatan).trigger('change');
+        } else {
+          console.log(res.data.msg);
+        }
+      })["catch"](function (res) {
+        console.log(res);
+      });
+    }
+  }, {
+    key: "openModal",
+    value: function openModal() {
+      this.setState({
+        id: 0,
+        nama: '',
+        email: '',
+        foto: '',
+        no_hp: '',
+        status: '',
+        edit: false
+      });
+      this.$tl = $(this.tl);
+      this.$tl.html("Tambah Data Pengurus Remaja Mesjid");
+    }
+  }, {
+    key: "reloadJabatan",
+    value: function reloadJabatan() {
+      var _this5 = this;
+
+      axios__WEBPACK_IMPORTED_MODULE_2___default()({
+        method: 'GET',
+        url: _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/jabatan',
+        dataType: 'JSON'
+      }).then(function (res) {
+        _this5.setState({
+          cmb_jabatan: res.data
+        });
+      });
+    }
+  }, {
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this6 = this;
+
+      this.reloadJabatan();
+      this.$m = $(this.m);
+      this.$m.select2({
+        width: '100%'
+      });
+      this.$m.on('change', this.inputChange);
+      var styles = {
+        status: function status(row, type, data) {
+          if (data.status == 1) {
+            return '<span class="label label-success">Aktif</span>';
+          } else {
+            return '<span class="label label-danger">Tidak Aktif</span>';
+          }
+        }
+      };
+      this.$el = $(this.el);
+      this.$el.DataTable({
+        processing: true,
+        serverSide: true,
+        responsive: true,
+        aLengthMenu: [[5, 10, 25, 100], [5, 10, 25, 100]],
+        order: [],
+        ajax: {
+          "url": _Route__WEBPACK_IMPORTED_MODULE_3__["ROUTE"] + 'pengurus/remaja/json',
+          "type": "POST",
+          "headers": {
+            "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content')
+          }
+        },
+        columns: [{
+          data: 'DT_RowIndex'
+        }, {
+          data: 'nama'
+        }, {
+          data: 'email'
+        }, {
+          data: 'no_hp'
+        }, {
+          data: 'status',
+          render: styles.status
+        }],
+        columnDefs: [{
+          targets: 5,
+          data: null,
+          createdCell: function createdCell(td, cellData, rowData, row, col) {
+            return react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("center", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+              "data-toggle": "modal",
+              "data-target": "#infoModalColoredHeader",
+              className: "btn btn-success btn-sm btn-edit",
+              id: rowData.id,
+              onClick: function onClick() {
+                return _this6.handleEdit(rowData.id);
+              }
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+              className: "icon icon-pencil-square-o"
+            })), " ", react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+              className: "btn btn-danger btn-sm",
+              id: rowData.id,
+              onClick: function onClick() {
+                return _this6.handleDelete(rowData.id);
+              }
+            }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+              className: "icon icon-trash"
+            })))), td);
+          }
+        }]
+      });
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var _this7 = this;
+
+      return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(react__WEBPACK_IMPORTED_MODULE_0__["Fragment"], null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "layout-content-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-info btn-sm",
+        type: "button",
+        "data-toggle": "modal",
+        "data-target": "#infoModalColoredHeader",
+        onClick: this.openModal,
+        style: {
+          marginBottom: '10px'
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("i", {
+        className: "icon icon-plus-circle"
+      }), " Tambah"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "row gutter-xs"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "col-xs-12"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-header"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", null, "Daftar Pengurus")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "card-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "table-responsive"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("table", {
+        id: "demo-datatables",
+        className: "table table-striped table-hover table-nowrap dataTable",
+        width: "100%",
+        ref: function ref(el) {
+          return _this7.el = el;
+        }
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("thead", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tr", null, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", {
+        width: "20px"
+      }, "No"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Nama Lengkap"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Email"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "No HP"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Status Pengurus"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("th", null, "Aksi"))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("tbody", null)))))))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        id: "infoModalColoredHeader",
+        role: "dialog",
+        className: "modal fade"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-dialog"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-content"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-header bg-primary"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        type: "button",
+        className: "close",
+        "data-dismiss": "modal"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        "aria-hidden": "true"
+      }, "\xD7"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "sr-only"
+      }, "Close")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("h4", {
+        className: "modal-title-insert",
+        ref: function ref(tl) {
+          return _this7.tl = tl;
+        }
+      }, "Tambah Data Pengurus")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("form", {
+        className: "form",
+        method: "post"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-body"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "nama"
+      }, "Nama Lengkap"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "nama",
+        name: "nama",
+        className: "form-control",
+        type: "text",
+        placeholder: "Masukan nama",
+        maxLength: "60",
+        onChange: this.inputChange,
+        value: this.state.nama,
+        autoComplete: "off"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "text-danger"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        id: "nama-error"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "email"
+      }, "Email"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "email",
+        name: "email",
+        className: "form-control",
+        type: "text",
+        placeholder: "Masukan email",
+        maxLength: "60",
+        onChange: this.inputChange,
+        onKeyUp: this.checkEmail.bind(this),
+        value: this.state.email,
+        autoComplete: "off"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "text-danger"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        ref: function ref(em) {
+          return _this7.em = em;
+        },
+        id: "email-error"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "no_hp"
+      }, "Nomor Handphone"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("input", {
+        id: "no_hp",
+        name: "no_hp",
+        className: "form-control",
+        type: "text",
+        placeholder: "Masukan nomor hp",
+        maxLength: "15",
+        onChange: this.inputChange,
+        onKeyUp: this.checkPhoneNumber.bind(this),
+        value: this.state.no_hp,
+        autoComplete: "off"
+      }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "text-danger"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        ref: function ref(ph) {
+          return _this7.ph = ph;
+        },
+        id: "no_hp-error"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "id_jabatan"
+      }, "Jabatan"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        name: "id_jabatan",
+        ref: function ref(m) {
+          return _this7.m = m;
+        },
+        onChange: this.inputChange,
+        value: this.state.id_jabatan,
+        className: "form-control"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: ""
+      }, "-- Pilih Jabatan --"), this.state.cmb_jabatan.map(function (data, i) {
+        return react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+          key: i,
+          value: data.id
+        }, data.nama);
+      })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "text-danger"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        id: "id_jabatan-error"
+      }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "form-group"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("label", {
+        htmlFor: "no_hp"
+      }, "Status"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("select", {
+        name: "status",
+        id: "status",
+        onChange: this.inputChange,
+        value: this.state.status,
+        className: "form-control"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: ""
+      }, "Pilih Status"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "1"
+      }, "Aktif"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("option", {
+        value: "0"
+      }, "Tidak Aktif")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+        className: "text-danger"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("strong", {
+        id: "status-error"
+      })))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+        className: "modal-footer"
+      }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        className: "btn btn-default",
+        "data-dismiss": "modal",
+        type: "button"
+      }, "Cancel"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("button", {
+        ref: function ref(bt) {
+          return _this7.bt = bt;
+        },
+        className: "btn btn-primary",
+        id: "btn-insert-data",
+        onClick: this.handleSubmit,
+        type: "submit"
+      }, "Submit")))))));
+    }
+  }]);
+
+  return PengurusRemaja;
+}(react__WEBPACK_IMPORTED_MODULE_0__["Component"]);
+
+
+
+if (document.getElementById('pengurus-remaja')) {
+  react_dom__WEBPACK_IMPORTED_MODULE_1___default.a.render(react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(PengurusRemaja, null), document.getElementById('pengurus-remaja'));
 }
 
 /***/ }),

@@ -7,7 +7,7 @@ import script from './MyScript';
 const $ = require('jquery');
 $.Datatable = require('datatables.net');
 
-export default class PengurusDKM extends Component {
+export default class PengurusMajelis extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -198,7 +198,7 @@ export default class PengurusDKM extends Component {
                     status: res.data.list.status,
                     edit: true
                 });
-                this.$tl.html("Update Data Pengurus DKM");
+                this.$tl.html("Update Data Pengurus Majelis Taklim");
                 this.$m.select2().val(res.data.list.id_jabatan).trigger('change');
             } else {
                 console.log(res.data.msg);
@@ -220,7 +220,7 @@ export default class PengurusDKM extends Component {
         });
 
         this.$tl = $(this.tl);
-        this.$tl.html("Tambah Data Pengurus DKM");
+        this.$tl.html("Tambah Data Pengurus Majelis Taklim");
     }
 
     reloadJabatan() {
@@ -263,7 +263,7 @@ export default class PengurusDKM extends Component {
             order: [],
 
             ajax: {
-                "url": ROUTE + 'pengurus/dkm/json',
+                "url": ROUTE + 'pengurus/majelis/json',
                 "type": "POST",
                 "headers": {
                     "X-CSRF-TOKEN": $('meta[name="csrf-token"]').attr('content'),
@@ -307,7 +307,7 @@ export default class PengurusDKM extends Component {
                         <div className="col-xs-12">
                             <div className="card">
                                 <div className="card-header">
-                                    <strong>Daftar Pengurus</strong>
+                                    <strong>Daftar Pengurus Majelis Taklim</strong>
                                 </div>
                                 <div className="card-body">
                                     <div className="table-responsive">
@@ -422,6 +422,6 @@ export default class PengurusDKM extends Component {
     }
 }
 
-if (document.getElementById('pengurus')) {
-    ReactDOM.render(<PengurusDKM/>, document.getElementById('pengurus'));
+if (document.getElementById('pengurus-majelis')) {
+    ReactDOM.render(<PengurusMajelis/>, document.getElementById('pengurus-majelis'));
 }

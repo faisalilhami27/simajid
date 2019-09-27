@@ -28,7 +28,49 @@ class PengurusController extends Controller
         }
 
         if ($isAdministrator) {
-            return view('pengurus.index');
+            return view('pengurus.dkm');
+        } else {
+            return view('error.denied');
+        }
+    }
+
+    public function majelisPage()
+    {
+        $user = UserPengurus::with('pengurusRole')
+            ->find(Auth::id());
+
+        $isAdministrator = false;
+        foreach ($user->pengurusRole as $userRole) {
+            $isAdministrator = RoleIdentifierController::hasAdministrator($userRole->id_user_level);
+
+            if ($isAdministrator) {
+                break;
+            }
+        }
+
+        if ($isAdministrator) {
+            return view('pengurus.majelis');
+        } else {
+            return view('error.denied');
+        }
+    }
+
+    public function remajaPage()
+    {
+        $user = UserPengurus::with('pengurusRole')
+            ->find(Auth::id());
+
+        $isAdministrator = false;
+        foreach ($user->pengurusRole as $userRole) {
+            $isAdministrator = RoleIdentifierController::hasAdministrator($userRole->id_user_level);
+
+            if ($isAdministrator) {
+                break;
+            }
+        }
+
+        if ($isAdministrator) {
+            return view('pengurus.remaja');
         } else {
             return view('error.denied');
         }
@@ -36,19 +78,25 @@ class PengurusController extends Controller
 
     public function datatable1()
     {
-        $data = Pengurus::where('id', '!=', 1);
+        $data = Pengurus::where('id_pengurus', 1)
+            ->where('id', '!=', 1)
+            ->get();
         return DataTables::of($data)->addIndexColumn()->make(true);
     }
 
     public function datatable2()
     {
-        $data = Pengurus::where('id', '!=', 1);
+        $data = Pengurus::where('id_pengurus', 2)
+            ->where('id', '!=', 1)
+            ->get();
         return DataTables::of($data)->addIndexColumn()->make(true);
     }
 
     public function datatable3()
     {
-        $data = Pengurus::where('id', '!=', 1);
+        $data = Pengurus::where('id_pengurus', 3)
+            ->where('id', '!=', 1)
+            ->get();
         return DataTables::of($data)->addIndexColumn()->make(true);
     }
 
@@ -64,7 +112,7 @@ class PengurusController extends Controller
         $email = htmlspecialchars($request->email);
         $noHp = htmlspecialchars($request->no_hp);
         $status = $request->status;
-        $idJenis = $request->id_jenis;
+        $idPengurus = $request->id_pengurus;
         $idJabatan = $request->id_jabatan;
 
         $insert = Pengurus::create([
@@ -72,7 +120,8 @@ class PengurusController extends Controller
             'email' => $email,
             'no_hp' => $noHp,
             'status' => $status,
-            'id_jenis' => $idJenis,
+            'id_pengurus' => $idPengurus,
+            'id_jabatan' => $idJabatan,
         ]);
 
         if ($insert) {
@@ -98,7 +147,7 @@ class PengurusController extends Controller
     public function cekEmail(Request $request)
     {
         $email = $request->email;
-        $cekUsername = Pengurus::where('email', $email)->get();
+        $cekUsername = Pengurus::where('email', $email)->first();
         $getEmail = $cekUsername->count();
 
         if ($getEmail == 1) {
@@ -111,7 +160,7 @@ class PengurusController extends Controller
     public function cekNoHp(Request $request)
     {
         $noHp = $request->noHp;
-        $cekUsername = Pengurus::where('no_hp', $noHp)->get();
+        $cekUsername = Pengurus::where('no_hp', $noHp)->first();
         $getNoHp = $cekUsername->count();
 
         if ($getNoHp == 1) {

@@ -27,7 +27,8 @@ class PengurusRequest extends FormRequest
             'nama' => 'required|max:50|regex:/^[a-zA-Z ]*$/',
             'email' => 'required|email|max:60',
             'no_hp' => 'required|numeric',
-            'status' => 'required'
+            'status' => 'required',
+            'id_jabatan' => 'required'
         ];
     }
 }
