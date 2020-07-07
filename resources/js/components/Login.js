@@ -82,7 +82,7 @@ export default class Login extends Component {
                                 <label htmlFor="username">Username</label>
                                 <div className="input-with-icon">
                                     <input id="username" onChange={this.handleChange} value={this.state.username} className="form-control" type="text" name="username"
-                                           maxLength="20" autoComplete="off" autoFocus required/>
+                                           maxLength="20" autoComplete="off" autoFocus placeholder="Username : faisal27" required/>
                                     <span className="icon icon-user input-icon"></span>
                                     <span className="text-danger">
                                         <strong id="username-error"></strong>
@@ -93,7 +93,7 @@ export default class Login extends Component {
                                 <label htmlFor="password">Password</label>
                                 <div className="input-with-icon">
                                     <input id="password" onChange={this.handleChange} value={this.state.password} className="form-control" type="password" maxLength="12"
-                                           name="password" required/>
+                                           name="password" placeholder="password: barca1899" required/>
                                     <span className="icon icon-lock input-icon"></span>
                                     <span className="text-danger">
                                         <strong id="password-error"></strong>

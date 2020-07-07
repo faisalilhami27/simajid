@@ -6145,7 +6145,7 @@ exports = module.exports = __webpack_require__(/*! ../../node_modules/css-loader
 
 
 // module
-exports.push([module.i, ".select2-container--default .select2-selection--single {\n    background-color: #233345;\n    border: 1px solid #293B51;\n    border-radius: 4px;\n    height: 34px;\n    padding-top: 3px;\n    color: #D4D6D8;\n}\n\n.select2-container--default .select2-selection--single .select2-selection__rendered {\n    color: #D4D6D8;\n    line-height: 28px;\n}\n\n.select2-container--default .select2-selection--multiple {\n    background-color: #233345;\n    border: 1px solid #293B51;\n    border-radius: 4px;\n    height: 34px;\n    padding-top: 3px;\n    color: #D4D6D8;\n}\n\n.select2-container--default .select2-selection--multiple .select2-selection__rendered {\n    box-sizing: border-box;\n    display: block;\n    line-height: 1.538462;\n    list-style: none;\n    margin-top: -3px;\n    margin-left: -3px;\n    overflow: hidden;\n    width: 100%;\n    text-overflow: ellipsis;\n    white-space: nowrap;\n}\n\n.select2-search--dropdown {\n    display: block;\n    padding: 4px;\n}\n\n.select2-container--default .select2-search--dropdown .select2-search__field {\n    box-shadow: none;\n    background-color: #233345;\n    border: 1px solid #293b51;\n    border-radius: 4px;\n    color: #e9e9e9;\n    font-size: 13px;\n}\n\n.select2-container--default .select2-selection--multiple .select2-selection__choice {\n    color: #e9e9e9;\n    background: #293b51;\n    border: 1px solid #293b51;\n    border-radius: 4px;\n    cursor: default;\n    float: left;\n    margin: 5px 0 0 6px;\n    padding: 0 6px;\n}\n\n.select2-container--default .select2-results__option[aria-selected=true] {\n    background-color: #293b51;\n    color: #a7a9af;\n}\n\n.select2-container--default .select2-results__option--highlighted[aria-selected] {\n    background-color: #7c55fb;\n    color: #fff;\n}\n", ""]);
+exports.push([module.i, ".select2-container--default .select2-selection--single {\r\n    background-color: #233345;\r\n    border: 1px solid #293B51;\r\n    border-radius: 4px;\r\n    height: 34px;\r\n    padding-top: 3px;\r\n    color: #D4D6D8;\r\n}\r\n\r\n.select2-container--default .select2-selection--single .select2-selection__rendered {\r\n    color: #D4D6D8;\r\n    line-height: 28px;\r\n}\r\n\r\n.select2-container--default .select2-selection--multiple {\r\n    background-color: #233345;\r\n    border: 1px solid #293B51;\r\n    border-radius: 4px;\r\n    height: 34px;\r\n    padding-top: 3px;\r\n    color: #D4D6D8;\r\n}\r\n\r\n.select2-container--default .select2-selection--multiple .select2-selection__rendered {\r\n    box-sizing: border-box;\r\n    display: block;\r\n    line-height: 1.538462;\r\n    list-style: none;\r\n    margin-top: -3px;\r\n    margin-left: -3px;\r\n    overflow: hidden;\r\n    width: 100%;\r\n    text-overflow: ellipsis;\r\n    white-space: nowrap;\r\n}\r\n\r\n.select2-search--dropdown {\r\n    display: block;\r\n    padding: 4px;\r\n}\r\n\r\n.select2-container--default .select2-search--dropdown .select2-search__field {\r\n    box-shadow: none;\r\n    background-color: #233345;\r\n    border: 1px solid #293b51;\r\n    border-radius: 4px;\r\n    color: #e9e9e9;\r\n    font-size: 13px;\r\n}\r\n\r\n.select2-container--default .select2-selection--multiple .select2-selection__choice {\r\n    color: #e9e9e9;\r\n    background: #293b51;\r\n    border: 1px solid #293b51;\r\n    border-radius: 4px;\r\n    cursor: default;\r\n    float: left;\r\n    margin: 5px 0 0 6px;\r\n    padding: 0 6px;\r\n}\r\n\r\n.select2-container--default .select2-results__option[aria-selected=true] {\r\n    background-color: #293b51;\r\n    color: #a7a9af;\r\n}\r\n\r\n.select2-container--default .select2-results__option--highlighted[aria-selected] {\r\n    background-color: #7c55fb;\r\n    color: #fff;\r\n}\r\n", ""]);
 
 // exports
 
@@ -90764,6 +90764,7 @@ function (_Component) {
         maxLength: "20",
         autoComplete: "off",
         autoFocus: true,
+        placeholder: "Username : faisal27",
         required: true
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "icon icon-user input-icon"
@@ -90785,6 +90786,7 @@ function (_Component) {
         type: "password",
         maxLength: "12",
         name: "password",
+        placeholder: "password: barca1899",
         required: true
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "icon icon-lock input-icon"
